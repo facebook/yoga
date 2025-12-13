@@ -207,7 +207,9 @@ function setupTestTree(
     ) {
       continue;
     }
-    if (!isDefaultStyleValue(style, node.style[style])) {
+    const styleValue = node.style[style];
+    const isDefault = isDefaultStyleValue(style, styleValue);
+    if (!isDefault) {
       switch (style) {
         case 'aspect-ratio':
           e.YGNodeStyleSetAspectRatio(
@@ -274,6 +276,22 @@ function setupTestTree(
             );
           }
           break;
+        case 'justify-items': {
+          const justifyItemsValue = justifyValue(e, node.style[style]);
+          if (justifyItemsValue !== undefined) {
+            e.YGNodeStyleSetJustifyItems(nodeName, justifyItemsValue);
+          }
+          break;
+        }
+        case 'justify-self': {
+          if (!parent || node.style[style] !== parent.style['justify-items']) {
+            const justifySelfValue = justifyValue(e, node.style[style]);
+            if (justifySelfValue !== undefined) {
+              e.YGNodeStyleSetJustifySelf(nodeName, justifySelfValue);
+            }
+          }
+          break;
+        }
         case 'position':
           e.YGNodeStyleSetPositionType(
             nodeName,
@@ -524,6 +542,79 @@ function setupTestTree(
             nodeName,
             boxSizingValue(e, node.style[style]),
           );
+          break;
+        case 'grid-template-columns':
+          if (node.style[style] && node.style[style] !== 'none') {
+            e.YGNodeStyleSetGridTemplateColumns(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-template-rows':
+          if (node.style[style] && node.style[style] !== 'none') {
+            e.YGNodeStyleSetGridTemplateRows(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-column-start':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnStart(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-column-end':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridColumnEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridColumnEnd(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-row-start':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowStartSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowStart(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-row-end':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            const value = node.style[style];
+            if (value.startsWith('span ')) {
+              e.YGNodeStyleSetGridRowEndSpan(
+                nodeName,
+                parseInt(value.substring(5)),
+              );
+            } else {
+              e.YGNodeStyleSetGridRowEnd(nodeName, parseInt(value));
+            }
+          }
+          break;
+        case 'grid-auto-columns':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            e.YGNodeStyleSetGridAutoColumns(nodeName, node.style[style]);
+          }
+          break;
+        case 'grid-auto-rows':
+          if (node.style[style] && node.style[style] !== 'auto') {
+            e.YGNodeStyleSetGridAutoRows(nodeName, node.style[style]);
+          }
+          break;
       }
     }
   }
@@ -604,6 +695,14 @@ function justifyValue(e, value) {
       return e.YGJustifyFlexStart;
     case 'flex-end':
       return e.YGJustifyFlexEnd;
+    case 'stretch':
+      return e.YGJustifyStretch;
+    case 'start':
+      return e.YGJustifyStart;
+    case 'end':
+      return e.YGJustifyEnd;
+    case 'auto':
+      return e.YGJustifyAuto;
   }
 }
 
@@ -649,6 +748,10 @@ function alignValue(e, value) {
       return e.YGAlignSpaceEvenly;
     case 'baseline':
       return e.YGAlignBaseline;
+    case 'start':
+      return e.YGAlignStart;
+    case 'end':
+      return e.YGAlignEnd;
   }
 }
 
@@ -678,6 +781,8 @@ function displayValue(e, value) {
       return e.YGDisplayNone;
     case 'contents':
       return e.YGDisplayContents;
+    case 'grid':
+      return e.YGDisplayGrid;
   }
 }
 
@@ -769,10 +874,19 @@ function calculateTree(root, parentOffsetLeft, parentOffsetTop) {
 function getYogaStyle(node) {
   // TODO: Relying on computed style means we cannot test shorthand props like
   // "padding", "margin", "gap", or negative values.
+  const gridTemplateProperties = new Set([
+    'grid-template-columns',
+    'grid-template-rows',
+    'grid-auto-columns',
+    'grid-auto-rows',
+  ]);
+
   return [
     'direction',
     'flex-direction',
     'justify-content',
+    'justify-items',
+    'justify-self',
     'align-content',
     'align-items',
     'align-self',
@@ -809,9 +923,23 @@ function getYogaStyle(node) {
     'display',
     'aspect-ratio',
     'box-sizing',
+    'grid-template-columns',
+    'grid-template-rows',
+    'grid-auto-columns',
+    'grid-auto-rows',
+    'grid-column-start',
+    'grid-column-end',
+    'grid-row-start',
+    'grid-row-end',
   ].reduce((map, key) => {
-    map[key] =
-      node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
+    // For grid template properties, only use inline styles to avoid capturing
+    // computed implicit grid tracks
+    if (gridTemplateProperties.has(key)) {
+      map[key] = node.style[key] || '';
+    } else {
+      map[key] =
+        node.style[key] || getComputedStyle(node, null).getPropertyValue(key);
+    }
     return map;
   }, {});
 }

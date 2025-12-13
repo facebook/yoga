@@ -9,7 +9,7 @@
 
 import * as fs from 'node:fs/promises';
 import {format} from 'node:util';
-import {parse, dirname} from 'path';
+import {parse, dirname, join, relative} from 'path';
 import * as process from 'node:process';
 import {Builder, logging} from 'selenium-webdriver';
 import {Options} from 'selenium-webdriver/chrome.js';
@@ -18,6 +18,22 @@ import {stdin, stdout} from 'node:process';
 import minimist from 'minimist';
 import readline from 'node:readline/promises';
 import signedsource from 'signedsource';
+
+async function findHtmlFixtures(dir: string): Promise<string[]> {
+  const entries = await fs.readdir(dir, {withFileTypes: true});
+  const files = await Promise.all(
+    entries.map(entry => {
+      const fullPath = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return findHtmlFixtures(fullPath);
+      } else if (entry.name.endsWith('.html')) {
+        return [fullPath];
+      }
+      return [];
+    }),
+  );
+  return files.flat();
+}
 
 function addSignatureToSourceCode(sourceCode: string): string {
   const codeWithToken = sourceCode.replace(
@@ -35,18 +51,23 @@ const headless = argv.h || argv.headless;
 
 const gentestDir = dirname(fileURLToPath(import.meta.url));
 const yogaDir = dirname(gentestDir);
+const fixturesDir = `${gentestDir}/fixtures`;
 
-let fixtures = await fs.readdir(`${gentestDir}/fixtures`);
+let fixtures: string[];
 try {
   if (specificFixture != null) {
-    await fs.access(`fixtures/${specificFixture}.html`, fs.constants.F_OK);
-    fixtures = [specificFixture + '.html'];
+    const fixturePath = `${fixturesDir}/${specificFixture}.html`;
+    await fs.access(fixturePath, fs.constants.F_OK);
+    fixtures = [fixturePath];
+  } else {
+    fixtures = await findHtmlFixtures(fixturesDir);
   }
 } catch (e) {
   const errorMessage = e instanceof Error ? e.message : '';
   console.log(
     `Trying to access ${specificFixture}.html threw an exception. Executing against all fixtures. ${errorMessage}`,
   );
+  fixtures = await findHtmlFixtures(fixturesDir);
 }
 
 const options = new Options();
@@ -65,25 +86,37 @@ const driver = await new Builder()
   .setChromeOptions(options)
   .build();
 
-for (const fileName of fixtures) {
-  const fixture = await fs.readFile(
-    `${gentestDir}/fixtures/${fileName}`,
-    'utf8',
-  );
-  const fileNameNoExtension = parse(fileName).name;
+for (const fixturePath of fixtures) {
+  const fixture = await fs.readFile(fixturePath, 'utf8');
+  const relativePath = relative(fixturesDir, fixturePath);
+  const fileNameNoExtension = parse(relativePath).name;
   console.log('Generate', fileNameNoExtension);
 
   // TODO: replace this with something more robust than just blindly replacing
   // start/end in the entire fixture
   const ltrFixture = fixture
-    .replaceAll('start', 'left')
-    .replaceAll('end', 'right')
+    // prevent replacing in grid properties and alignment properties (justify/align-*)
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g,
+      'left',
+    )
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g,
+      'right',
+    )
     .replaceAll('flex-left', 'flex-start')
     .replaceAll('flex-right', 'flex-end');
 
   const rtlFixture = fixture
-    .replaceAll('start', 'right')
-    .replaceAll('end', 'left')
+    // prevent replacing in grid properties and alignment properties (justify/align-*)
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )start/g,
+      'right',
+    )
+    .replaceAll(
+      /(?<!grid-column-)(?<!grid-row-)(?<!justify-self: )(?<!align-self: )(?<!justify-content: )(?<!align-content: )(?<!justify-items: )(?<!align-items: )end/g,
+      'left',
+    )
     .replaceAll('flex-right', 'flex-start')
     .replaceAll('flex-left', 'flex-end');
 

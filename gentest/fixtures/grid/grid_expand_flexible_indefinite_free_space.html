@@ -1,0 +1,9 @@
+
+<!-- Test requires adding a parent div with width set to max-content as test-template adds 2 absolute positioned children which measures min-content on browser but yoga supports max-content. -->
+<div style="width: max-content" id="grid_expand_flexible_indefinite_free_space_container">
+  <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; grid-template-rows: 1fr 2fr;">
+    <div style="width: 100px; height: 80px"></div>
+    <div style="width: 150px; height: 120px"></div>
+    <div style="width: 120px; height: 100px"></div>
+  </div>
+</div>
