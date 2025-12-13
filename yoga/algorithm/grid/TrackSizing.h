@@ -472,7 +472,6 @@ struct TrackSizing {
     }
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
     auto sizingMode = dimension == Dimension::Width ? widthSizingMode : heightSizingMode;
-    auto containerSize = dimension == Dimension::Width ? containerInnerWidth : containerInnerHeight;
     auto startIndexkey = dimension == Dimension::Width ? &GridItem::columnStart : &GridItem::rowStart;
     auto endIndexKey = dimension == Dimension::Width ? &GridItem::columnEnd : &GridItem::rowEnd;
 
@@ -485,16 +484,16 @@ struct TrackSizing {
 
       auto start = item.*startIndexkey;
       auto end = item.*endIndexKey;
-      std::vector<GridTrackSize*> intrinsicMinFlexibleTracks;
+      std::vector<GridTrackSize*> flexibleTracks;
 
       for (size_t i = start; i < end && i < tracks.size(); i++) {
         auto& track = tracks[i];
-        if (isIntrinsicSizingFunction(track.minSizingFunction, containerSize)) {
-          intrinsicMinFlexibleTracks.push_back(&track);
+        if (isFlexibleSizingFunction(track.maxSizingFunction)) {
+          flexibleTracks.push_back(&track);
         }
       }
 
-      if (!intrinsicMinFlexibleTracks.empty()) {
+      if (!flexibleTracks.empty()) {
         auto itemConstraints = calculateItemConstraints(item, dimension);
         auto minContribution = sizingMode == SizingMode::MaxContent
             ? limitedMinContentContribution(item, dimension, itemConstraints)
@@ -502,7 +501,7 @@ struct TrackSizing {
 
         itemsSpanningFlexible.emplace_back(
             &item,
-            std::move(intrinsicMinFlexibleTracks),
+            std::move(flexibleTracks),
             minContribution
         );
       }
@@ -657,7 +656,7 @@ struct TrackSizing {
   }
 
   // https://www.w3.org/TR/css-grid-1/#extra-space
-  // Similar to distribute extra space for content sized trcks, but distributes space considering flex factors.
+  // Similar to distribute extra space for content sized tracks, but distributes space considering flex factors.
   void distributeSpaceToFlexibleTracksForItems(
     Dimension dimension,
     const std::vector<ItemSizeContribution>& gridItemSizeContributions) {
@@ -1331,27 +1330,6 @@ struct TrackSizing {
 
   bool hasPercentageTracks(Dimension dimension) const {
     return dimension == Dimension::Width ? hasPercentageColumnTracks : hasPercentageRowTracks;
-  }
-
-  std::pair<float, float> getContainingBlockSizeForItem(const GridItem& item, float effectiveColumnGap, float effectiveRowGap) {
-    float containingBlockWidth = 0.0f;
-    float containingBlockHeight = 0.0f;
-    
-    for (size_t i = item.columnStart; i < item.columnEnd && i < columnTracks.size(); i++) {
-      containingBlockWidth += columnTracks[i].baseSize;
-      if (i < item.columnEnd - 1) {
-        containingBlockWidth += effectiveColumnGap;
-      }
-    }
-    
-    for (size_t i = item.rowStart; i < item.rowEnd && i < rowTracks.size(); i++) {
-      containingBlockHeight += rowTracks[i].baseSize;
-      if (i < item.rowEnd - 1) {
-        containingBlockHeight += effectiveRowGap;
-      }
-    }
-    
-    return std::make_pair(containingBlockWidth, containingBlockHeight);
   }
 
   ContentDistribution calculateContentDistribution(

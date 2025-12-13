@@ -292,6 +292,21 @@ TEST_F(GridAutoplacementTest, handles_negative_grid_line_references) {
     }
 }
 
+TEST_F(GridAutoplacementTest, same_start_and_end_line_spans_one_track) {
+    createGridItem(
+        GridLine::fromInteger(1), GridLine::fromInteger(1),
+        GridLine::fromInteger(1), GridLine::fromInteger(2));
+
+    auto autoPlacementResult = AutoPlacement::performAutoPlacement(gridContainer);
+    auto& placements = autoPlacementResult.gridItems;
+
+    ASSERT_EQ(placements.size(), 1);
+    EXPECT_EQ(placements[0].columnStart, 0);
+    EXPECT_EQ(placements[0].columnEnd, 1);
+    EXPECT_EQ(placements[0].rowStart, 0);
+    EXPECT_EQ(placements[0].rowEnd, 1);
+}
+
 TEST_F(GridAutoplacementTest, handles_negative_grid_lines_with_row_positioning) {
     std::vector<GridTrackSize> columns = {
         GridTrackSize::length(20.0f),

@@ -234,9 +234,18 @@ void calculateGridLayoutInternal(Node* node,
   }
 
   for (auto& item : gridItems) {
-    auto [containingBlockWidth, containingBlockHeight] = trackSizing.getContainingBlockSizeForItem(item, finalEffectiveColumnGap, finalEffectiveRowGap);
-    float gridItemInlineStart = columnGridLineOffsets[std::min(item.columnStart, columnTracks.size())];
-    float gridItemBlockStart = rowGridLineOffsets[std::min(item.rowStart, rowTracks.size())];
+    // grid line offsets include the gap after each track (except the last).
+    // so we subtract the trailing gap for items that do not end at the last track.
+    float containingBlockWidth = columnGridLineOffsets[item.columnEnd] - columnGridLineOffsets[item.columnStart];
+    if (item.columnEnd < columnTracks.size()) {
+        containingBlockWidth -= finalEffectiveColumnGap;
+    }
+    float containingBlockHeight = rowGridLineOffsets[item.rowEnd] - rowGridLineOffsets[item.rowStart];
+    if (item.rowEnd < rowTracks.size()) {
+        containingBlockHeight -= finalEffectiveRowGap;
+    }
+    float gridItemInlineStart = columnGridLineOffsets[item.columnStart];
+    float gridItemBlockStart = rowGridLineOffsets[item.rowStart];
     const auto& itemStyle = item.node->style();
 
     const auto marginInlineStart = itemStyle.computeInlineStartMargin(FlexDirection::Row, direction, containingBlockWidth);
