@@ -18,28 +18,22 @@
 namespace facebook::yoga {
 
 struct OccupancyGrid {
-  std::unordered_set<int64_t> cells;
-
-  static int64_t cellKey(int32_t row, int32_t col) {
-    return (static_cast<int64_t>(row) << 32) | static_cast<uint32_t>(col);
-  }
+  std::unordered_map<int32_t, std::vector<std::pair<int32_t, int32_t>>> rowIntervals;
 
   void markOccupied(int32_t rowStart, int32_t rowEnd, int32_t colStart, int32_t colEnd) {
     for (int32_t row = rowStart; row < rowEnd; row++) {
-      for (int32_t col = colStart; col < colEnd; col++) {
-        cells.insert(cellKey(row, col));
-      }
+      rowIntervals[row].push_back({colStart, colEnd});
     }
-  }
-
-  bool isOccupied(int32_t row, int32_t col) const {
-    return cells.contains(cellKey(row, col));
   }
 
   bool hasOverlap(int32_t rowStart, int32_t rowEnd, int32_t colStart, int32_t colEnd) const {
     for (int32_t row = rowStart; row < rowEnd; row++) {
-      for (int32_t col = colStart; col < colEnd; col++) {
-        if (isOccupied(row, col)) {
+      auto it = rowIntervals.find(row);
+      if (it == rowIntervals.end()) {
+        continue;
+      }
+      for (const auto& interval : it->second) {
+        if (interval.first < colEnd && interval.second > colStart) {
           return true;
         }
       }
