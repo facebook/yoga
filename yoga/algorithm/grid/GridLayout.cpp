@@ -281,16 +281,18 @@ void calculateGridLayoutInternal(Node* node,
     float startAutoMarginOffset = 0.0f;
     // https://www.w3.org/TR/css-grid-1/#auto-margins
     // auto margins in either axis absorb positive free space prior to alignment via the box alignment properties, thereby disabling the effects of any self-alignment properties in that axis.
-    if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Row, direction) 
-        && itemStyle.inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
-      startAutoMarginOffset = freeSpaceInlineAxisItem / 2;
-      freeSpaceInlineAxisItem = 0.0f;
-    } else if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Row, direction)) {
-      startAutoMarginOffset = freeSpaceInlineAxisItem;
-      freeSpaceInlineAxisItem = 0.0f;
-    } else if (itemStyle.inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
-      startAutoMarginOffset = 0.0f;
-      freeSpaceInlineAxisItem = 0.0f;
+    if (freeSpaceInlineAxisItem > 0.0f) {
+      if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Row, direction)
+          && itemStyle.inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
+        startAutoMarginOffset = freeSpaceInlineAxisItem / 2;
+        freeSpaceInlineAxisItem = 0.0f;
+      } else if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Row, direction)) {
+        startAutoMarginOffset = freeSpaceInlineAxisItem;
+        freeSpaceInlineAxisItem = 0.0f;
+      } else if (itemStyle.inlineEndMarginIsAuto(FlexDirection::Row, direction)) {
+        startAutoMarginOffset = 0.0f;
+        freeSpaceInlineAxisItem = 0.0f;
+      }
     }
     
     float justifySelfOffset = 0.0f;
@@ -318,15 +320,17 @@ void calculateGridLayoutInternal(Node* node,
     float actualItemHeight = item.node->getLayout().measuredDimension(Dimension::Height);
     auto freeSpaceBlockAxisItem = containingBlockHeight - actualItemHeight - marginBlockStart - marginBlockEnd;
     float topAutoMarginOffset = 0.0f;
-    if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Column, direction) 
-          && itemStyle.inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
-      topAutoMarginOffset = freeSpaceBlockAxisItem / 2;
-      freeSpaceBlockAxisItem = 0.0f;
-    } else if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Column, direction)) {
-      topAutoMarginOffset = freeSpaceBlockAxisItem;
-      freeSpaceBlockAxisItem = 0.0f;
-    } else if (itemStyle.inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
-      freeSpaceBlockAxisItem = 0.0f;
+    if (freeSpaceBlockAxisItem > 0.0f) {
+      if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Column, direction)
+            && itemStyle.inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
+        topAutoMarginOffset = freeSpaceBlockAxisItem / 2;
+        freeSpaceBlockAxisItem = 0.0f;
+      } else if (itemStyle.inlineStartMarginIsAuto(FlexDirection::Column, direction)) {
+        topAutoMarginOffset = freeSpaceBlockAxisItem;
+        freeSpaceBlockAxisItem = 0.0f;
+      } else if (itemStyle.inlineEndMarginIsAuto(FlexDirection::Column, direction)) {
+        freeSpaceBlockAxisItem = 0.0f;
+      }
     }
 
     float alignSelfOffset = 0.0f;

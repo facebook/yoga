@@ -1657,7 +1657,7 @@ struct TrackSizing {
       float crossDimAfter = estimatorAfter ? estimatorAfter(item) : YGUndefined;
 
       // If cross dimension hasn't changed, contribution depending on it won't change
-      if (crossDimBefore == crossDimAfter) {
+      if (yoga::inexactEquals(crossDimBefore, crossDimAfter)) {
         continue;
       }
 
@@ -1671,7 +1671,7 @@ struct TrackSizing {
       auto constraintsAfter = calculateItemConstraints(item, containingBlockWidth, containingBlockHeight);
       float contributionAfter = minContentContribution(item, dimension, constraintsAfter);
 
-      if (contributionBefore != contributionAfter) {
+      if (!yoga::inexactEquals(contributionBefore, contributionAfter)) {
         return true;
       }
     }
