@@ -43,8 +43,8 @@ static YGSize _measure(
 
 TEST(YogaTest, exactly_measure_stretched_child_column) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -70,8 +70,8 @@ TEST(YogaTest, exactly_measure_stretched_child_column) {
 
 TEST(YogaTest, exactly_measure_stretched_child_row) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -98,8 +98,8 @@ TEST(YogaTest, exactly_measure_stretched_child_row) {
 
 TEST(YogaTest, at_most_main_axis_column) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -125,8 +125,8 @@ TEST(YogaTest, at_most_main_axis_column) {
 
 TEST(YogaTest, at_most_cross_axis_column) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -153,8 +153,8 @@ TEST(YogaTest, at_most_cross_axis_column) {
 
 TEST(YogaTest, at_most_main_axis_row) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -181,8 +181,8 @@ TEST(YogaTest, at_most_main_axis_row) {
 
 TEST(YogaTest, at_most_cross_axis_row) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -210,8 +210,8 @@ TEST(YogaTest, at_most_cross_axis_row) {
 
 TEST(YogaTest, flex_child) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -240,8 +240,8 @@ TEST(YogaTest, flex_child) {
 
 TEST(YogaTest, flex_child_with_flex_basis) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -268,8 +268,8 @@ TEST(YogaTest, flex_child_with_flex_basis) {
 
 TEST(YogaTest, overflow_scroll_column) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
@@ -300,8 +300,8 @@ TEST(YogaTest, overflow_scroll_column) {
 
 TEST(YogaTest, overflow_scroll_row) {
   auto constraintList = _MeasureConstraintList{
-      0,
-      (struct _MeasureConstraint*)malloc(
+      .length = 0,
+      .constraints = (struct _MeasureConstraint*)malloc(
           10 * sizeof(struct _MeasureConstraint)),
   };
 
