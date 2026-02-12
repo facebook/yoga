@@ -47,6 +47,36 @@ float YGConfigGetPointScaleFactor(const YGConfigConstRef config) {
   return resolveRef(config)->getPointScaleFactor();
 }
 
+void YGConfigSetViewportWidth(
+    const YGConfigRef config,
+    const float viewportWidth) {
+  yoga::assertFatalWithConfig(
+      resolveRef(config),
+      viewportWidth >= 0.0f,
+      "Viewport width should not be less than zero");
+
+  resolveRef(config)->setViewportWidth(viewportWidth);
+}
+
+float YGConfigGetViewportWidth(const YGConfigConstRef config) {
+  return resolveRef(config)->getViewportWidth();
+}
+
+void YGConfigSetViewportHeight(
+    const YGConfigRef config,
+    const float viewportHeight) {
+  yoga::assertFatalWithConfig(
+      resolveRef(config),
+      viewportHeight >= 0.0f,
+      "Viewport height should not be less than zero");
+
+  resolveRef(config)->setViewportHeight(viewportHeight);
+}
+
+float YGConfigGetViewportHeight(const YGConfigConstRef config) {
+  return resolveRef(config)->getViewportHeight();
+}
+
 void YGConfigSetErrata(YGConfigRef config, YGErrata errata) {
   resolveRef(config)->setErrata(scopedEnum(errata));
 }
