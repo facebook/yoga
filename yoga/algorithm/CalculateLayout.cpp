@@ -43,10 +43,18 @@ static void constrainMaxSizeForMode(
     float ownerWidth,
     /*in_out*/ SizingMode* mode,
     /*in_out*/ float* size) {
-  const FloatOptional maxSize =
-      node->style().resolvedMaxDimension(
-          direction, dimension(axis), ownerAxisSize, ownerWidth) +
-      FloatOptional(node->style().computeMarginForAxis(axis, ownerWidth));
+  const FloatOptional maxSize = node->style().resolvedMaxDimension(
+                                    direction,
+                                    dimension(axis),
+                                    ownerAxisSize,
+                                    ownerWidth,
+                                    node->getConfig()->getViewportWidth(),
+                                    node->getConfig()->getViewportHeight()) +
+      FloatOptional(node->style().computeMarginForAxis(
+          axis,
+          ownerWidth,
+          node->getConfig()->getViewportWidth(),
+          node->getConfig()->getViewportHeight()));
   switch (*mode) {
     case SizingMode::StretchFit:
     case SizingMode::FitContent:
@@ -131,10 +139,16 @@ static void computeFlexBasisForChild(
     childWidthSizingMode = SizingMode::MaxContent;
     childHeightSizingMode = SizingMode::MaxContent;
 
-    auto marginRow =
-        child->style().computeMarginForAxis(FlexDirection::Row, ownerWidth);
-    auto marginColumn =
-        child->style().computeMarginForAxis(FlexDirection::Column, ownerWidth);
+    auto marginRow = child->style().computeMarginForAxis(
+        FlexDirection::Row,
+        ownerWidth,
+        child->getConfig()->getViewportWidth(),
+        child->getConfig()->getViewportHeight());
+    auto marginColumn = child->style().computeMarginForAxis(
+        FlexDirection::Column,
+        ownerWidth,
+        child->getConfig()->getViewportWidth(),
+        child->getConfig()->getViewportHeight());
 
     if (isRowStyleDimDefined) {
       childWidth = child
@@ -514,14 +528,24 @@ static float calculateAvailableInnerDimension(
     // constraints
     const FloatOptional minDimensionOptional =
         node->style().resolvedMinDimension(
-            direction, dimension, ownerDim, ownerWidth);
+            direction,
+            dimension,
+            ownerDim,
+            ownerWidth,
+            node->getConfig()->getViewportWidth(),
+            node->getConfig()->getViewportHeight());
     const float minInnerDim = minDimensionOptional.isUndefined()
         ? 0.0f
         : minDimensionOptional.unwrap() - paddingAndBorder;
 
     const FloatOptional maxDimensionOptional =
         node->style().resolvedMaxDimension(
-            direction, dimension, ownerDim, ownerWidth);
+            direction,
+            dimension,
+            ownerDim,
+            ownerWidth,
+            node->getConfig()->getViewportWidth(),
+            node->getConfig()->getViewportHeight());
 
     const float maxInnerDim = maxDimensionOptional.isUndefined()
         ? FLT_MAX
@@ -609,7 +633,11 @@ static float computeFlexBasisForChildren(
 
     totalOuterFlexBasis +=
         (child->getLayout().computedFlexBasis.unwrap() +
-         child->style().computeMarginForAxis(mainAxis, availableInnerWidth));
+         child->style().computeMarginForAxis(
+             mainAxis,
+             availableInnerWidth,
+             child->getConfig()->getViewportWidth(),
+             child->getConfig()->getViewportHeight()));
   }
 
   return totalOuterFlexBasis;
@@ -702,10 +730,14 @@ static float distributeFreeSpaceSecondPass(
 
     deltaFreeSpace += updatedMainSize - childFlexBasis;
 
+    const float viewportWidth =
+        currentLineChild->getConfig()->getViewportWidth();
+    const float viewportHeight =
+        currentLineChild->getConfig()->getViewportHeight();
     const float marginMain = currentLineChild->style().computeMarginForAxis(
-        mainAxis, availableInnerWidth);
+        mainAxis, availableInnerWidth, viewportWidth, viewportHeight);
     const float marginCross = currentLineChild->style().computeMarginForAxis(
-        crossAxis, availableInnerWidth);
+        crossAxis, availableInnerWidth, viewportWidth, viewportHeight);
 
     float childCrossSize = YGUndefined;
     float childMainSize = updatedMainSize + marginMain;
@@ -994,16 +1026,18 @@ static void justifyMainAxis(
     const float availableInnerWidth,
     const bool performLayout) {
   const auto& style = node->style();
+  const float viewportWidth = node->getConfig()->getViewportWidth();
+  const float viewportHeight = node->getConfig()->getViewportHeight();
 
   const float leadingPaddingAndBorderMain =
       node->style().computeFlexStartPaddingAndBorder(
-          mainAxis, direction, ownerWidth);
+          mainAxis, direction, ownerWidth, viewportWidth, viewportHeight);
   const float trailingPaddingAndBorderMain =
       node->style().computeFlexEndPaddingAndBorder(
-          mainAxis, direction, ownerWidth);
+          mainAxis, direction, ownerWidth, viewportWidth, viewportHeight);
 
-  const float gap =
-      node->style().computeGapForAxis(mainAxis, availableInnerMainDim);
+  const float gap = node->style().computeGapForAxis(
+      mainAxis, availableInnerMainDim, viewportWidth, viewportHeight);
   // If we are using "at most" rules in the main axis, make sure that
   // remainingFreeSpace is 0 when min main dimension is not given
   if (sizingModeMainDim == SizingMode::FitContent &&
@@ -1011,7 +1045,12 @@ static void justifyMainAxis(
     if (style.minDimension(dimension(mainAxis)).isDefined() &&
         style
             .resolvedMinDimension(
-                direction, dimension(mainAxis), mainAxisOwnerSize, ownerWidth)
+                direction,
+                dimension(mainAxis),
+                mainAxisOwnerSize,
+                ownerWidth,
+                viewportWidth,
+                viewportHeight)
             .isDefined()) {
       // This condition makes sure that if the size of main dimension(after
       // considering child nodes main dim, leading and trailing padding etc)
@@ -1020,11 +1059,15 @@ static void justifyMainAxis(
 
       // `minAvailableMainDim` denotes minimum available space in which child
       // can be laid out, it will exclude space consumed by padding and border.
-      const float minAvailableMainDim =
-          style
-              .resolvedMinDimension(
-                  direction, dimension(mainAxis), mainAxisOwnerSize, ownerWidth)
-              .unwrap() -
+      const float minAvailableMainDim = style
+                                            .resolvedMinDimension(
+                                                direction,
+                                                dimension(mainAxis),
+                                                mainAxisOwnerSize,
+                                                ownerWidth,
+                                                viewportWidth,
+                                                viewportHeight)
+                                            .unwrap() -
           leadingPaddingAndBorderMain - trailingPaddingAndBorderMain;
       const float occupiedSpaceByChildNodes =
           availableInnerMainDim - flexLine.layout.remainingFreeSpace;
@@ -1112,7 +1155,8 @@ static void justifyMainAxis(
       // because they weren't computed. This means we can't call
       // dimensionWithMargin.
       flexLine.layout.mainDim +=
-          child->style().computeMarginForAxis(mainAxis, availableInnerWidth) +
+          child->style().computeMarginForAxis(
+              mainAxis, availableInnerWidth, viewportWidth, viewportHeight) +
           childLayout.computedFlexBasis.unwrap();
       flexLine.layout.crossDim = availableInnerCrossDim;
     } else {
@@ -1126,11 +1170,18 @@ static void justifyMainAxis(
         // calculated by adding maxAscent and maxDescent from the baseline.
         const float ascent = calculateBaseline(child) +
             child->style().computeFlexStartMargin(
-                FlexDirection::Column, direction, availableInnerWidth);
+                FlexDirection::Column,
+                direction,
+                availableInnerWidth,
+                viewportWidth,
+                viewportHeight);
         const float descent =
             child->getLayout().measuredDimension(Dimension::Height) +
             child->style().computeMarginForAxis(
-                FlexDirection::Column, availableInnerWidth) -
+                FlexDirection::Column,
+                availableInnerWidth,
+                viewportWidth,
+                viewportHeight) -
             ascent;
 
         maxAscentForCurrentLine =
@@ -1256,50 +1307,80 @@ static void calculateLayoutImpl(
   const auto endEdge =
       direction == Direction::LTR ? PhysicalEdge::Right : PhysicalEdge::Left;
 
+  const auto viewportWidth = node->getConfig()->getViewportWidth();
+  const auto viewportHeight = node->getConfig()->getViewportHeight();
   const float marginRowLeading = node->style().computeInlineStartMargin(
-      flexRowDirection, direction, ownerWidth);
+      flexRowDirection, direction, ownerWidth, viewportWidth, viewportHeight);
   node->setLayoutMargin(marginRowLeading, startEdge);
   const float marginRowTrailing = node->style().computeInlineEndMargin(
-      flexRowDirection, direction, ownerWidth);
+      flexRowDirection, direction, ownerWidth, viewportWidth, viewportHeight);
   node->setLayoutMargin(marginRowTrailing, endEdge);
   const float marginColumnLeading = node->style().computeInlineStartMargin(
-      flexColumnDirection, direction, ownerWidth);
+      flexColumnDirection,
+      direction,
+      ownerWidth,
+      viewportWidth,
+      viewportHeight);
   node->setLayoutMargin(marginColumnLeading, PhysicalEdge::Top);
   const float marginColumnTrailing = node->style().computeInlineEndMargin(
-      flexColumnDirection, direction, ownerWidth);
+      flexColumnDirection,
+      direction,
+      ownerWidth,
+      viewportWidth,
+      viewportHeight);
   node->setLayoutMargin(marginColumnTrailing, PhysicalEdge::Bottom);
 
   const float marginAxisRow = marginRowLeading + marginRowTrailing;
   const float marginAxisColumn = marginColumnLeading + marginColumnTrailing;
 
   node->setLayoutBorder(
-      node->style().computeInlineStartBorder(flexRowDirection, direction),
+      node->style().computeInlineStartBorder(
+          flexRowDirection, direction, viewportWidth, viewportHeight),
       startEdge);
   node->setLayoutBorder(
-      node->style().computeInlineEndBorder(flexRowDirection, direction),
+      node->style().computeInlineEndBorder(
+          flexRowDirection, direction, viewportWidth, viewportHeight),
       endEdge);
   node->setLayoutBorder(
-      node->style().computeInlineStartBorder(flexColumnDirection, direction),
+      node->style().computeInlineStartBorder(
+          flexColumnDirection, direction, viewportWidth, viewportHeight),
       PhysicalEdge::Top);
   node->setLayoutBorder(
-      node->style().computeInlineEndBorder(flexColumnDirection, direction),
+      node->style().computeInlineEndBorder(
+          flexColumnDirection, direction, viewportWidth, viewportHeight),
       PhysicalEdge::Bottom);
 
   node->setLayoutPadding(
       node->style().computeInlineStartPadding(
-          flexRowDirection, direction, ownerWidth),
+          flexRowDirection,
+          direction,
+          ownerWidth,
+          viewportWidth,
+          viewportHeight),
       startEdge);
   node->setLayoutPadding(
       node->style().computeInlineEndPadding(
-          flexRowDirection, direction, ownerWidth),
+          flexRowDirection,
+          direction,
+          ownerWidth,
+          viewportWidth,
+          viewportHeight),
       endEdge);
   node->setLayoutPadding(
       node->style().computeInlineStartPadding(
-          flexColumnDirection, direction, ownerWidth),
+          flexColumnDirection,
+          direction,
+          ownerWidth,
+          viewportWidth,
+          viewportHeight),
       PhysicalEdge::Top);
   node->setLayoutPadding(
       node->style().computeInlineEndPadding(
-          flexColumnDirection, direction, ownerWidth),
+          flexColumnDirection,
+          direction,
+          ownerWidth,
+          viewportWidth,
+          viewportHeight),
       PhysicalEdge::Bottom);
 
   if (node->hasMeasureFunc()) {
@@ -1383,7 +1464,7 @@ static void calculateLayoutImpl(
       paddingAndBorderForAxis(node, crossAxis, direction, ownerWidth);
   const float leadingPaddingAndBorderCross =
       node->style().computeFlexStartPaddingAndBorder(
-          crossAxis, direction, ownerWidth);
+          crossAxis, direction, ownerWidth, viewportWidth, viewportHeight);
 
   SizingMode sizingModeMainDim =
       isMainAxisRow ? widthSizingMode : heightSizingMode;
@@ -1438,7 +1519,8 @@ static void calculateLayoutImpl(
 
   if (childCount > 1) {
     totalMainDim +=
-        node->style().computeGapForAxis(mainAxis, availableInnerMainDim) *
+        node->style().computeGapForAxis(
+            mainAxis, availableInnerMainDim, viewportWidth, viewportHeight) *
         static_cast<float>(childCount - 1);
   }
 
@@ -1462,8 +1544,8 @@ static void calculateLayoutImpl(
   // Accumulated cross dimensions of all lines so far.
   float totalLineCrossDim = 0;
 
-  const float crossAxisGap =
-      node->style().computeGapForAxis(crossAxis, availableInnerCrossDim);
+  const float crossAxisGap = node->style().computeGapForAxis(
+      crossAxis, availableInnerCrossDim, viewportWidth, viewportHeight);
 
   // Max main dimension of all the lines.
   float maxLineMainDim = 0;
@@ -1493,29 +1575,45 @@ static void calculateLayoutImpl(
     // violate min and max
     if (sizingModeMainDim != SizingMode::StretchFit) {
       const auto& style = node->style();
-      const float minInnerWidth =
-          style
-              .resolvedMinDimension(
-                  direction, Dimension::Width, ownerWidth, ownerWidth)
-              .unwrap() -
+      const float minInnerWidth = style
+                                      .resolvedMinDimension(
+                                          direction,
+                                          Dimension::Width,
+                                          ownerWidth,
+                                          ownerWidth,
+                                          viewportWidth,
+                                          viewportHeight)
+                                      .unwrap() -
           paddingAndBorderAxisRow;
-      const float maxInnerWidth =
-          style
-              .resolvedMaxDimension(
-                  direction, Dimension::Width, ownerWidth, ownerWidth)
-              .unwrap() -
+      const float maxInnerWidth = style
+                                      .resolvedMaxDimension(
+                                          direction,
+                                          Dimension::Width,
+                                          ownerWidth,
+                                          ownerWidth,
+                                          viewportWidth,
+                                          viewportHeight)
+                                      .unwrap() -
           paddingAndBorderAxisRow;
-      const float minInnerHeight =
-          style
-              .resolvedMinDimension(
-                  direction, Dimension::Height, ownerHeight, ownerWidth)
-              .unwrap() -
+      const float minInnerHeight = style
+                                       .resolvedMinDimension(
+                                           direction,
+                                           Dimension::Height,
+                                           ownerHeight,
+                                           ownerWidth,
+                                           viewportWidth,
+                                           viewportHeight)
+                                       .unwrap() -
           paddingAndBorderAxisColumn;
-      const float maxInnerHeight =
-          style
-              .resolvedMaxDimension(
-                  direction, Dimension::Height, ownerHeight, ownerWidth)
-              .unwrap() -
+      const float maxInnerHeight = style
+                                       .resolvedMaxDimension(
+                                           direction,
+                                           Dimension::Height,
+                                           ownerHeight,
+                                           ownerWidth,
+                                           viewportWidth,
+                                           viewportHeight)
+                                       .unwrap() -
           paddingAndBorderAxisColumn;
 
       const float minInnerMainDim =
@@ -1669,14 +1767,17 @@ static void calculateLayoutImpl(
             const auto& childStyle = child->style();
             float childCrossSize = childStyle.aspectRatio().isDefined()
                 ? child->style().computeMarginForAxis(
-                      crossAxis, availableInnerWidth) +
+                      crossAxis,
+                      availableInnerWidth,
+                      viewportWidth,
+                      viewportHeight) +
                     (isMainAxisRow
                          ? childMainSize / childStyle.aspectRatio().unwrap()
                          : childMainSize * childStyle.aspectRatio().unwrap())
                 : flexLine.layout.crossDim;
 
             childMainSize += child->style().computeMarginForAxis(
-                mainAxis, availableInnerWidth);
+                mainAxis, availableInnerWidth, viewportWidth, viewportHeight);
 
             SizingMode childMainSizingMode = SizingMode::StretchFit;
             SizingMode childCrossSizingMode = SizingMode::StretchFit;
@@ -1855,16 +1956,26 @@ static void calculateLayoutImpl(
                 lineHeight,
                 child->getLayout().measuredDimension(dimension(crossAxis)) +
                     child->style().computeMarginForAxis(
-                        crossAxis, availableInnerWidth));
+                        crossAxis,
+                        availableInnerWidth,
+                        viewportWidth,
+                        viewportHeight));
           }
           if (resolveChildAlignment(node, child) == Align::Baseline) {
             const float ascent = calculateBaseline(child) +
                 child->style().computeFlexStartMargin(
-                    FlexDirection::Column, direction, availableInnerWidth);
+                    FlexDirection::Column,
+                    direction,
+                    availableInnerWidth,
+                    viewportWidth,
+                    viewportHeight);
             const float descent =
                 child->getLayout().measuredDimension(Dimension::Height) +
                 child->style().computeMarginForAxis(
-                    FlexDirection::Column, availableInnerWidth) -
+                    FlexDirection::Column,
+                    availableInnerWidth,
+                    viewportWidth,
+                    viewportHeight) -
                 ascent;
             maxAscentForCurrentLine =
                 yoga::maxOrDefined(maxAscentForCurrentLine, ascent);
@@ -1890,7 +2001,11 @@ static void calculateLayoutImpl(
               child->setLayoutPosition(
                   currentLead +
                       child->style().computeFlexStartPosition(
-                          crossAxis, direction, availableInnerWidth),
+                          crossAxis,
+                          direction,
+                          availableInnerWidth,
+                          viewportWidth,
+                          viewportHeight),
                   flexStartEdge(crossAxis));
               break;
             }
@@ -1898,7 +2013,11 @@ static void calculateLayoutImpl(
               child->setLayoutPosition(
                   currentLead + lineHeight -
                       child->style().computeFlexEndMargin(
-                          crossAxis, direction, availableInnerWidth) -
+                          crossAxis,
+                          direction,
+                          availableInnerWidth,
+                          viewportWidth,
+                          viewportHeight) -
                       child->getLayout().measuredDimension(
                           dimension(crossAxis)),
                   flexStartEdge(crossAxis));
@@ -1917,7 +2036,11 @@ static void calculateLayoutImpl(
               child->setLayoutPosition(
                   currentLead +
                       child->style().computeFlexStartMargin(
-                          crossAxis, direction, availableInnerWidth),
+                          crossAxis,
+                          direction,
+                          availableInnerWidth,
+                          viewportWidth,
+                          viewportHeight),
                   flexStartEdge(crossAxis));
 
               // Remeasure child with the line height as it as been only
@@ -1927,13 +2050,19 @@ static void calculateLayoutImpl(
                 const float childWidth = isMainAxisRow
                     ? (child->getLayout().measuredDimension(Dimension::Width) +
                        child->style().computeMarginForAxis(
-                           mainAxis, availableInnerWidth))
+                           mainAxis,
+                           availableInnerWidth,
+                           viewportWidth,
+                           viewportHeight))
                     : leadPerLine + lineHeight;
 
                 const float childHeight = !isMainAxisRow
                     ? (child->getLayout().measuredDimension(Dimension::Height) +
                        child->style().computeMarginForAxis(
-                           crossAxis, availableInnerWidth))
+                           crossAxis,
+                           availableInnerWidth,
+                           viewportWidth,
+                           viewportHeight))
                     : leadPerLine + lineHeight;
 
                 if (!(yoga::inexactEquals(
@@ -1969,7 +2098,9 @@ static void calculateLayoutImpl(
                       child->style().computeFlexStartPosition(
                           FlexDirection::Column,
                           direction,
-                          availableInnerCrossDim),
+                          availableInnerCrossDim,
+                          viewportWidth,
+                          viewportHeight),
                   PhysicalEdge::Top);
 
               break;
@@ -2191,10 +2322,16 @@ bool calculateLayoutInternal(
   // they are the most expensive to measure, so it's worth avoiding redundant
   // measurements if at all possible.
   if (node->hasMeasureFunc()) {
-    const float marginAxisRow =
-        node->style().computeMarginForAxis(FlexDirection::Row, ownerWidth);
-    const float marginAxisColumn =
-        node->style().computeMarginForAxis(FlexDirection::Column, ownerWidth);
+    const float marginAxisRow = node->style().computeMarginForAxis(
+        FlexDirection::Row,
+        ownerWidth,
+        node->getConfig()->getViewportWidth(),
+        node->getConfig()->getViewportHeight());
+    const float marginAxisColumn = node->style().computeMarginForAxis(
+        FlexDirection::Column,
+        ownerWidth,
+        node->getConfig()->getViewportWidth(),
+        node->getConfig()->getViewportHeight());
 
     // First, try to use the layout cache.
     if (canUseCachedMeasurement(
@@ -2361,6 +2498,8 @@ void calculateLayout(
   float width = YGUndefined;
   SizingMode widthSizingMode = SizingMode::MaxContent;
   const auto& style = node->style();
+  const auto viewportWidth = node->getConfig()->getViewportWidth();
+  const auto viewportHeight = node->getConfig()->getViewportHeight();
   if (node->hasDefiniteLength(Dimension::Width, ownerWidth)) {
     width =
         (node->getResolvedDimension(
@@ -2369,15 +2508,26 @@ void calculateLayout(
                  ownerWidth,
                  ownerWidth)
              .unwrap() +
-         node->style().computeMarginForAxis(FlexDirection::Row, ownerWidth));
+         node->style().computeMarginForAxis(
+             FlexDirection::Row, ownerWidth, viewportWidth, viewportHeight));
     widthSizingMode = SizingMode::StretchFit;
   } else if (style
                  .resolvedMaxDimension(
-                     direction, Dimension::Width, ownerWidth, ownerWidth)
+                     direction,
+                     Dimension::Width,
+                     ownerWidth,
+                     ownerWidth,
+                     viewportWidth,
+                     viewportHeight)
                  .isDefined()) {
     width = style
                 .resolvedMaxDimension(
-                    direction, Dimension::Width, ownerWidth, ownerWidth)
+                    direction,
+                    Dimension::Width,
+                    ownerWidth,
+                    ownerWidth,
+                    viewportWidth,
+                    viewportHeight)
                 .unwrap();
     widthSizingMode = SizingMode::FitContent;
   } else {
@@ -2396,15 +2546,26 @@ void calculateLayout(
                  ownerHeight,
                  ownerWidth)
              .unwrap() +
-         node->style().computeMarginForAxis(FlexDirection::Column, ownerWidth));
+         node->style().computeMarginForAxis(
+             FlexDirection::Column, ownerWidth, viewportWidth, viewportHeight));
     heightSizingMode = SizingMode::StretchFit;
   } else if (style
                  .resolvedMaxDimension(
-                     direction, Dimension::Height, ownerHeight, ownerWidth)
+                     direction,
+                     Dimension::Height,
+                     ownerHeight,
+                     ownerWidth,
+                     viewportWidth,
+                     viewportHeight)
                  .isDefined()) {
     height = style
                  .resolvedMaxDimension(
-                     direction, Dimension::Height, ownerHeight, ownerWidth)
+                     direction,
+                     Dimension::Height,
+                     ownerHeight,
+                     ownerWidth,
+                     viewportWidth,
+                     viewportHeight)
                  .unwrap();
     heightSizingMode = SizingMode::FitContent;
   } else {

@@ -9,6 +9,7 @@
 
 #include <yoga/enums/Unit.h>
 #include <yoga/numeric/FloatOptional.h>
+#include <yoga/style/StyleCalcLength.h>
 
 namespace facebook::yoga {
 
@@ -42,11 +43,15 @@ class StyleLength {
   }
 
   constexpr static StyleLength ofAuto() {
-    return StyleLength{{}, Unit::Auto};
+    return StyleLength{FloatOptional{}, Unit::Auto};
   }
 
   constexpr static StyleLength undefined() {
-    return StyleLength{{}, Unit::Undefined};
+    return StyleLength{FloatOptional{}, Unit::Undefined};
+  }
+
+  constexpr static StyleLength calc(StyleCalcLength value) {
+    return StyleLength{value, Unit::Calc};
   }
 
   constexpr bool isAuto() const {
@@ -69,11 +74,28 @@ class StyleLength {
     return !isUndefined();
   }
 
-  constexpr FloatOptional value() const {
-    return value_;
+  constexpr bool isCalc() const {
+    return unit_ == Unit::Calc;
   }
 
-  constexpr FloatOptional resolve(float referenceLength) {
+  constexpr FloatOptional value() const {
+    if (unit_ == Unit::Calc) {
+      return FloatOptional{};
+    }
+    return value_.scalar;
+  }
+
+  constexpr StyleCalcLength calcValue() const {
+    if (unit_ == Unit::Calc) {
+      return value_.calc;
+    }
+    return StyleCalcLength{};
+  }
+
+  FloatOptional resolve(
+      float referenceLength,
+      float viewportWidth,
+      float viewportHeight) const {
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wswitch-enum"
@@ -83,34 +105,65 @@ class StyleLength {
 #pragma clang diagnostic pop
 #endif
       case Unit::Point:
-        return value_;
+        return value_.scalar;
       case Unit::Percent:
-        return FloatOptional{value_.unwrap() * referenceLength * 0.01f};
+        return FloatOptional{value_.scalar.unwrap() * referenceLength * 0.01f};
+      case Unit::Calc:
+        return value_.calc.resolve(
+            referenceLength, viewportWidth, viewportHeight);
       default:
         return FloatOptional{};
     }
   }
 
   explicit constexpr operator YGValue() const {
-    return YGValue{value_.unwrap(), unscopedEnum(unit_)};
+    if (unit_ == Unit::Calc) {
+      return static_cast<YGValue>(value_.calc);
+    }
+    return YGValue{value_.scalar.unwrap(), unscopedEnum(unit_)};
   }
 
   constexpr bool operator==(const StyleLength& rhs) const {
-    return value_ == rhs.value_ && unit_ == rhs.unit_;
+    if (unit_ != rhs.unit_) {
+      return false;
+    }
+    if (unit_ == Unit::Calc) {
+      return value_.calc == rhs.value_.calc;
+    } else {
+      return value_.scalar == rhs.value_.scalar;
+    }
   }
 
   constexpr bool inexactEquals(const StyleLength& other) const {
-    return unit_ == other.unit_ &&
-        facebook::yoga::inexactEquals(value_, other.value_);
+    if (unit_ != other.unit_) {
+      return false;
+    }
+    if (unit_ == Unit::Calc) {
+      return facebook::yoga::inexactEquals(value_.calc, other.value_.calc);
+    } else {
+      return facebook::yoga::inexactEquals(value_.scalar, other.value_.scalar);
+    }
   }
 
  private:
+  union Value {
+    FloatOptional scalar;
+    StyleCalcLength calc;
+
+    constexpr Value() : scalar{} {}
+    constexpr Value(FloatOptional s) : scalar(s) {}
+    constexpr Value(StyleCalcLength c) : calc(c) {}
+  };
+
   // We intentionally do not allow direct construction using value and unit, to
   // avoid invalid, or redundant combinations.
   constexpr StyleLength(FloatOptional value, Unit unit)
-      : value_(value), unit_(unit) {}
+      : value_{value}, unit_(unit) {}
 
-  FloatOptional value_{};
+  constexpr StyleLength(StyleCalcLength value, Unit unit)
+      : value_{value}, unit_(unit) {}
+
+  Value value_{};
   Unit unit_{Unit::Undefined};
 };
 

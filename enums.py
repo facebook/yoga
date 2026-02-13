@@ -16,6 +16,7 @@ ENUMS = {
         "MaxContent",
         "FitContent",
         "Stretch",
+        "Calc",
     ],
     "FlexDirection": ["Column", "ColumnReverse", "Row", "RowReverse"],
     "Justify": [
