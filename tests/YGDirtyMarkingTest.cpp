@@ -249,3 +249,58 @@ TEST(YogaTest, dirty_node_only_if_undefined_values_gets_set_to_undefined) {
 
   YGNodeFreeRecursive(root);
 }
+
+TEST(YogaTest, dirty_removed_child_node) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  YGNodeRef child = YGNodeNew();
+  YGNodeStyleSetWidth(child, 50);
+  YGNodeStyleSetHeight(child, 50);
+  YGNodeInsertChild(root, child, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(YGNodeIsDirty(child));
+
+  YGNodeRemoveChild(root, child);
+
+  // Child should be marked dirty after removal so layout is recalculated
+  // when the child is reused (e.g., in a recycling view system)
+  EXPECT_TRUE(YGNodeIsDirty(child));
+
+  YGNodeFree(child);
+  YGNodeFreeRecursive(root);
+}
+
+TEST(YogaTest, dirty_removed_child_nodes_when_removing_all) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  YGNodeRef child0 = YGNodeNew();
+  YGNodeStyleSetWidth(child0, 50);
+  YGNodeStyleSetHeight(child0, 25);
+  YGNodeInsertChild(root, child0, 0);
+
+  YGNodeRef child1 = YGNodeNew();
+  YGNodeStyleSetWidth(child1, 50);
+  YGNodeStyleSetHeight(child1, 25);
+  YGNodeInsertChild(root, child1, 1);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  EXPECT_FALSE(YGNodeIsDirty(child0));
+  EXPECT_FALSE(YGNodeIsDirty(child1));
+
+  YGNodeRemoveAllChildren(root);
+
+  // All children should be marked dirty after removal
+  EXPECT_TRUE(YGNodeIsDirty(child0));
+  EXPECT_TRUE(YGNodeIsDirty(child1));
+
+  YGNodeFree(child0);
+  YGNodeFree(child1);
+  YGNodeFreeRecursive(root);
+}

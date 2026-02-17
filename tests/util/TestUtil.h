@@ -21,7 +21,7 @@ struct TestUtil {
 };
 
 struct ScopedEventSubscription {
-  explicit ScopedEventSubscription(std::function<Event::Subscriber>&&);
+  explicit ScopedEventSubscription(std::function<Event::Subscriber>&& s);
   ~ScopedEventSubscription();
 };
 

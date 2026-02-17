@@ -33,3 +33,36 @@ TEST(YogaTest, reset_layout_when_child_removed) {
   YGNodeFreeRecursive(root);
   YGNodeFreeRecursive(root_child0);
 }
+
+TEST(YogaTest, removed_child_can_be_reused_with_valid_layout) {
+  YGNodeRef root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 200);
+  YGNodeStyleSetHeight(root, 200);
+
+  YGNodeRef child = YGNodeNew();
+  YGNodeStyleSetWidth(child, 100);
+  YGNodeStyleSetHeight(child, 100);
+  YGNodeInsertChild(root, child, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(child));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(child));
+
+  // Remove child - layout should be cleared and child marked dirty
+  YGNodeRemoveChild(root, child);
+
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetWidth(child)));
+  ASSERT_TRUE(YGFloatIsUndefined(YGNodeLayoutGetHeight(child)));
+  ASSERT_TRUE(YGNodeIsDirty(child));
+
+  // Reinsert the child and recalculate - layout should be valid again
+  YGNodeInsertChild(root, child, 0);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_EQ(100, YGNodeLayoutGetWidth(child));
+  ASSERT_EQ(100, YGNodeLayoutGetHeight(child));
+  ASSERT_FALSE(YGNodeIsDirty(child));
+
+  YGNodeFreeRecursive(root);
+}
