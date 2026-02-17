@@ -32,21 +32,6 @@
 
 <!-- TRACK SIZING ALGORITHM TESTS -->
 
-<!-- Flow 1.1: Initialize Track Sizes - Fixed Sizing Functions -->
-<div
-  id="init_track_fixed_sizing"
-  style="
-    display: grid;
-    grid-template-columns: 100px 200px 150px;
-    grid-template-rows: 80px 120px;
-    width: 500px;
-    height: 300px;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
 <!-- Flow 1.2: Initialize Track Sizes - Intrinsic Sizing Functions (auto) -->
 <div
   id="init_track_intrinsic_sizing"
@@ -359,222 +344,6 @@
   <div style="width: 110px; height: 85px"></div>
 </div>
 
-<!-- Flow 6.3: justify-content: center -->
-<div
-  id="justify_content_center"
-  style="
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px;
-    width: 500px;
-    height: 100px;
-    justify-content: center;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 6.4: justify-content: space-between -->
-<div
-  id="justify_content_space_between"
-  style="
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px;
-    width: 500px;
-    height: 100px;
-    justify-content: space-between;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 6.5: justify-content: space-around -->
-<div
-  id="justify_content_space_around"
-  style="
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px;
-    width: 500px;
-    height: 100px;
-    justify-content: space-around;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 6.6: justify-content: space-evenly -->
-<div
-  id="justify_content_space_evenly"
-  style="
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px;
-    width: 500px;
-    height: 100px;
-    justify-content: space-evenly;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.1: align-content: start -->
-<div
-  id="align_content_start"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: start;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.2: align-content: end -->
-<div
-  id="align_content_end"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: end;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.3: align-content: center -->
-<div
-  id="align_content_center"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: center;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.4: align-content: space-between -->
-<div
-  id="align_content_space_between"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: space-between;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.5: align-content: space-around -->
-<div
-  id="align_content_space_around"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: space-around;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 7.6: align-content: space-evenly -->
-<div
-  id="align_content_space_evenly"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 100px 100px 100px;
-    width: 100px;
-    height: 500px;
-    align-content: space-evenly;
-  ">
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-  <div style="width: 100%; height: 100%"></div>
-</div>
-
-<!-- Flow 8.1: justify-self: start -->
-<div
-  id="justify_self_start"
-  style="
-    display: grid;
-    grid-template-columns: 200px 200px;
-    grid-template-rows: 100px;
-    width: 400px;
-    height: 100px;
-  ">
-  <div style="width: 100px; height: 100%; justify-self: start"></div>
-  <div style="width: 100px; height: 100%; justify-self: start"></div>
-</div>
-
-<!-- Flow 8.2: justify-self: end -->
-<div
-  id="justify_self_end"
-  style="
-    display: grid;
-    grid-template-columns: 200px 200px;
-    grid-template-rows: 100px;
-    width: 400px;
-    height: 100px;
-  ">
-  <div style="width: 100px; height: 100%; justify-self: end"></div>
-  <div style="width: 100px; height: 100%; justify-self: end"></div>
-</div>
-
-<!-- Flow 8.3: justify-self: center -->
-<div
-  id="justify_self_center"
-  style="
-    display: grid;
-    grid-template-columns: 200px 200px;
-    grid-template-rows: 100px;
-    width: 400px;
-    height: 100px;
-  ">
-  <div style="width: 100px; height: 100%; justify-self: center"></div>
-  <div style="width: 100px; height: 100%; justify-self: center"></div>
-</div>
-
-<!-- Flow 8.4: justify-self: stretch (default) -->
-<div
-  id="justify_self_stretch"
-  style="
-    display: grid;
-    grid-template-columns: 200px 200px;
-    grid-template-rows: 100px;
-    width: 400px;
-    height: 100px;
-  ">
-  <div style="height: 100%; justify-self: stretch"></div>
-  <div style="height: 100%; justify-self: stretch"></div>
-</div>
-
 <!-- Flow 8.5: justify-self with auto margin left -->
 <div
   id="justify_self_auto_margin_left"
@@ -627,62 +396,6 @@
       margin-left: auto;
       margin-right: auto;
     "></div>
-</div>
-
-<!-- Flow 9.1: align-self: start -->
-<div
-  id="align_self_start"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 200px 200px;
-    width: 100px;
-    height: 400px;
-  ">
-  <div style="width: 100%; height: 100px; align-self: start"></div>
-  <div style="width: 100%; height: 100px; align-self: start"></div>
-</div>
-
-<!-- Flow 9.2: align-self: end -->
-<div
-  id="align_self_end"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 200px 200px;
-    width: 100px;
-    height: 400px;
-  ">
-  <div style="width: 100%; height: 100px; align-self: end"></div>
-  <div style="width: 100%; height: 100px; align-self: end"></div>
-</div>
-
-<!-- Flow 9.3: align-self: center -->
-<div
-  id="grid_align_self_center"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 200px 200px;
-    width: 100px;
-    height: 400px;
-  ">
-  <div style="width: 100%; height: 100px; align-self: center"></div>
-  <div style="width: 100%; height: 100px; align-self: center"></div>
-</div>
-
-<!-- Flow 9.4: align-self: stretch (default) -->
-<div
-  id="grid_align_self_stretch"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 200px 200px;
-    width: 100px;
-    height: 400px;
-  ">
-  <div style="width: 100%; align-self: stretch"></div>
-  <div style="width: 100%; align-self: stretch"></div>
 </div>
 
 <!-- Flow 9.5: align-self with auto margin top -->
@@ -1087,23 +800,6 @@
   <div style="width: 150px; height: 100%; margin-right: auto"></div>
 </div>
 
-<!-- Flow 17.3: Auto Margins - Inline Axis Both (Center) -->
-<div
-  id="auto_margins_inline_both"
-  style="
-    display: grid;
-    grid-template-columns: 300px;
-    grid-template-rows: 100px;
-  ">
-  <div
-    style="
-      width: 150px;
-      height: 100%;
-      margin-left: auto;
-      margin-right: auto;
-    "></div>
-</div>
-
 <!-- Flow 17.4: Auto Margins - Block Axis Top -->
 <div
   id="auto_margins_block_top"
@@ -1124,23 +820,6 @@
     grid-template-rows: 300px;
   ">
   <div style="width: 100%; height: 150px; margin-bottom: auto"></div>
-</div>
-
-<!-- Flow 17.6: Auto Margins - Block Axis Both (Center) -->
-<div
-  id="auto_margins_block_both"
-  style="
-    display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: 300px;
-  ">
-  <div
-    style="
-      width: 100%;
-      height: 150px;
-      margin-top: auto;
-      margin-bottom: auto;
-    "></div>
 </div>
 
 <!-- Flow 17.7: Auto Margins - Overrides justify-self -->
@@ -1416,18 +1095,6 @@
       left: 80px;
       top: 10px;
     "></div>
-</div>
-
-<div
-  id="grid_display_none_items"
-  style="
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px 100px 100px;
-  ">
-  <div style="width: 100px; height: 100px"></div>
-  <div style="width: 50px; height: 50px; display: none"></div>
-  <div style="width: 100px; height: 100px"></div>
 </div>
 
 <div

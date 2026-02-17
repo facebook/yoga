@@ -18,22 +18,7 @@ import {stdin, stdout} from 'node:process';
 import minimist from 'minimist';
 import readline from 'node:readline/promises';
 import signedsource from 'signedsource';
-
-async function findHtmlFixtures(dir: string): Promise<string[]> {
-  const entries = await fs.readdir(dir, {withFileTypes: true});
-  const files = await Promise.all(
-    entries.map(entry => {
-      const fullPath = join(dir, entry.name);
-      if (entry.isDirectory()) {
-        return findHtmlFixtures(fullPath);
-      } else if (entry.name.endsWith('.html')) {
-        return [fullPath];
-      }
-      return [];
-    }),
-  );
-  return files.flat();
-}
+import {glob} from 'glob';
 
 function addSignatureToSourceCode(sourceCode: string): string {
   const codeWithToken = sourceCode.replace(
@@ -60,14 +45,14 @@ try {
     await fs.access(fixturePath, fs.constants.F_OK);
     fixtures = [fixturePath];
   } else {
-    fixtures = await findHtmlFixtures(fixturesDir);
+    fixtures = await glob(`${fixturesDir}/**/*.html`);
   }
 } catch (e) {
   const errorMessage = e instanceof Error ? e.message : '';
   console.log(
     `Trying to access ${specificFixture}.html threw an exception. Executing against all fixtures. ${errorMessage}`,
   );
-  fixtures = await findHtmlFixtures(fixturesDir);
+  fixtures = await glob(`${fixturesDir}/**/*.html`);
 }
 
 const options = new Options();
