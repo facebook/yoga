@@ -9,7 +9,7 @@
 
 import * as fs from 'node:fs/promises';
 import {format} from 'node:util';
-import {parse, dirname, join, relative} from 'path';
+import {parse, dirname, relative} from 'path';
 import * as process from 'node:process';
 import {Builder, logging} from 'selenium-webdriver';
 import {Options} from 'selenium-webdriver/chrome.js';
