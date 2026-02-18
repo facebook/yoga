@@ -1,4 +1,4 @@
-name: Validate Apple
+name: Validate SwiftPM
 
 on:
   pull_request:
@@ -9,21 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint-pods:
-    name: Build [CocoaPods]
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup
-        uses: ./.github/actions/setup-apple
-
-      - name: pod lib lint
-        run: pod lib lint --verbose --include-podspecs=**/*.podspec
-
   test:
-    name: Build [SwiftPM]
+    name: Build
     runs-on: macos-latest
 
     steps:
