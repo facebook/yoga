@@ -49,6 +49,10 @@ class StyleValueHandle {
     return type() == Type::Auto;
   }
 
+  constexpr bool isCalc() const {
+    return type() == Type::Calc;
+  }
+
  private:
   friend class StyleValuePool;
 
@@ -62,7 +66,8 @@ class StyleValueHandle {
     Percent,
     Number,
     Auto,
-    Keyword
+    Keyword,
+    Calc
   };
 
   // Intentionally leaving out auto as a fast path

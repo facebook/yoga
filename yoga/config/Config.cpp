@@ -17,7 +17,9 @@ bool configUpdateInvalidatesLayout(
   return oldConfig.getErrata() != newConfig.getErrata() ||
       oldConfig.getEnabledExperiments() != newConfig.getEnabledExperiments() ||
       oldConfig.getPointScaleFactor() != newConfig.getPointScaleFactor() ||
-      oldConfig.useWebDefaults() != newConfig.useWebDefaults();
+      oldConfig.useWebDefaults() != newConfig.useWebDefaults() ||
+      oldConfig.getViewportWidth() != newConfig.getViewportWidth() ||
+      oldConfig.getViewportHeight() != newConfig.getViewportHeight();
 }
 
 void Config::setUseWebDefaults(bool useWebDefaults) {
@@ -83,6 +85,20 @@ void Config::setPointScaleFactor(float pointScaleFactor) {
 
 float Config::getPointScaleFactor() const {
   return pointScaleFactor_;
+}
+
+void Config::setViewportWidth(float viewportWidth) {
+  if (viewportWidth_ != viewportWidth) {
+    viewportWidth_ = viewportWidth;
+    version_++;
+  }
+}
+
+void Config::setViewportHeight(float viewportHeight) {
+  if (viewportHeight_ != viewportHeight) {
+    viewportHeight_ = viewportHeight;
+    version_++;
+  }
 }
 
 void Config::setContext(void* context) {

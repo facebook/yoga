@@ -21,10 +21,12 @@ inline float paddingAndBorderForAxis(
     const FlexDirection axis,
     const Direction direction,
     const float widthSize) {
+  const auto viewportWidth = node->getConfig()->getViewportWidth();
+  const auto viewportHeight = node->getConfig()->getViewportHeight();
   return node->style().computeInlineStartPaddingAndBorder(
-             axis, direction, widthSize) +
+             axis, direction, widthSize, viewportWidth, viewportHeight) +
       node->style().computeInlineEndPaddingAndBorder(
-          axis, direction, widthSize);
+          axis, direction, widthSize, viewportWidth, viewportHeight);
 }
 
 inline FloatOptional boundAxisWithinMinAndMax(
@@ -34,19 +36,41 @@ inline FloatOptional boundAxisWithinMinAndMax(
     const FloatOptional value,
     const float axisSize,
     const float widthSize) {
+  const auto viewportWidth = node->getConfig()->getViewportWidth();
+  const auto viewportHeight = node->getConfig()->getViewportHeight();
   FloatOptional min;
   FloatOptional max;
 
   if (isColumn(axis)) {
     min = node->style().resolvedMinDimension(
-        direction, Dimension::Height, axisSize, widthSize);
+        direction,
+        Dimension::Height,
+        axisSize,
+        widthSize,
+        viewportWidth,
+        viewportHeight);
     max = node->style().resolvedMaxDimension(
-        direction, Dimension::Height, axisSize, widthSize);
+        direction,
+        Dimension::Height,
+        axisSize,
+        widthSize,
+        viewportWidth,
+        viewportHeight);
   } else if (isRow(axis)) {
     min = node->style().resolvedMinDimension(
-        direction, Dimension::Width, axisSize, widthSize);
+        direction,
+        Dimension::Width,
+        axisSize,
+        widthSize,
+        viewportWidth,
+        viewportHeight);
     max = node->style().resolvedMaxDimension(
-        direction, Dimension::Width, axisSize, widthSize);
+        direction,
+        Dimension::Width,
+        axisSize,
+        widthSize,
+        viewportWidth,
+        viewportHeight);
   }
 
   if (max >= FloatOptional{0} && value > max) {

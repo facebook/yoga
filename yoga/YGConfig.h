@@ -76,6 +76,30 @@ YG_EXPORT void YGConfigSetPointScaleFactor(
 YG_EXPORT float YGConfigGetPointScaleFactor(YGConfigConstRef config);
 
 /**
+ * Sets the viewport width used for resolving CSS calc() expressions with
+ * viewport units (vw). This should be the width of the root viewport in points.
+ */
+YG_EXPORT void YGConfigSetViewportWidth(YGConfigRef config, float viewportWidth);
+
+/**
+ * Gets the currently set viewport width.
+ */
+YG_EXPORT float YGConfigGetViewportWidth(YGConfigConstRef config);
+
+/**
+ * Sets the viewport height used for resolving CSS calc() expressions with
+ * viewport units (vh). This should be the height of the root viewport in points.
+ */
+YG_EXPORT void YGConfigSetViewportHeight(
+    YGConfigRef config,
+    float viewportHeight);
+
+/**
+ * Gets the currently set viewport height.
+ */
+YG_EXPORT float YGConfigGetViewportHeight(YGConfigConstRef config);
+
+/**
  * Configures how Yoga balances W3C conformance vs compatibility with layouts
  * created against earlier versions of Yoga.
  *
