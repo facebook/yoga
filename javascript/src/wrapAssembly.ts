@@ -20,6 +20,7 @@ import type {
   Errata,
   ExperimentalFeature,
   FlexDirection,
+  GridTrackType,
   Gutter,
   Justify,
   MeasureMode,
@@ -45,6 +46,13 @@ type Size = {
 type Value = {
   unit: Unit;
   value: number;
+};
+
+type GridTrackValue = {
+  type: GridTrackType;
+  value?: number;
+  min?: GridTrackValue;
+  max?: GridTrackValue;
 };
 
 export type Config = {
@@ -170,6 +178,8 @@ export type Node = {
   setHeightPercent(height: number | undefined): void;
   setHeightStretch(): void;
   setJustifyContent(justifyContent: Justify): void;
+  setJustifyItems(justifyItems: Justify): void;
+  setJustifySelf(justifySelf: Justify): void;
   setGap(gutter: Gutter, gapLength: number | `${number}%` | undefined): Value;
   setGapPercent(gutter: Gutter, gapLength: number | undefined): Value;
   setMargin(
@@ -258,6 +268,18 @@ export type Node = {
   unsetDirtiedFunc(): void;
   unsetMeasureFunc(): void;
   setAlwaysFormsContainingBlock(alwaysFormsContainingBlock: boolean): void;
+  setGridTemplateColumns(tracks: GridTrackValue[]): void;
+  setGridTemplateRows(tracks: GridTrackValue[]): void;
+  setGridAutoColumns(tracks: GridTrackValue[]): void;
+  setGridAutoRows(tracks: GridTrackValue[]): void;
+  setGridColumnStart(value: number): void;
+  setGridColumnStartSpan(span: number): void;
+  setGridColumnEnd(value: number): void;
+  setGridColumnEndSpan(span: number): void;
+  setGridRowStart(value: number): void;
+  setGridRowStartSpan(span: number): void;
+  setGridRowEnd(value: number): void;
+  setGridRowEndSpan(span: number): void;
 };
 
 export type Yoga = {
