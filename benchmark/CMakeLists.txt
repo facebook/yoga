@@ -12,16 +12,16 @@ include(${YOGA_ROOT}/cmake/project-defaults.cmake)
 
 add_subdirectory(${YOGA_ROOT}/yoga ${CMAKE_CURRENT_BINARY_DIR}/yoga)
 
-file(GLOB SOURCES_LEGACY CONFIGURE_DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
 file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 add_executable(benchmark ${SOURCES})
-add_executable(benchmarklegacy ${SOURCES_LEGACY})
+add_executable(benchmarklegacy ${CMAKE_CURRENT_SOURCE_DIR}/YGBenchmark.c)
+add_executable(benchmarkgrid ${CMAKE_CURRENT_SOURCE_DIR}/YGGridBenchmark.c)
 
 target_link_libraries(benchmark yogacore)
 target_link_libraries(benchmarklegacy yogacore)
+target_link_libraries(benchmarkgrid yogacore)
 target_include_directories(benchmark
     PRIVATE
     $<BUILD_INTERFACE:${YOGA_ROOT}/lib>)
