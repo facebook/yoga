@@ -19,12 +19,16 @@ ENUMS = {
     ],
     "FlexDirection": ["Column", "ColumnReverse", "Row", "RowReverse"],
     "Justify": [
+        "Auto",
         "FlexStart",
         "Center",
         "FlexEnd",
         "SpaceBetween",
         "SpaceAround",
         "SpaceEvenly",
+        "Stretch",
+        "Start",
+        "End",
     ],
     "Overflow": ["Visible", "Hidden", "Scroll"],
     "Align": [
@@ -37,9 +41,11 @@ ENUMS = {
         "SpaceBetween",
         "SpaceAround",
         "SpaceEvenly",
+        "Start",
+        "End",
     ],
     "PositionType": ["Static", "Relative", "Absolute"],
-    "Display": ["Flex", "None", "Contents"],
+    "Display": ["Flex", "None", "Contents", "Grid"],
     "Wrap": ["NoWrap", "Wrap", "WrapReverse"],
     "BoxSizing": ["BorderBox", "ContentBox"],
     "MeasureMode": ["Undefined", "Exactly", "AtMost"],
@@ -62,6 +68,7 @@ ENUMS = {
         "WebFlexBasis",
     ],
     "Gutter": ["Column", "Row", "All"],
+    "GridTrackType": ["Auto", "Points", "Percent", "Fr", "Minmax"],
     # Known incorrect behavior which can be enabled for compatibility
     "Errata": [
         # Default: Standards conformant mode
