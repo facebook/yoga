@@ -78,6 +78,8 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
       .function("setFlexDirection", &Node::setFlexDirection)
       .function("setFlexWrap", &Node::setFlexWrap)
       .function("setJustifyContent", &Node::setJustifyContent)
+      .function("setJustifyItems", &Node::setJustifyItems)
+      .function("setJustifySelf", &Node::setJustifySelf)
 
       .function("setMargin", &Node::setMargin)
       .function("setMarginPercent", &Node::setMarginPercent)
@@ -191,6 +193,20 @@ EMSCRIPTEN_BINDINGS(YOGA_LAYOUT) {
 
       .function(
           "setAlwaysFormsContainingBlock", &Node::setAlwaysFormsContainingBlock)
+
+      // Grid setters
+      .function("setGridTemplateColumns", &Node::setGridTemplateColumns)
+      .function("setGridTemplateRows", &Node::setGridTemplateRows)
+      .function("setGridAutoColumns", &Node::setGridAutoColumns)
+      .function("setGridAutoRows", &Node::setGridAutoRows)
+      .function("setGridColumnStart", &Node::setGridColumnStart)
+      .function("setGridColumnStartSpan", &Node::setGridColumnStartSpan)
+      .function("setGridColumnEnd", &Node::setGridColumnEnd)
+      .function("setGridColumnEndSpan", &Node::setGridColumnEndSpan)
+      .function("setGridRowStart", &Node::setGridRowStart)
+      .function("setGridRowStartSpan", &Node::setGridRowStartSpan)
+      .function("setGridRowEnd", &Node::setGridRowEnd)
+      .function("setGridRowEndSpan", &Node::setGridRowEndSpan)
 
       .function("isReferenceBaseline", &Node::isReferenceBaseline)
       .function("setIsReferenceBaseline", &Node::setIsReferenceBaseline)
