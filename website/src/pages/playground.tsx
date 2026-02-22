@@ -23,7 +23,7 @@ const defaultCode = `
 </Layout>
 `.trim();
 
-export default function PlaygroundPage(): JSX.Element {
+export default function PlaygroundPage() {
   const code = useCodeFromQueryParam();
 
   return (
