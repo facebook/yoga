@@ -125,6 +125,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGAlignSpaceAround: {value: 'YGAlignSpaceAround'},
   YGAlignSpaceEvenly: {value: 'YGAlignSpaceEvenly'},
   YGAlignBaseline: {value: 'YGAlignBaseline'},
+  YGAlignStart: {value: 'YGAlignStart'},
+  YGAlignEnd: {value: 'YGAlignEnd'},
 
   YGDirectionInherit: {value: 'YGDirectionInherit'},
   YGDirectionLTR: {value: 'YGDirectionLTR'},
@@ -152,6 +154,10 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGJustifySpaceAround: {value: 'YGJustifySpaceAround'},
   YGJustifySpaceBetween: {value: 'YGJustifySpaceBetween'},
   YGJustifySpaceEvenly: {value: 'YGJustifySpaceEvenly'},
+  YGJustifyStretch: {value: 'YGJustifyStretch'},
+  YGJustifyStart: {value: 'YGJustifyStart'},
+  YGJustifyEnd: {value: 'YGJustifyEnd'},
+  YGJustifyAuto: {value: 'YGJustifyAuto'},
 
   YGOverflowHidden: {value: 'YGOverflowHidden'},
   YGOverflowVisible: {value: 'YGOverflowVisible'},
@@ -178,6 +184,8 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGMaxContent: {value: 'MaxContent'},
   YGFitContent: {value: 'FitContent'},
   YGStretch: {value: 'Stretch'},
+
+  YGDisplayGrid: {value: 'YGDisplayGrid'},
 
   YGNodeCalculateLayout: {
     value: function (node, dir, _experiments) {
@@ -363,6 +371,30 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
     },
   },
 
+  YGNodeStyleSetJustifyItems: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetJustifyItems(' +
+          nodeName +
+          ', ' +
+          toValueCpp(value) +
+          ');',
+      );
+    },
+  },
+
+  YGNodeStyleSetJustifySelf: {
+    value: function (nodeName, value) {
+      this.push(
+        'YGNodeStyleSetJustifySelf(' +
+          nodeName +
+          ', ' +
+          toValueCpp(value) +
+          ');',
+      );
+    },
+  },
+
   YGNodeStyleSetMargin: {
     value: function (nodeName, edge, value) {
       let valueStr = toValueCpp(value);
@@ -509,4 +541,267 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
       );
     },
   },
+
+  YGNodeStyleSetGridTemplateRows: {
+    value: function (nodeName, value) {
+      if (!value) {
+        return;
+      }
+
+      const tracks = parseGridTrackList(this, value);
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`auto ${nodeName}_gridTemplateRows = YGGridTrackListCreate();`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValue(track.min);
+          const maxVal = this.formatGridTrackValue(track.max);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridTemplateRows, YGMinMax(${minVal}, ${maxVal}));`,
+          );
+        } else {
+          const val = this.formatGridTrackValue(track);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridTemplateRows, ${val});`,
+          );
+        }
+      }
+
+      this.push(
+        `YGNodeStyleSetGridTemplateRows(${nodeName}, ${nodeName}_gridTemplateRows);`,
+      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridTemplateRows);`);
+    },
+  },
+
+  YGNodeStyleSetGridTemplateColumns: {
+    value: function (nodeName, value) {
+      if (!value) {
+        return;
+      }
+
+      const tracks = parseGridTrackList(this, value);
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(
+        `auto ${nodeName}_gridTemplateColumns = YGGridTrackListCreate();`,
+      );
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValue(track.min);
+          const maxVal = this.formatGridTrackValue(track.max);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridTemplateColumns, YGMinMax(${minVal}, ${maxVal}));`,
+          );
+        } else {
+          const val = this.formatGridTrackValue(track);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridTemplateColumns, ${val});`,
+          );
+        }
+      }
+
+      this.push(
+        `YGNodeStyleSetGridTemplateColumns(${nodeName}, ${nodeName}_gridTemplateColumns);`,
+      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridTemplateColumns);`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnStart: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnStart(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnStartSpan(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEnd: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnEnd(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridColumnEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridColumnEndSpan(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowStart: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowStart(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowStartSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowStartSpan(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEnd: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowEnd(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridRowEndSpan: {
+    value: function (nodeName, value) {
+      this.push(`YGNodeStyleSetGridRowEndSpan(${nodeName}, ${value});`);
+    },
+  },
+
+  YGNodeStyleSetGridAutoColumns: {
+    value: function (nodeName, value) {
+      if (!value) {
+        return;
+      }
+
+      const tracks = parseGridTrackList(this, value);
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`auto ${nodeName}_gridAutoColumns = YGGridTrackListCreate();`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValue(track.min);
+          const maxVal = this.formatGridTrackValue(track.max);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridAutoColumns, YGMinMax(${minVal}, ${maxVal}));`,
+          );
+        } else {
+          const val = this.formatGridTrackValue(track);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridAutoColumns, ${val});`,
+          );
+        }
+      }
+
+      this.push(
+        `YGNodeStyleSetGridAutoColumns(${nodeName}, ${nodeName}_gridAutoColumns);`,
+      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridAutoColumns);`);
+    },
+  },
+
+  YGNodeStyleSetGridAutoRows: {
+    value: function (nodeName, value) {
+      if (!value) {
+        return;
+      }
+
+      const tracks = parseGridTrackList(this, value);
+      if (!tracks || tracks.length === 0) {
+        return;
+      }
+
+      this.push(`auto ${nodeName}_gridAutoRows = YGGridTrackListCreate();`);
+
+      for (const track of tracks) {
+        if (track.type === 'minmax') {
+          const minVal = this.formatGridTrackValue(track.min);
+          const maxVal = this.formatGridTrackValue(track.max);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridAutoRows, YGMinMax(${minVal}, ${maxVal}));`,
+          );
+        } else {
+          const val = this.formatGridTrackValue(track);
+          this.push(
+            `YGGridTrackListAddTrack(${nodeName}_gridAutoRows, ${val});`,
+          );
+        }
+      }
+
+      this.push(
+        `YGNodeStyleSetGridAutoRows(${nodeName}, ${nodeName}_gridAutoRows);`,
+      );
+      this.push(`YGGridTrackListFree(${nodeName}_gridAutoRows);`);
+    },
+  },
+
+  formatGridTrackValue: {
+    value: function (track) {
+      switch (track.type) {
+        case 'auto':
+          return 'YGAuto()';
+        case 'points':
+          return `YGPoints(${toValueCpp(track.value)})`;
+        case 'percent':
+          return `YGPercent(${toValueCpp(track.value)})`;
+        case 'fr':
+          return `YGFr(${toValueCpp(track.value)})`;
+        default:
+          return 'YGAuto()';
+      }
+    },
+  },
 });
+
+function parseGridTrackList(e, value) {
+  if (!value || value === 'none') {
+    return null;
+  }
+
+  // Parse space-separated track values
+  // Examples: "100px 100px 100px", "100px 100% minmax(100px, 200px) auto"
+  const tracks = [];
+  const parts = value.trim().split(/\s+/);
+
+  let i = 0;
+  while (i < parts.length) {
+    const part = parts[i];
+
+    if (part.startsWith('minmax(')) {
+      // Handle minmax function - may span multiple parts if there are spaces
+      let minmaxStr = part;
+      while (!minmaxStr.includes(')') && i < parts.length - 1) {
+        i++;
+        minmaxStr += ' ' + parts[i];
+      }
+
+      // Extract min and max values from minmax(min, max)
+      const match = minmaxStr.match(/minmax\(([^,]+),\s*([^)]+)\)/);
+      if (match) {
+        const min = match[1].trim();
+        const max = match[2].trim();
+        tracks.push({
+          type: 'minmax',
+          min: parseGridTrackValue(e, min),
+          max: parseGridTrackValue(e, max),
+        });
+      }
+    } else {
+      // Simple track value
+      tracks.push(parseGridTrackValue(e, part));
+    }
+    i++;
+  }
+
+  return tracks;
+}
+
+function parseGridTrackValue(e, value) {
+  if (value === 'auto') {
+    return {type: 'auto'};
+  } else if (value.endsWith('px')) {
+    return {type: 'points', value: parseFloat(value)};
+  } else if (value.endsWith('%')) {
+    return {type: 'percent', value: parseFloat(value)};
+  } else if (value.endsWith('fr')) {
+    return {type: 'fr', value: parseFloat(value)};
+  }
+  return {type: 'auto'};
+}
