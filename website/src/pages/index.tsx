@@ -74,7 +74,7 @@ function PlaygroundSection() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home() {
   return (
     <Layout description="Documentation for the Yoga layout engine">
       <HeroSection />

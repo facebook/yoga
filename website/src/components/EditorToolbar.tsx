@@ -22,11 +22,7 @@ export type Props = Readonly<{
   style?: React.CSSProperties;
 }>;
 
-export default function EditorToolbar({
-  code,
-  className,
-  style,
-}: Props): JSX.Element {
+export default function EditorToolbar({code, className, style}: Props) {
   const handleShare = useCallback(() => {
     navigator.clipboard.writeText(
       window.location.origin +
@@ -47,11 +43,7 @@ type ToolbarButtonProps = Readonly<{
   label?: string;
 }>;
 
-function ToolbarButton({
-  onClick,
-  Icon,
-  label,
-}: ToolbarButtonProps): JSX.Element {
+function ToolbarButton({onClick, Icon, label}: ToolbarButtonProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const copyTimeout = useRef<number | undefined>(undefined);
 
