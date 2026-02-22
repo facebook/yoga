@@ -13,7 +13,7 @@ import {fileURLToPath} from 'url';
 import signedsource from 'signedsource';
 import {glob} from 'glob';
 
-const yogaRootDir = dirname(dirname(fileURLToPath(import.meta.url)));
+const yogaRootDir = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
 
 const filesToValidate = await glob(
   [
