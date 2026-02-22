@@ -1,0 +1,16 @@
+<!-- https://github.com/DioxusLabs/taffy/blob/fd8f81fc639e71cecef3a6bb618bca6606bdf644/test_fixtures/grid/grid_fr_single_item_indefinite.html -->
+ 
+<!-- difference from taffy is that here we add a parent div with width set to max-content as test-template adds 2 absolute positioned children which measures min-content on browser but yoga supports max-content. The generated assertion is same as taffy's -->
+<div style="width: max-content;" id="grid_fr_single_item_indefinite">
+  <div style="width: auto; height: auto; display: grid; grid-template-columns: 40px 1fr 1fr; grid-template-rows: 40px 1fr 1fr;">
+    <div></div>
+    <div style="width: 100px;"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
