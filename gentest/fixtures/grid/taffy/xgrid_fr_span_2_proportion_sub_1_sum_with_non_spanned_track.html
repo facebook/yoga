@@ -1,0 +1,12 @@
+<!-- https://github.com/DioxusLabs/taffy/blob/fd8f81fc639e71cecef3a6bb618bca6606bdf644/test_fixtures/grid/xgrid_fr_span_2_proportion_sub_1_sum_with_non_spanned_track.html -->
+
+<!-- difference from taffy is that here we add a parent div with width set to max-content as test-template adds 2 absolute positioned children which measures min-content on browser but yoga supports max-content. The generated assertion is same as taffy's -->
+<div id="grid_fr_span_2_proportion_sub_1_sum_with_non_spanned_track" style="width: max-content;">
+  <div style="display: grid; grid-template-columns: 0.2fr 0.3fr 0.5fr; grid-template-rows: 40px 40px;">
+    <div style="width: 60px; grid-column-start: span 2;"></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
