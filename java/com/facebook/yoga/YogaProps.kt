@@ -133,6 +133,10 @@ public interface YogaProps {
 
   public var justifyContent: YogaJustify
 
+  public var justifyItems: YogaJustify
+
+  public var justifySelf: YogaJustify
+
   public var alignItems: YogaAlign
 
   public var alignSelf: YogaAlign
