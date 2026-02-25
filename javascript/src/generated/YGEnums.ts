@@ -17,6 +17,8 @@ export enum Align {
   SpaceBetween = 6,
   SpaceAround = 7,
   SpaceEvenly = 8,
+  Start = 9,
+  End = 10,
 }
 
 export enum BoxSizing {
@@ -39,6 +41,7 @@ export enum Display {
   Flex = 0,
   None = 1,
   Contents = 2,
+  Grid = 3,
 }
 
 export enum Edge {
@@ -73,6 +76,14 @@ export enum FlexDirection {
   RowReverse = 3,
 }
 
+export enum GridTrackType {
+  Auto = 0,
+  Points = 1,
+  Percent = 2,
+  Fr = 3,
+  Minmax = 4,
+}
+
 export enum Gutter {
   Column = 0,
   Row = 1,
@@ -80,12 +91,16 @@ export enum Gutter {
 }
 
 export enum Justify {
-  FlexStart = 0,
-  Center = 1,
-  FlexEnd = 2,
-  SpaceBetween = 3,
-  SpaceAround = 4,
-  SpaceEvenly = 5,
+  Auto = 0,
+  FlexStart = 1,
+  Center = 2,
+  FlexEnd = 3,
+  SpaceBetween = 4,
+  SpaceAround = 5,
+  SpaceEvenly = 6,
+  Stretch = 7,
+  Start = 8,
+  End = 9,
 }
 
 export enum LogLevel {
@@ -146,6 +161,8 @@ const constants = {
   ALIGN_SPACE_BETWEEN: Align.SpaceBetween,
   ALIGN_SPACE_AROUND: Align.SpaceAround,
   ALIGN_SPACE_EVENLY: Align.SpaceEvenly,
+  ALIGN_START: Align.Start,
+  ALIGN_END: Align.End,
   BOX_SIZING_BORDER_BOX: BoxSizing.BorderBox,
   BOX_SIZING_CONTENT_BOX: BoxSizing.ContentBox,
   DIMENSION_WIDTH: Dimension.Width,
@@ -156,6 +173,7 @@ const constants = {
   DISPLAY_FLEX: Display.Flex,
   DISPLAY_NONE: Display.None,
   DISPLAY_CONTENTS: Display.Contents,
+  DISPLAY_GRID: Display.Grid,
   EDGE_LEFT: Edge.Left,
   EDGE_TOP: Edge.Top,
   EDGE_RIGHT: Edge.Right,
@@ -176,15 +194,24 @@ const constants = {
   FLEX_DIRECTION_COLUMN_REVERSE: FlexDirection.ColumnReverse,
   FLEX_DIRECTION_ROW: FlexDirection.Row,
   FLEX_DIRECTION_ROW_REVERSE: FlexDirection.RowReverse,
+  GRID_TRACK_TYPE_AUTO: GridTrackType.Auto,
+  GRID_TRACK_TYPE_POINTS: GridTrackType.Points,
+  GRID_TRACK_TYPE_PERCENT: GridTrackType.Percent,
+  GRID_TRACK_TYPE_FR: GridTrackType.Fr,
+  GRID_TRACK_TYPE_MINMAX: GridTrackType.Minmax,
   GUTTER_COLUMN: Gutter.Column,
   GUTTER_ROW: Gutter.Row,
   GUTTER_ALL: Gutter.All,
+  JUSTIFY_AUTO: Justify.Auto,
   JUSTIFY_FLEX_START: Justify.FlexStart,
   JUSTIFY_CENTER: Justify.Center,
   JUSTIFY_FLEX_END: Justify.FlexEnd,
   JUSTIFY_SPACE_BETWEEN: Justify.SpaceBetween,
   JUSTIFY_SPACE_AROUND: Justify.SpaceAround,
   JUSTIFY_SPACE_EVENLY: Justify.SpaceEvenly,
+  JUSTIFY_STRETCH: Justify.Stretch,
+  JUSTIFY_START: Justify.Start,
+  JUSTIFY_END: Justify.End,
   LOG_LEVEL_ERROR: LogLevel.Error,
   LOG_LEVEL_WARN: LogLevel.Warn,
   LOG_LEVEL_INFO: LogLevel.Info,
