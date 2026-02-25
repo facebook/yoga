@@ -35,6 +35,6 @@ If top-level-await is not supported, use the `yoga-layout/load` entry point inst
 ```ts
 import {loadYoga, Align} from 'yoga-layout/load';
 
-const node = (await loadYoga).Node.create();
+const node = (await loadYoga()).Node.create();
 node.setAlignContent(Align.Center);
 ```
