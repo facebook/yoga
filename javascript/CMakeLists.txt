@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.13...3.26)
 set(CMAKE_VERBOSE_MAKEFILE on)
 project(yoga)
 
-file(GLOB SOURCES CONFIGURE_DEPENDS
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
