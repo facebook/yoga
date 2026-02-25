@@ -6,6 +6,7 @@
  */
 
 #include <gtest/gtest.h>
+#include <yoga/YGGridTrackList.h>
 #include <yoga/Yoga.h>
 
 static float _baselineFunc(
@@ -830,6 +831,172 @@ TEST(
 
   ASSERT_FLOAT_EQ(500, YGNodeLayoutGetLeft(root_child1_child1));
   ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child1_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, grid_align_baseline_with_margin) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
+  YGNodeStyleSetDisplay(root, YGDisplayGrid);
+  auto root_gridTemplateColumns = YGGridTrackListCreate();
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGNodeStyleSetGridTemplateColumns(root, root_gridTemplateColumns);
+  YGGridTrackListFree(root_gridTemplateColumns);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 10);
+  YGNodeStyleSetWidth(root_child0, 100);
+  YGNodeStyleSetHeight(root_child0, 50);
+  YGNodeSetBaselineFunc(root_child0, _baselineFunc);
+  YGNodeInsertChild(root, root_child0, 0);
+  // child0 marginTop (10) + baseline (25) = 35
+
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child1, 100);
+  YGNodeStyleSetHeight(root_child1, 30);
+  YGNodeSetBaselineFunc(root_child1, _baselineFunc);
+  YGNodeInsertChild(root, root_child1, 1);
+  // child1 baseline (15)
+  // child1 baselineShim = 35 - 15 = 20
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, grid_align_baseline_with_padding) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
+  YGNodeStyleSetPadding(root, YGEdgeTop, 20);
+  YGNodeStyleSetPadding(root, YGEdgeBottom, 20);
+  YGNodeStyleSetDisplay(root, YGDisplayGrid);
+  auto root_gridTemplateColumns = YGGridTrackListCreate();
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGNodeStyleSetGridTemplateColumns(root, root_gridTemplateColumns);
+  YGGridTrackListFree(root_gridTemplateColumns);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child0, 100);
+  YGNodeStyleSetHeight(root_child0, 60);
+  YGNodeSetBaselineFunc(root_child0, _baselineFunc);
+  YGNodeInsertChild(root, root_child0, 0);
+  // child0 baseline (30)
+
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child1, 100);
+  YGNodeStyleSetHeight(root_child1, 40);
+  YGNodeSetBaselineFunc(root_child1, _baselineFunc);
+  YGNodeInsertChild(root, root_child1, 1);
+  // child1 baseline (20)
+  // child1 baselineShim = 30 - 20 = 10
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  // container padding (20) + child0 baseline (0) = 20
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1));
+  // container padding (20) + child1 baselineShim (10) = 30
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child1));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, grid_align_baseline_nested_child) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignBaseline);
+  YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
+  YGNodeStyleSetDisplay(root, YGDisplayGrid);
+  auto root_gridTemplateColumns = YGGridTrackListCreate();
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGGridTrackListAddTrack(root_gridTemplateColumns, YGPoints(100));
+  YGNodeStyleSetGridTemplateColumns(root, root_gridTemplateColumns);
+  YGGridTrackListFree(root_gridTemplateColumns);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetMargin(root_child0, YGEdgeTop, 10);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child0_child0, 80);
+  YGNodeStyleSetHeight(root_child0_child0, 60);
+  YGNodeSetBaselineFunc(root_child0_child0, _baselineFunc);
+  YGNodeInsertChild(root_child0, root_child0_child0, 0);
+  // child0 baseline (30) + marginTop (10) = 40
+
+  YGNodeRef root_child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child1, 100);
+  YGNodeStyleSetHeight(root_child1, 20);
+  YGNodeSetBaselineFunc(root_child1, _baselineFunc);
+  YGNodeInsertChild(root, root_child1, 1);
+  // child1 baseline (10)
+  // child1 baselineShim = 40 - 10 = 30
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root));
+  ASSERT_FLOAT_EQ(200, YGNodeLayoutGetWidth(root));
+  ASSERT_FLOAT_EQ(70, YGNodeLayoutGetHeight(root));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0));
+  ASSERT_FLOAT_EQ(10, YGNodeLayoutGetTop(root_child0));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child0));
+
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetLeft(root_child0_child0));
+  ASSERT_FLOAT_EQ(0, YGNodeLayoutGetTop(root_child0_child0));
+  ASSERT_FLOAT_EQ(80, YGNodeLayoutGetWidth(root_child0_child0));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child0_child0));
+
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetLeft(root_child1));
+  // baselineShim (30)
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetTop(root_child1));
+  ASSERT_FLOAT_EQ(100, YGNodeLayoutGetWidth(root_child1));
+  ASSERT_FLOAT_EQ(20, YGNodeLayoutGetHeight(root_child1));
 
   YGNodeFreeRecursive(root);
 
