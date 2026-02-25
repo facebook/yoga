@@ -14,6 +14,7 @@ import {
   Display,
   Edge,
   FlexDirection,
+  GridTrackType,
   Gutter,
   Justify,
   Overflow,
@@ -63,7 +64,7 @@ export type FlexStyle = {
   bottom?: number | `${number}%`;
   boxSizing?: 'border-box' | 'content-box';
   direction?: 'ltr' | 'rtl';
-  display?: 'none' | 'flex' | 'contents';
+  display?: 'none' | 'flex' | 'contents' | 'grid';
   end?: number | `${number}%`;
   flex?: number;
   flexBasis?: number | 'auto' | `${number}%`;
@@ -108,6 +109,15 @@ export type FlexStyle = {
   insetBlock?: number | `${number}%`;
   inset?: number | `${number}%`;
   width?: number | 'auto' | `${number}%`;
+  // Grid properties
+  gridTemplateColumns?: string;
+  gridTemplateRows?: string;
+  gridAutoColumns?: string;
+  gridAutoRows?: string;
+  gridColumnStart?: number | `span ${number}`;
+  gridColumnEnd?: number | `span ${number}`;
+  gridRowStart?: number | `span ${number}`;
+  gridRowEnd?: number | `span ${number}`;
 };
 
 export function applyStyle(node: YogaNode, style: FlexStyle = {}): void {
@@ -297,6 +307,64 @@ export function applyStyle(node: YogaNode, style: FlexStyle = {}): void {
         case 'width':
           node.setWidth(style.width);
           break;
+        case 'gridTemplateColumns':
+          node.setGridTemplateColumns(
+            parseGridTemplate(style.gridTemplateColumns),
+          );
+          break;
+        case 'gridTemplateRows':
+          node.setGridTemplateRows(parseGridTemplate(style.gridTemplateRows));
+          break;
+        case 'gridAutoColumns':
+          node.setGridAutoColumns(parseGridTemplate(style.gridAutoColumns));
+          break;
+        case 'gridAutoRows':
+          node.setGridAutoRows(parseGridTemplate(style.gridAutoRows));
+          break;
+        case 'gridColumnStart':
+          if (
+            typeof style.gridColumnStart === 'string' &&
+            style.gridColumnStart.startsWith('span ')
+          ) {
+            node.setGridColumnStartSpan(
+              parseInt(style.gridColumnStart.slice(5), 10),
+            );
+          } else {
+            node.setGridColumnStart(style.gridColumnStart as number);
+          }
+          break;
+        case 'gridColumnEnd':
+          if (
+            typeof style.gridColumnEnd === 'string' &&
+            style.gridColumnEnd.startsWith('span ')
+          ) {
+            node.setGridColumnEndSpan(
+              parseInt(style.gridColumnEnd.slice(5), 10),
+            );
+          } else {
+            node.setGridColumnEnd(style.gridColumnEnd as number);
+          }
+          break;
+        case 'gridRowStart':
+          if (
+            typeof style.gridRowStart === 'string' &&
+            style.gridRowStart.startsWith('span ')
+          ) {
+            node.setGridRowStartSpan(parseInt(style.gridRowStart.slice(5), 10));
+          } else {
+            node.setGridRowStart(style.gridRowStart as number);
+          }
+          break;
+        case 'gridRowEnd':
+          if (
+            typeof style.gridRowEnd === 'string' &&
+            style.gridRowEnd.startsWith('span ')
+          ) {
+            node.setGridRowEndSpan(parseInt(style.gridRowEnd.slice(5), 10));
+          } else {
+            node.setGridRowEnd(style.gridRowEnd as number);
+          }
+          break;
       }
     } catch (e) {
       // Fail gracefully
@@ -360,7 +428,7 @@ function direction(str?: 'ltr' | 'rtl'): Direction {
   throw new Error(`"${str}" is not a valid value for direction`);
 }
 
-function display(str?: 'none' | 'flex' | 'contents'): Display {
+function display(str?: 'none' | 'flex' | 'contents' | 'grid'): Display {
   switch (str) {
     case 'none':
       return Display.None;
@@ -368,6 +436,8 @@ function display(str?: 'none' | 'flex' | 'contents'): Display {
       return Display.Flex;
     case 'contents':
       return Display.Contents;
+    case 'grid':
+      return Display.Grid;
   }
   throw new Error(`"${str}" is not a valid value for display`);
 }
@@ -440,4 +510,76 @@ function position(str?: 'absolute' | 'relative' | 'static'): PositionType {
       return PositionType.Static;
   }
   throw new Error(`"${str}" is not a valid value for position`);
+}
+
+type GridTrackValue = {
+  type: GridTrackType;
+  value?: number;
+  min?: GridTrackValue;
+  max?: GridTrackValue;
+};
+
+function parseGridTrackValue(track: string): GridTrackValue {
+  track = track.trim();
+
+  if (track === 'auto') {
+    return {type: GridTrackType.Auto};
+  }
+
+  if (track.endsWith('fr')) {
+    return {type: GridTrackType.Fr, value: parseFloat(track)};
+  }
+
+  if (track.endsWith('%')) {
+    return {type: GridTrackType.Percent, value: parseFloat(track)};
+  }
+
+  if (track.endsWith('px')) {
+    return {type: GridTrackType.Points, value: parseFloat(track)};
+  }
+
+  if (track.startsWith('minmax(') && track.endsWith(')')) {
+    const inner = track.slice(7, -1);
+    const commaIndex = findTopLevelComma(inner);
+    if (commaIndex === -1) {
+      throw new Error(`Invalid minmax syntax: ${track}`);
+    }
+    const minPart = inner.slice(0, commaIndex).trim();
+    const maxPart = inner.slice(commaIndex + 1).trim();
+    return {
+      type: GridTrackType.Minmax,
+      min: parseGridTrackValue(minPart),
+      max: parseGridTrackValue(maxPart),
+    };
+  }
+
+  const num = parseFloat(track);
+  if (!isNaN(num)) {
+    return {type: GridTrackType.Points, value: num};
+  }
+
+  throw new Error(`Invalid grid track value: ${track}`);
+}
+
+function findTopLevelComma(str: string): number {
+  let depth = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(') depth++;
+    else if (str[i] === ')') depth--;
+    else if (str[i] === ',' && depth === 0) return i;
+  }
+  return -1;
+}
+
+function parseGridTemplate(template?: string): GridTrackValue[] {
+  if (!template) return [];
+
+  const tracks: GridTrackValue[] = [];
+  const parts = template.trim().split(/\s+/);
+
+  for (const part of parts) {
+    tracks.push(parseGridTrackValue(part));
+  }
+
+  return tracks;
 }
