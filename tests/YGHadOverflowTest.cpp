@@ -133,3 +133,29 @@ TEST_F(YogaTest_HadOverflowTests, spacing_overflow_in_nested_nodes) {
 
   ASSERT_TRUE(YGNodeLayoutGetHadOverflow(root));
 }
+
+TEST(YogaTest, grid_hadoverflow_when_content_exceeds_container) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetDisplay(root, YGDisplayGrid);
+  YGNodeStyleSetWidth(root, 200);
+  YGNodeStyleSetHeight(root, 100);
+
+  YGNodeRef child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(child0, 150);
+  YGNodeStyleSetHeight(child0, 80);
+  YGNodeInsertChild(root, child0, 0);
+
+  YGNodeRef child1 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(child1, 150);
+  YGNodeStyleSetHeight(child1, 80);
+  YGNodeInsertChild(root, child1, 1);
+
+  YGNodeCalculateLayout(root, 200, 100, YGDirectionLTR);
+
+  ASSERT_TRUE(YGNodeLayoutGetHadOverflow(root));
+
+  YGNodeFreeRecursive(root);
+  YGConfigFree(config);
+}
