@@ -1,0 +1,20 @@
+<!-- https://github.com/DioxusLabs/taffy/blob/fd8f81fc639e71cecef3a6bb618bca6606bdf644/test_fixtures/grid/grid_absolute_container_left_overrides_right.html -->
+
+<div
+  id="grid_absolute_container_left_overrides_right"
+  style="
+    display: grid;
+    grid-template-columns: 40px 40px 40px;
+    grid-template-rows: 40px 40px 40px;
+    padding: 10px 20px 30px 40px;
+  ">
+  <div
+    style="
+      position: absolute;
+      z-index: 2;
+      background-color: red;
+      right: 2px;
+      left: 5px;
+      width: 10px;
+    "></div>
+</div>

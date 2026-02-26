@@ -1,0 +1,8 @@
+<!-- https://github.com/DioxusLabs/taffy/blob/fd8f81fc639e71cecef3a6bb618bca6606bdf644/test_fixtures/grid/grid_minmax_auto_percent_indefinite.html -->
+
+<!-- difference from taffy is that here we add a parent div with width set to max-content as test-template adds 2 absolute positioned children which measures min-content on browser but yoga supports max-content. The generated assertion is same as taffy's -->
+<div style="width: max-content;" id="grid_minmax_auto_percent_indefinite">
+  <div style="display: grid; grid-template-columns: minmax(auto, 20%); grid-template-rows: 40px;">
+    <div>HH HH</div>
+  </div>
+</div>

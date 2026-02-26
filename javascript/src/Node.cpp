@@ -6,7 +6,9 @@
  */
 
 #include <algorithm>
+#include <string>
 
+#include <yoga/YGGridTrackList.h>
 #include <yoga/Yoga.h>
 
 #include "./Config.h"
@@ -122,6 +124,14 @@ void Node::setFlexWrap(int flexWrap) {
 
 void Node::setJustifyContent(int justifyContent) {
   YGNodeStyleSetJustifyContent(m_node, static_cast<YGJustify>(justifyContent));
+}
+
+void Node::setJustifyItems(int justifyItems) {
+  YGNodeStyleSetJustifyItems(m_node, static_cast<YGJustify>(justifyItems));
+}
+
+void Node::setJustifySelf(int justifySelf) {
+  YGNodeStyleSetJustifySelf(m_node, static_cast<YGJustify>(justifySelf));
 }
 
 void Node::setMargin(int edge, double margin) {
@@ -589,4 +599,103 @@ double Node::getComputedPadding(int edge) const {
 void Node::setAlwaysFormsContainingBlock(bool alwaysFormsContainingBlock) {
   return YGNodeSetAlwaysFormsContainingBlock(
       m_node, alwaysFormsContainingBlock);
+}
+
+// Helper function to convert JS track value to YGGridTrackValueRef
+static YGGridTrackValueRef convertTrackValue(emscripten::val track) {
+  int type = track["type"].as<int>();
+
+  switch (type) {
+    case YGGridTrackTypeAuto:
+      return YGAuto();
+    case YGGridTrackTypePoints: {
+      float value = track["value"].as<float>();
+      return YGPoints(value);
+    }
+    case YGGridTrackTypePercent: {
+      float value = track["value"].as<float>();
+      return YGPercent(value);
+    }
+    case YGGridTrackTypeFr: {
+      float value = track["value"].as<float>();
+      return YGFr(value);
+    }
+    case YGGridTrackTypeMinmax: {
+      YGGridTrackValueRef minVal = convertTrackValue(track["min"]);
+      YGGridTrackValueRef maxVal = convertTrackValue(track["max"]);
+      return YGMinMax(minVal, maxVal);
+    }
+    default:
+      return YGAuto();
+  }
+}
+
+// Helper function to build grid track list from JS array
+static YGGridTrackListRef buildGridTrackList(emscripten::val tracks) {
+  YGGridTrackListRef trackList = YGGridTrackListCreate();
+
+  unsigned length = tracks["length"].as<unsigned>();
+  for (unsigned i = 0; i < length; i++) {
+    emscripten::val track = tracks[i];
+    YGGridTrackValueRef trackValue = convertTrackValue(track);
+    YGGridTrackListAddTrack(trackList, trackValue);
+  }
+
+  return trackList;
+}
+
+void Node::setGridTemplateColumns(emscripten::val tracks) {
+  YGGridTrackListRef trackList = buildGridTrackList(tracks);
+  YGNodeStyleSetGridTemplateColumns(m_node, trackList);
+  YGGridTrackListFree(trackList);
+}
+
+void Node::setGridTemplateRows(emscripten::val tracks) {
+  YGGridTrackListRef trackList = buildGridTrackList(tracks);
+  YGNodeStyleSetGridTemplateRows(m_node, trackList);
+  YGGridTrackListFree(trackList);
+}
+
+void Node::setGridAutoColumns(emscripten::val tracks) {
+  YGGridTrackListRef trackList = buildGridTrackList(tracks);
+  YGNodeStyleSetGridAutoColumns(m_node, trackList);
+  YGGridTrackListFree(trackList);
+}
+
+void Node::setGridAutoRows(emscripten::val tracks) {
+  YGGridTrackListRef trackList = buildGridTrackList(tracks);
+  YGNodeStyleSetGridAutoRows(m_node, trackList);
+  YGGridTrackListFree(trackList);
+}
+
+void Node::setGridColumnStart(int value) {
+  YGNodeStyleSetGridColumnStart(m_node, value);
+}
+
+void Node::setGridColumnStartSpan(int span) {
+  YGNodeStyleSetGridColumnStartSpan(m_node, span);
+}
+
+void Node::setGridColumnEnd(int value) {
+  YGNodeStyleSetGridColumnEnd(m_node, value);
+}
+
+void Node::setGridColumnEndSpan(int span) {
+  YGNodeStyleSetGridColumnEndSpan(m_node, span);
+}
+
+void Node::setGridRowStart(int value) {
+  YGNodeStyleSetGridRowStart(m_node, value);
+}
+
+void Node::setGridRowStartSpan(int span) {
+  YGNodeStyleSetGridRowStartSpan(m_node, span);
+}
+
+void Node::setGridRowEnd(int value) {
+  YGNodeStyleSetGridRowEnd(m_node, value);
+}
+
+void Node::setGridRowEndSpan(int span) {
+  YGNodeStyleSetGridRowEndSpan(m_node, span);
 }
