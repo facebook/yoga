@@ -84,6 +84,8 @@ class Node {
   void setFlexDirection(int flexDirection);
   void setFlexWrap(int flexWrap);
   void setJustifyContent(int justifyContent);
+  void setJustifyItems(int justifyItems);
+  void setJustifySelf(int justifySelf);
   void setDirection(int direction);
 
   void setMargin(int edge, double margin);
@@ -149,6 +151,20 @@ class Node {
   void setGapPercent(int gutter, double gapLength);
 
   void setBoxSizing(int boxSizing);
+
+  // Grid setters
+  void setGridTemplateColumns(emscripten::val tracks);
+  void setGridTemplateRows(emscripten::val tracks);
+  void setGridAutoColumns(emscripten::val tracks);
+  void setGridAutoRows(emscripten::val tracks);
+  void setGridColumnStart(int value);
+  void setGridColumnStartSpan(int span);
+  void setGridColumnEnd(int value);
+  void setGridColumnEndSpan(int span);
+  void setGridRowStart(int value);
+  void setGridRowStartSpan(int span);
+  void setGridRowEnd(int value);
+  void setGridRowEndSpan(int span);
 
  public: // Style getters
   int getPositionType(void) const;
