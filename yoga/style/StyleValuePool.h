@@ -12,6 +12,7 @@
 
 #include <yoga/numeric/FloatOptional.h>
 #include <yoga/style/SmallValueBuffer.h>
+#include <yoga/style/StyleCalcLength.h>
 #include <yoga/style/StyleLength.h>
 #include <yoga/style/StyleSizeLength.h>
 #include <yoga/style/StyleValueHandle.h>
@@ -32,6 +33,8 @@ class StyleValuePool {
       handle.setType(StyleValueHandle::Type::Undefined);
     } else if (length.isAuto()) {
       handle.setType(StyleValueHandle::Type::Auto);
+    } else if (length.isCalc()) {
+      storeCalc(handle, length.calcValue());
     } else {
       auto type = length.isPoints() ? StyleValueHandle::Type::Point
                                     : StyleValueHandle::Type::Percent;
@@ -50,6 +53,8 @@ class StyleValuePool {
       storeKeyword(handle, StyleValueHandle::Keyword::Stretch);
     } else if (sizeValue.isFitContent()) {
       storeKeyword(handle, StyleValueHandle::Keyword::FitContent);
+    } else if (sizeValue.isCalc()) {
+      storeCalc(handle, sizeValue.calcValue());
     } else {
       auto type = sizeValue.isPoints() ? StyleValueHandle::Type::Point
                                        : StyleValueHandle::Type::Percent;
@@ -70,6 +75,8 @@ class StyleValuePool {
       return StyleLength::undefined();
     } else if (handle.isAuto()) {
       return StyleLength::ofAuto();
+    } else if (handle.isCalc()) {
+      return StyleLength::calc(getCalc(handle));
     } else {
       assert(
           handle.type() == StyleValueHandle::Type::Point ||
@@ -95,6 +102,8 @@ class StyleValuePool {
       return StyleSizeLength::ofFitContent();
     } else if (handle.isKeyword(StyleValueHandle::Keyword::Stretch)) {
       return StyleSizeLength::ofStretch();
+    } else if (handle.isCalc()) {
+      return StyleSizeLength::calc(getCalc(handle));
     } else {
       assert(
           handle.type() == StyleValueHandle::Type::Point ||
@@ -119,6 +128,43 @@ class StyleValuePool {
           : unpackInlineInteger(handle.value());
       return FloatOptional{value};
     }
+  }
+
+  // Used in frequently executed layout code.
+  // It resolves directly from the handle and avoids creating temporary
+  // StyleLength objects (getLength + resolve).
+  FloatOptional resolveLength(
+      StyleValueHandle handle,
+      float referenceLength,
+      float viewportWidth,
+      float viewportHeight) const {
+    if (handle.isUndefined() || handle.isAuto()) {
+      return FloatOptional{};
+    }
+
+    const auto handleType = handle.type();
+    if (handleType == StyleValueHandle::Type::Point ||
+        handleType == StyleValueHandle::Type::Percent) {
+      float value = handle.isValueIndexed()
+          ? std::bit_cast<float>(buffer_.get32(handle.value()))
+          : unpackInlineInteger(handle.value());
+      return handle.type() == StyleValueHandle::Type::Point
+          ? FloatOptional{value}
+          : FloatOptional{referenceLength * value * 0.01f};
+    }
+
+    if (handle.isKeyword(StyleValueHandle::Keyword::MaxContent) ||
+        handle.isKeyword(StyleValueHandle::Keyword::FitContent) ||
+        handle.isKeyword(StyleValueHandle::Keyword::Stretch)) {
+      return FloatOptional{};
+    }
+
+    if (handleType == StyleValueHandle::Type::Calc) {
+      return resolveCalc(
+          handle, referenceLength, viewportWidth, viewportHeight);
+    }
+
+    return FloatOptional{};
   }
 
  private:
@@ -154,6 +200,61 @@ class StyleValuePool {
       handle.setValue(static_cast<uint16_t>(keyword));
     }
   }
+
+  void storeCalc(StyleValueHandle& handle, StyleCalcLength calc) {
+    handle.setType(StyleValueHandle::Type::Calc);
+    uint64_t first = (static_cast<uint64_t>(std::bit_cast<uint32_t>(
+                         calc.px().unwrapOrDefault(0.f)))) |
+        (static_cast<uint64_t>(
+             std::bit_cast<uint32_t>(calc.percent().unwrapOrDefault(0.f)))
+         << 32);
+    uint64_t second = (static_cast<uint64_t>(std::bit_cast<uint32_t>(
+                          calc.vw().unwrapOrDefault(0.f)))) |
+        (static_cast<uint64_t>(
+             std::bit_cast<uint32_t>(calc.vh().unwrapOrDefault(0.f)))
+         << 32);
+
+    if (handle.isValueIndexed()) {
+      auto newIndex = buffer_.replace(handle.value(), first);
+      if (newIndex != handle.value()) {
+        (void)buffer_.push(second);
+      } else {
+        (void)buffer_.replace(newIndex + 2, second);
+      }
+      handle.setValue(newIndex);
+    } else {
+      auto newIndex = buffer_.push(first);
+      (void)buffer_.push(second);
+      handle.setValue(newIndex);
+      handle.setValueIsIndexed();
+    }
+  }
+
+  StyleCalcLength getCalc(StyleValueHandle handle) const {
+    if (handle.isUndefined()) {
+      return StyleCalcLength{};
+    }
+    assert(handle.type() == StyleValueHandle::Type::Calc);
+    assert(handle.isValueIndexed());
+
+    uint64_t first = buffer_.get64(handle.value());
+    uint64_t second = buffer_.get64(handle.value() + 2);
+
+    return StyleCalcLength{
+        FloatOptional{
+            std::bit_cast<float>(static_cast<uint32_t>(first & 0xFFFFFFFF))},
+        FloatOptional{std::bit_cast<float>(static_cast<uint32_t>(first >> 32))},
+        FloatOptional{
+            std::bit_cast<float>(static_cast<uint32_t>(second & 0xFFFFFFFF))},
+        FloatOptional{
+            std::bit_cast<float>(static_cast<uint32_t>(second >> 32))}};
+  }
+
+  FloatOptional resolveCalc(
+      StyleValueHandle handle,
+      float referenceLength,
+      float viewportWidth,
+      float viewportHeight) const;
 
   static constexpr bool isIntegerPackable(float f) {
     constexpr uint16_t kMaxInlineAbsValue = (1 << 11) - 1;

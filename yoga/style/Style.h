@@ -195,14 +195,21 @@ class YG_EXPORT Style {
       Direction direction,
       Dimension axis,
       float referenceLength,
-      float ownerWidth) const {
-    FloatOptional value = minDimension(axis).resolve(referenceLength);
+      float ownerWidth,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    FloatOptional value = pool_.resolveLength(
+        minDimensions_[yoga::to_underlying(axis)],
+        referenceLength,
+        viewportWidth,
+        viewportHeight);
     if (boxSizing() == BoxSizing::BorderBox) {
       return value;
     }
 
-    FloatOptional dimensionPaddingAndBorder = FloatOptional{
-        computePaddingAndBorderForDimension(direction, axis, ownerWidth)};
+    FloatOptional dimensionPaddingAndBorder =
+        FloatOptional{computePaddingAndBorderForDimension(
+            direction, axis, ownerWidth, viewportWidth, viewportHeight)};
 
     return value +
         (dimensionPaddingAndBorder.isDefined() ? dimensionPaddingAndBorder
@@ -220,14 +227,21 @@ class YG_EXPORT Style {
       Direction direction,
       Dimension axis,
       float referenceLength,
-      float ownerWidth) const {
-    FloatOptional value = maxDimension(axis).resolve(referenceLength);
+      float ownerWidth,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    FloatOptional value = pool_.resolveLength(
+        maxDimensions_[yoga::to_underlying(axis)],
+        referenceLength,
+        viewportWidth,
+        viewportHeight);
     if (boxSizing() == BoxSizing::BorderBox) {
       return value;
     }
 
-    FloatOptional dimensionPaddingAndBorder = FloatOptional{
-        computePaddingAndBorderForDimension(direction, axis, ownerWidth)};
+    FloatOptional dimensionPaddingAndBorder =
+        FloatOptional{computePaddingAndBorderForDimension(
+            direction, axis, ownerWidth, viewportWidth, viewportHeight)};
 
     return value +
         (dimensionPaddingAndBorder.isDefined() ? dimensionPaddingAndBorder
@@ -270,140 +284,222 @@ class YG_EXPORT Style {
 
   bool isFlexStartPositionDefined(FlexDirection axis, Direction direction)
       const {
-    return computePosition(flexStartEdge(axis), direction).isDefined();
+    return positionHandle(flexStartEdge(axis), direction).isDefined();
   }
 
   bool isFlexStartPositionAuto(FlexDirection axis, Direction direction) const {
-    return computePosition(flexStartEdge(axis), direction).isAuto();
+    return positionHandle(flexStartEdge(axis), direction).isAuto();
   }
 
   bool isInlineStartPositionDefined(FlexDirection axis, Direction direction)
       const {
-    return computePosition(inlineStartEdge(axis, direction), direction)
+    return positionHandle(inlineStartEdge(axis, direction), direction)
         .isDefined();
   }
 
   bool isInlineStartPositionAuto(FlexDirection axis, Direction direction)
       const {
-    return computePosition(inlineStartEdge(axis, direction), direction)
-        .isAuto();
+    return positionHandle(inlineStartEdge(axis, direction), direction).isAuto();
   }
 
   bool isFlexEndPositionDefined(FlexDirection axis, Direction direction) const {
-    return computePosition(flexEndEdge(axis), direction).isDefined();
+    return positionHandle(flexEndEdge(axis), direction).isDefined();
   }
 
   bool isFlexEndPositionAuto(FlexDirection axis, Direction direction) const {
-    return computePosition(flexEndEdge(axis), direction).isAuto();
+    return positionHandle(flexEndEdge(axis), direction).isAuto();
   }
 
   bool isInlineEndPositionDefined(FlexDirection axis, Direction direction)
       const {
-    return computePosition(inlineEndEdge(axis, direction), direction)
+    return positionHandle(inlineEndEdge(axis, direction), direction)
         .isDefined();
   }
 
   bool isInlineEndPositionAuto(FlexDirection axis, Direction direction) const {
-    return computePosition(inlineEndEdge(axis, direction), direction).isAuto();
+    return positionHandle(inlineEndEdge(axis, direction), direction).isAuto();
   }
 
   float computeFlexStartPosition(
       FlexDirection axis,
       Direction direction,
-      float axisSize) const {
-    return computePosition(flexStartEdge(axis), direction)
-        .resolve(axisSize)
+      float axisSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            positionHandle(flexStartEdge(axis), direction),
+            axisSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeInlineStartPosition(
       FlexDirection axis,
       Direction direction,
-      float axisSize) const {
-    return computePosition(inlineStartEdge(axis, direction), direction)
-        .resolve(axisSize)
+      float axisSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            positionHandle(inlineStartEdge(axis, direction), direction),
+            axisSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeFlexEndPosition(
       FlexDirection axis,
       Direction direction,
-      float axisSize) const {
-    return computePosition(flexEndEdge(axis), direction)
-        .resolve(axisSize)
+      float axisSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            positionHandle(flexEndEdge(axis), direction),
+            axisSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeInlineEndPosition(
       FlexDirection axis,
       Direction direction,
-      float axisSize) const {
-    return computePosition(inlineEndEdge(axis, direction), direction)
-        .resolve(axisSize)
+      float axisSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            positionHandle(inlineEndEdge(axis, direction), direction),
+            axisSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeFlexStartMargin(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeMargin(flexStartEdge(axis), direction)
-        .resolve(widthSize)
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            marginHandle(flexStartEdge(axis), direction),
+            widthSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeInlineStartMargin(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeMargin(inlineStartEdge(axis, direction), direction)
-        .resolve(widthSize)
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            marginHandle(inlineStartEdge(axis, direction), direction),
+            widthSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeFlexEndMargin(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeMargin(flexEndEdge(axis), direction)
-        .resolve(widthSize)
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            marginHandle(flexEndEdge(axis), direction),
+            widthSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
   float computeInlineEndMargin(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeMargin(inlineEndEdge(axis, direction), direction)
-        .resolve(widthSize)
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return pool_
+        .resolveLength(
+            marginHandle(inlineEndEdge(axis, direction), direction),
+            widthSize,
+            viewportWidth,
+            viewportHeight)
         .unwrapOrDefault(0.0f);
   }
 
-  float computeFlexStartBorder(FlexDirection axis, Direction direction) const {
+  float computeFlexStartBorder(
+      FlexDirection axis,
+      Direction direction,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computeBorder(flexStartEdge(axis), direction).resolve(0.0f).unwrap(),
-        0.0f);
-  }
-
-  float computeInlineStartBorder(FlexDirection axis, Direction direction)
-      const {
-    return maxOrDefined(
-        computeBorder(inlineStartEdge(axis, direction), direction)
-            .resolve(0.0f)
+        pool_
+            .resolveLength(
+                borderHandle(flexStartEdge(axis), direction),
+                0.0f,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
 
-  float computeFlexEndBorder(FlexDirection axis, Direction direction) const {
+  float computeInlineStartBorder(
+      FlexDirection axis,
+      Direction direction,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computeBorder(flexEndEdge(axis), direction).resolve(0.0f).unwrap(),
+        pool_
+            .resolveLength(
+                borderHandle(inlineStartEdge(axis, direction), direction),
+                0.0f,
+                viewportWidth,
+                viewportHeight)
+            .unwrap(),
         0.0f);
   }
 
-  float computeInlineEndBorder(FlexDirection axis, Direction direction) const {
+  float computeFlexEndBorder(
+      FlexDirection axis,
+      Direction direction,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computeBorder(inlineEndEdge(axis, direction), direction)
-            .resolve(0.0f)
+        pool_
+            .resolveLength(
+                borderHandle(flexEndEdge(axis), direction),
+                0.0f,
+                viewportWidth,
+                viewportHeight)
+            .unwrap(),
+        0.0f);
+  }
+
+  float computeInlineEndBorder(
+      FlexDirection axis,
+      Direction direction,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return maxOrDefined(
+        pool_
+            .resolveLength(
+                borderHandle(inlineEndEdge(axis, direction), direction),
+                0.0f,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
@@ -411,10 +507,16 @@ class YG_EXPORT Style {
   float computeFlexStartPadding(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computePadding(flexStartEdge(axis), direction)
-            .resolve(widthSize)
+        pool_
+            .resolveLength(
+                paddingHandle(flexStartEdge(axis), direction),
+                widthSize,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
@@ -422,10 +524,16 @@ class YG_EXPORT Style {
   float computeInlineStartPadding(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computePadding(inlineStartEdge(axis, direction), direction)
-            .resolve(widthSize)
+        pool_
+            .resolveLength(
+                paddingHandle(inlineStartEdge(axis, direction), direction),
+                widthSize,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
@@ -433,10 +541,16 @@ class YG_EXPORT Style {
   float computeFlexEndPadding(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computePadding(flexEndEdge(axis), direction)
-            .resolve(widthSize)
+        pool_
+            .resolveLength(
+                paddingHandle(flexEndEdge(axis), direction),
+                widthSize,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
@@ -444,10 +558,16 @@ class YG_EXPORT Style {
   float computeInlineEndPadding(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     return maxOrDefined(
-        computePadding(inlineEndEdge(axis, direction), direction)
-            .resolve(widthSize)
+        pool_
+            .resolveLength(
+                paddingHandle(inlineEndEdge(axis, direction), direction),
+                widthSize,
+                viewportWidth,
+                viewportHeight)
             .unwrap(),
         0.0f);
   }
@@ -455,72 +575,113 @@ class YG_EXPORT Style {
   float computeInlineStartPaddingAndBorder(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeInlineStartPadding(axis, direction, widthSize) +
-        computeInlineStartBorder(axis, direction);
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return computeInlineStartPadding(
+               axis, direction, widthSize, viewportWidth, viewportHeight) +
+        computeInlineStartBorder(
+               axis, direction, viewportWidth, viewportHeight);
   }
 
   float computeFlexStartPaddingAndBorder(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeFlexStartPadding(axis, direction, widthSize) +
-        computeFlexStartBorder(axis, direction);
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return computeFlexStartPadding(
+               axis, direction, widthSize, viewportWidth, viewportHeight) +
+        computeFlexStartBorder(axis, direction, viewportWidth, viewportHeight);
   }
 
   float computeInlineEndPaddingAndBorder(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeInlineEndPadding(axis, direction, widthSize) +
-        computeInlineEndBorder(axis, direction);
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return computeInlineEndPadding(
+               axis, direction, widthSize, viewportWidth, viewportHeight) +
+        computeInlineEndBorder(axis, direction, viewportWidth, viewportHeight);
   }
 
   float computeFlexEndPaddingAndBorder(
       FlexDirection axis,
       Direction direction,
-      float widthSize) const {
-    return computeFlexEndPadding(axis, direction, widthSize) +
-        computeFlexEndBorder(axis, direction);
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return computeFlexEndPadding(
+               axis, direction, widthSize, viewportWidth, viewportHeight) +
+        computeFlexEndBorder(axis, direction, viewportWidth, viewportHeight);
   }
 
   float computePaddingAndBorderForDimension(
       Direction direction,
       Dimension dimension,
-      float widthSize) const {
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     FlexDirection flexDirectionForDimension = dimension == Dimension::Width
         ? FlexDirection::Row
         : FlexDirection::Column;
 
     return computeFlexStartPaddingAndBorder(
-               flexDirectionForDimension, direction, widthSize) +
+               flexDirectionForDimension,
+               direction,
+               widthSize,
+               viewportWidth,
+               viewportHeight) +
         computeFlexEndPaddingAndBorder(
-               flexDirectionForDimension, direction, widthSize);
+               flexDirectionForDimension,
+               direction,
+               widthSize,
+               viewportWidth,
+               viewportHeight);
   }
 
-  float computeBorderForAxis(FlexDirection axis) const {
-    return computeInlineStartBorder(axis, Direction::LTR) +
-        computeInlineEndBorder(axis, Direction::LTR);
+  float computeBorderForAxis(
+      FlexDirection axis,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    return computeInlineStartBorder(
+               axis, Direction::LTR, viewportWidth, viewportHeight) +
+        computeInlineEndBorder(
+               axis, Direction::LTR, viewportWidth, viewportHeight);
   }
 
-  float computeMarginForAxis(FlexDirection axis, float widthSize) const {
+  float computeMarginForAxis(
+      FlexDirection axis,
+      float widthSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
     // The total margin for a given axis does not depend on the direction
     // so hardcoding LTR here to avoid piping direction to this function
-    return computeInlineStartMargin(axis, Direction::LTR, widthSize) +
-        computeInlineEndMargin(axis, Direction::LTR, widthSize);
+    return computeInlineStartMargin(
+               axis, Direction::LTR, widthSize, viewportWidth, viewportHeight) +
+        computeInlineEndMargin(
+               axis, Direction::LTR, widthSize, viewportWidth, viewportHeight);
   }
 
-  float computeGapForAxis(FlexDirection axis, float ownerSize) const {
-    auto gap = isRow(axis) ? computeColumnGap() : computeRowGap();
-    return maxOrDefined(gap.resolve(ownerSize).unwrap(), 0.0f);
+  float computeGapForAxis(
+      FlexDirection axis,
+      float ownerSize,
+      float viewportWidth = 0.0f,
+      float viewportHeight = 0.0f) const {
+    auto gap = isRow(axis) ? columnGapHandle() : rowGapHandle();
+    return maxOrDefined(
+        pool_.resolveLength(gap, ownerSize, viewportWidth, viewportHeight)
+            .unwrap(),
+        0.0f);
   }
 
   bool flexStartMarginIsAuto(FlexDirection axis, Direction direction) const {
-    return computeMargin(flexStartEdge(axis), direction).isAuto();
+    return marginHandle(flexStartEdge(axis), direction).isAuto();
   }
 
   bool flexEndMarginIsAuto(FlexDirection axis, Direction direction) const {
-    return computeMargin(flexEndEdge(axis), direction).isAuto();
+    return marginHandle(flexEndEdge(axis), direction).isAuto();
   }
 
   bool operator==(const Style& other) const {
@@ -587,133 +748,135 @@ class YG_EXPORT Style {
         });
   }
 
-  Style::Length computeColumnGap() const {
+  StyleValueHandle columnGapHandle() const {
     if (gap_[yoga::to_underlying(Gutter::Column)].isDefined()) {
-      return pool_.getLength(gap_[yoga::to_underlying(Gutter::Column)]);
+      return gap_[yoga::to_underlying(Gutter::Column)];
     } else {
-      return pool_.getLength(gap_[yoga::to_underlying(Gutter::All)]);
+      return gap_[yoga::to_underlying(Gutter::All)];
     }
   }
 
-  Style::Length computeRowGap() const {
+  StyleValueHandle rowGapHandle() const {
     if (gap_[yoga::to_underlying(Gutter::Row)].isDefined()) {
-      return pool_.getLength(gap_[yoga::to_underlying(Gutter::Row)]);
+      return gap_[yoga::to_underlying(Gutter::Row)];
     } else {
-      return pool_.getLength(gap_[yoga::to_underlying(Gutter::All)]);
+      return gap_[yoga::to_underlying(Gutter::All)];
     }
   }
 
-  Style::Length computeLeftEdge(const Edges& edges, Direction layoutDirection)
+  StyleValueHandle leftEdgeHandle(const Edges& edges, Direction layoutDirection)
       const {
     if (layoutDirection == Direction::LTR &&
         edges[yoga::to_underlying(Edge::Start)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Start)]);
+      return edges[yoga::to_underlying(Edge::Start)];
     } else if (
         layoutDirection == Direction::RTL &&
         edges[yoga::to_underlying(Edge::End)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::End)]);
+      return edges[yoga::to_underlying(Edge::End)];
     } else if (edges[yoga::to_underlying(Edge::Left)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Left)]);
+      return edges[yoga::to_underlying(Edge::Left)];
     } else if (edges[yoga::to_underlying(Edge::Horizontal)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Horizontal)]);
+      return edges[yoga::to_underlying(Edge::Horizontal)];
     } else {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::All)]);
+      return edges[yoga::to_underlying(Edge::All)];
     }
   }
 
-  Style::Length computeTopEdge(const Edges& edges) const {
+  StyleValueHandle topEdgeHandle(const Edges& edges) const {
     if (edges[yoga::to_underlying(Edge::Top)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Top)]);
+      return edges[yoga::to_underlying(Edge::Top)];
     } else if (edges[yoga::to_underlying(Edge::Vertical)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Vertical)]);
+      return edges[yoga::to_underlying(Edge::Vertical)];
     } else {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::All)]);
+      return edges[yoga::to_underlying(Edge::All)];
     }
   }
 
-  Style::Length computeRightEdge(const Edges& edges, Direction layoutDirection)
-      const {
+  StyleValueHandle rightEdgeHandle(
+      const Edges& edges,
+      Direction layoutDirection) const {
     if (layoutDirection == Direction::LTR &&
         edges[yoga::to_underlying(Edge::End)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::End)]);
+      return edges[yoga::to_underlying(Edge::End)];
     } else if (
         layoutDirection == Direction::RTL &&
         edges[yoga::to_underlying(Edge::Start)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Start)]);
+      return edges[yoga::to_underlying(Edge::Start)];
     } else if (edges[yoga::to_underlying(Edge::Right)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Right)]);
+      return edges[yoga::to_underlying(Edge::Right)];
     } else if (edges[yoga::to_underlying(Edge::Horizontal)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Horizontal)]);
+      return edges[yoga::to_underlying(Edge::Horizontal)];
     } else {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::All)]);
+      return edges[yoga::to_underlying(Edge::All)];
     }
   }
 
-  Style::Length computeBottomEdge(const Edges& edges) const {
+  StyleValueHandle bottomEdgeHandle(const Edges& edges) const {
     if (edges[yoga::to_underlying(Edge::Bottom)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Bottom)]);
+      return edges[yoga::to_underlying(Edge::Bottom)];
     } else if (edges[yoga::to_underlying(Edge::Vertical)].isDefined()) {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::Vertical)]);
+      return edges[yoga::to_underlying(Edge::Vertical)];
     } else {
-      return pool_.getLength(edges[yoga::to_underlying(Edge::All)]);
+      return edges[yoga::to_underlying(Edge::All)];
     }
   }
 
-  Style::Length computePosition(PhysicalEdge edge, Direction direction) const {
+  StyleValueHandle positionHandle(PhysicalEdge edge, Direction direction)
+      const {
     switch (edge) {
       case PhysicalEdge::Left:
-        return computeLeftEdge(position_, direction);
+        return leftEdgeHandle(position_, direction);
       case PhysicalEdge::Top:
-        return computeTopEdge(position_);
+        return topEdgeHandle(position_);
       case PhysicalEdge::Right:
-        return computeRightEdge(position_, direction);
+        return rightEdgeHandle(position_, direction);
       case PhysicalEdge::Bottom:
-        return computeBottomEdge(position_);
+        return bottomEdgeHandle(position_);
       default:
         fatalWithMessage("Invalid physical edge");
     }
   }
 
-  Style::Length computeMargin(PhysicalEdge edge, Direction direction) const {
+  StyleValueHandle marginHandle(PhysicalEdge edge, Direction direction) const {
     switch (edge) {
       case PhysicalEdge::Left:
-        return computeLeftEdge(margin_, direction);
+        return leftEdgeHandle(margin_, direction);
       case PhysicalEdge::Top:
-        return computeTopEdge(margin_);
+        return topEdgeHandle(margin_);
       case PhysicalEdge::Right:
-        return computeRightEdge(margin_, direction);
+        return rightEdgeHandle(margin_, direction);
       case PhysicalEdge::Bottom:
-        return computeBottomEdge(margin_);
+        return bottomEdgeHandle(margin_);
       default:
         fatalWithMessage("Invalid physical edge");
     }
   }
 
-  Style::Length computePadding(PhysicalEdge edge, Direction direction) const {
+  StyleValueHandle paddingHandle(PhysicalEdge edge, Direction direction) const {
     switch (edge) {
       case PhysicalEdge::Left:
-        return computeLeftEdge(padding_, direction);
+        return leftEdgeHandle(padding_, direction);
       case PhysicalEdge::Top:
-        return computeTopEdge(padding_);
+        return topEdgeHandle(padding_);
       case PhysicalEdge::Right:
-        return computeRightEdge(padding_, direction);
+        return rightEdgeHandle(padding_, direction);
       case PhysicalEdge::Bottom:
-        return computeBottomEdge(padding_);
+        return bottomEdgeHandle(padding_);
       default:
         fatalWithMessage("Invalid physical edge");
     }
   }
 
-  Style::Length computeBorder(PhysicalEdge edge, Direction direction) const {
+  StyleValueHandle borderHandle(PhysicalEdge edge, Direction direction) const {
     switch (edge) {
       case PhysicalEdge::Left:
-        return computeLeftEdge(border_, direction);
+        return leftEdgeHandle(border_, direction);
       case PhysicalEdge::Top:
-        return computeTopEdge(border_);
+        return topEdgeHandle(border_);
       case PhysicalEdge::Right:
-        return computeRightEdge(border_, direction);
+        return rightEdgeHandle(border_, direction);
       case PhysicalEdge::Bottom:
-        return computeBottomEdge(border_);
+        return bottomEdgeHandle(border_);
       default:
         fatalWithMessage("Invalid physical edge");
     }

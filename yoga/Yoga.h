@@ -11,6 +11,7 @@
  * `#include <yoga/Yoga.h>` includes all of Yoga's public headers.
  */
 
+#include <yoga/YGCalc.h> // IWYU pragma: export
 #include <yoga/YGConfig.h> // IWYU pragma: export
 #include <yoga/YGEnums.h> // IWYU pragma: export
 #include <yoga/YGMacros.h> // IWYU pragma: export
