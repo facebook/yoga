@@ -42,55 +42,27 @@ YG_EXPORT void YGGridTrackListAddTrack(
 /**
  * Create a grid track value with a points (px) length.
  */
-YG_EXPORT YGGridTrackValueRef YGPoints(float points);
+YG_EXPORT YGGridTrackValueRef YGGridTrackPoints(float points);
 
 /**
  * Create a grid track value with a percentage length.
  */
-YG_EXPORT YGGridTrackValueRef YGPercent(float percent);
+YG_EXPORT YGGridTrackValueRef YGGridTrackPercent(float percent);
 
 /**
  * Create a grid track value with a flexible (fr) length.
  */
-YG_EXPORT YGGridTrackValueRef YGFr(float fr);
+YG_EXPORT YGGridTrackValueRef YGGridTrackFr(float fr);
 
 /**
  * Create a grid track value with auto sizing.
  */
-YG_EXPORT YGGridTrackValueRef YGAuto(void);
+YG_EXPORT YGGridTrackValueRef YGGridTrackAuto(void);
 
 /**
  * Create a grid track value with minmax(min, max) sizing.
  */
-YG_EXPORT YGGridTrackValueRef
-YGMinMax(YGGridTrackValueRef min, YGGridTrackValueRef max);
-
-/**
- * Set the grid-template-rows property on a node.
- */
-YG_EXPORT void YGNodeStyleSetGridTemplateRows(
-    YGNodeRef node,
-    YGGridTrackListRef trackList);
-
-/**
- * Set the grid-template-columns property on a node.
- */
-YG_EXPORT void YGNodeStyleSetGridTemplateColumns(
-    YGNodeRef node,
-    YGGridTrackListRef trackList);
-
-/**
- * Set the grid-auto-rows property on a node.
- */
-YG_EXPORT void YGNodeStyleSetGridAutoRows(
-    YGNodeRef node,
-    YGGridTrackListRef trackList);
-
-/**
- * Set the grid-auto-columns property on a node.
- */
-YG_EXPORT void YGNodeStyleSetGridAutoColumns(
-    YGNodeRef node,
-    YGGridTrackListRef trackList);
+YG_EXPORT YGGridTrackValueRef 
+YGGridTrackMinMax(YGGridTrackValueRef min, YGGridTrackValueRef max);
 
 YG_EXTERN_C_END

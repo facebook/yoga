@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stddef.h>
+#include <yoga/YGGridTrackList.h>
 #include <yoga/YGNode.h>
 #include <yoga/YGValue.h>
 
@@ -177,5 +178,19 @@ YG_EXPORT void YGNodeStyleSetGridRowEnd(YGNodeRef node, int gridRowEnd);
 YG_EXPORT void YGNodeStyleSetGridRowEndAuto(YGNodeRef node);
 YG_EXPORT void YGNodeStyleSetGridRowEndSpan(YGNodeRef node, int span);
 YG_EXPORT int YGNodeStyleGetGridRowEnd(YGNodeConstRef node);
+
+// Grid Container Properties
+YG_EXPORT void YGNodeStyleSetGridTemplateRows(
+    YGNodeRef node,
+    YGGridTrackListRef trackList);
+YG_EXPORT void YGNodeStyleSetGridTemplateColumns(
+    YGNodeRef node,
+    YGGridTrackListRef trackList);
+YG_EXPORT void YGNodeStyleSetGridAutoRows(
+    YGNodeRef node,
+    YGGridTrackListRef trackList);
+YG_EXPORT void YGNodeStyleSetGridAutoColumns(
+    YGNodeRef node,
+    YGGridTrackListRef trackList);
 
 YG_EXTERN_C_END
