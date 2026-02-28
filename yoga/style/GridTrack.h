@@ -24,39 +24,32 @@ struct GridTrackSize {
   bool infinitelyGrowable = false;
 
   // Static factory methods for common cases
-  static GridTrackSize auto_() {
+  constexpr static GridTrackSize auto_() {
     return GridTrackSize{StyleSizeLength::ofAuto(), StyleSizeLength::ofAuto()};
   }
 
-  static GridTrackSize length(float points) {
+  constexpr static GridTrackSize length(float points) {
     auto len = StyleSizeLength::points(points);
     return GridTrackSize{len, len};
   }
 
-  static GridTrackSize fr(float fraction) {
+  constexpr static GridTrackSize fr(float fraction) {
     // Flex sizing function is always a max sizing function
     return GridTrackSize{
         StyleSizeLength::ofAuto(), StyleSizeLength::stretch(fraction)};
   }
 
-  static GridTrackSize percent(float percentage) {
+  constexpr static GridTrackSize percent(float percentage) {
     return GridTrackSize{
         StyleSizeLength::percent(percentage),
         StyleSizeLength::percent(percentage)};
   }
 
-  static GridTrackSize minmax(StyleSizeLength min, StyleSizeLength max) {
+  constexpr static GridTrackSize minmax(StyleSizeLength min, StyleSizeLength max) {
     return GridTrackSize{min, max};
   }
 
-  bool operator==(const GridTrackSize& other) const {
-    return minSizingFunction == other.minSizingFunction &&
-        maxSizingFunction == other.maxSizingFunction;
-  }
-
-  bool operator!=(const GridTrackSize& other) const {
-    return !(*this == other);
-  }
+  bool operator==(const GridTrackSize& other) const = default;
 };
 
 // Grid track list for grid-template-rows/columns properties

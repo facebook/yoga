@@ -8,6 +8,7 @@
 #include <yoga/Yoga.h>
 #include <yoga/debug/AssertFatal.h>
 #include <yoga/node/Node.h>
+#include <yoga/style/GridTrack.h>
 
 using namespace facebook;
 using namespace facebook::yoga;
@@ -602,4 +603,172 @@ void YGNodeStyleSetGridRowEndSpan(YGNodeRef node, int32_t span) {
 int32_t YGNodeStyleGetGridRowEnd(YGNodeConstRef node) {
   const auto& gridLine = resolveRef(node)->style().gridRowEnd();
   return gridLine.isInteger() ? gridLine.integer : 0;
+}
+
+// Grid Container Properties
+
+namespace {
+
+GridTrackSize gridTrackSizeFromTypeAndValue(YGGridTrackType type, float value) {
+  switch (type) {
+    case YGGridTrackTypePoints:
+      return GridTrackSize::length(value);
+    case YGGridTrackTypePercent:
+      return GridTrackSize::percent(value);
+    case YGGridTrackTypeFr:
+      return GridTrackSize::fr(value);
+    case YGGridTrackTypeAuto:
+      return GridTrackSize::auto_();
+    default:
+      return GridTrackSize::auto_();
+  }
+}
+
+StyleSizeLength styleSizeLengthFromTypeAndValue(
+    YGGridTrackType type,
+    float value) {
+  switch (type) {
+    case YGGridTrackTypePoints:
+      return StyleSizeLength::points(value);
+    case YGGridTrackTypePercent:
+      return StyleSizeLength::percent(value);
+    case YGGridTrackTypeFr:
+      return StyleSizeLength::stretch(value);
+    case YGGridTrackTypeAuto:
+      return StyleSizeLength::ofAuto();
+    default:
+      return StyleSizeLength::ofAuto();
+  }
+}
+
+} // namespace
+
+// GridTemplateColumns
+
+void YGNodeStyleSetGridTemplateColumnsCount(
+    YGNodeRef node,
+    uint32_t count) {
+  resolveRef(node)->style().resizeGridTemplateColumns(count);
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridTemplateColumn(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value) {
+  resolveRef(node)->style().setGridTemplateColumnAt(
+      index, gridTrackSizeFromTypeAndValue(type, value));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridTemplateColumnMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue) {
+  resolveRef(node)->style().setGridTemplateColumnAt(
+      index,
+      GridTrackSize::minmax(
+          styleSizeLengthFromTypeAndValue(minType, minValue),
+          styleSizeLengthFromTypeAndValue(maxType, maxValue)));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+// GridTemplateRows
+
+void YGNodeStyleSetGridTemplateRowsCount(YGNodeRef node, uint32_t count) {
+  resolveRef(node)->style().resizeGridTemplateRows(count);
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridTemplateRow(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value) {
+  resolveRef(node)->style().setGridTemplateRowAt(
+      index, gridTrackSizeFromTypeAndValue(type, value));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridTemplateRowMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue) {
+  resolveRef(node)->style().setGridTemplateRowAt(
+      index,
+      GridTrackSize::minmax(
+          styleSizeLengthFromTypeAndValue(minType, minValue),
+          styleSizeLengthFromTypeAndValue(maxType, maxValue)));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+// GridAutoColumns
+
+void YGNodeStyleSetGridAutoColumnsCount(YGNodeRef node, uint32_t count) {
+  resolveRef(node)->style().resizeGridAutoColumns(count);
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridAutoColumn(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value) {
+  resolveRef(node)->style().setGridAutoColumnAt(
+      index, gridTrackSizeFromTypeAndValue(type, value));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridAutoColumnMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue) {
+  resolveRef(node)->style().setGridAutoColumnAt(
+      index,
+      GridTrackSize::minmax(
+          styleSizeLengthFromTypeAndValue(minType, minValue),
+          styleSizeLengthFromTypeAndValue(maxType, maxValue)));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+// GridAutoRows
+
+void YGNodeStyleSetGridAutoRowsCount(YGNodeRef node, uint32_t count) {
+  resolveRef(node)->style().resizeGridAutoRows(count);
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridAutoRow(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value) {
+  resolveRef(node)->style().setGridAutoRowAt(
+      index, gridTrackSizeFromTypeAndValue(type, value));
+  resolveRef(node)->markDirtyAndPropagate();
+}
+
+void YGNodeStyleSetGridAutoRowMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue) {
+  resolveRef(node)->style().setGridAutoRowAt(
+      index,
+      GridTrackSize::minmax(
+          styleSizeLengthFromTypeAndValue(minType, minValue),
+          styleSizeLengthFromTypeAndValue(maxType, maxValue)));
+  resolveRef(node)->markDirtyAndPropagate();
 }

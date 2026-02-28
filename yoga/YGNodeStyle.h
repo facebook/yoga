@@ -8,7 +8,8 @@
 #pragma once
 
 #include <stddef.h>
-#include <yoga/YGGridTrackList.h>
+#include <stdint.h>
+#include <yoga/YGEnums.h>
 #include <yoga/YGNode.h>
 #include <yoga/YGValue.h>
 
@@ -180,17 +181,68 @@ YG_EXPORT void YGNodeStyleSetGridRowEndSpan(YGNodeRef node, int span);
 YG_EXPORT int YGNodeStyleGetGridRowEnd(YGNodeConstRef node);
 
 // Grid Container Properties
-YG_EXPORT void YGNodeStyleSetGridTemplateRows(
+YG_EXPORT void YGNodeStyleSetGridTemplateColumnsCount(
     YGNodeRef node,
-    YGGridTrackListRef trackList);
-YG_EXPORT void YGNodeStyleSetGridTemplateColumns(
+    uint32_t count);
+YG_EXPORT void YGNodeStyleSetGridTemplateColumn(
     YGNodeRef node,
-    YGGridTrackListRef trackList);
-YG_EXPORT void YGNodeStyleSetGridAutoRows(
+    uint32_t index,
+    YGGridTrackType type,
+    float value);
+YG_EXPORT void YGNodeStyleSetGridTemplateColumnMinMax(
     YGNodeRef node,
-    YGGridTrackListRef trackList);
-YG_EXPORT void YGNodeStyleSetGridAutoColumns(
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue);
+
+YG_EXPORT void YGNodeStyleSetGridTemplateRowsCount(
     YGNodeRef node,
-    YGGridTrackListRef trackList);
+    uint32_t count);
+YG_EXPORT void YGNodeStyleSetGridTemplateRow(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value);
+YG_EXPORT void YGNodeStyleSetGridTemplateRowMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue);
+
+YG_EXPORT void YGNodeStyleSetGridAutoColumnsCount(
+    YGNodeRef node,
+    uint32_t count);
+YG_EXPORT void YGNodeStyleSetGridAutoColumn(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value);
+YG_EXPORT void YGNodeStyleSetGridAutoColumnMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue);
+
+YG_EXPORT void YGNodeStyleSetGridAutoRowsCount(
+    YGNodeRef node,
+    uint32_t count);
+YG_EXPORT void YGNodeStyleSetGridAutoRow(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType type,
+    float value);
+YG_EXPORT void YGNodeStyleSetGridAutoRowMinMax(
+    YGNodeRef node,
+    uint32_t index,
+    YGGridTrackType minType,
+    float minValue,
+    YGGridTrackType maxType,
+    float maxValue);
 
 YG_EXTERN_C_END

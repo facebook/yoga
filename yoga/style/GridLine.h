@@ -25,37 +25,31 @@ struct GridLine {
   // Line position (1, 2, -1, -2, etc)
   int32_t integer;
 
-  static GridLine auto_() {
+  constexpr static GridLine auto_() {
     return GridLine{GridLineType::Auto, 0};
   }
 
-  static GridLine fromInteger(int32_t value) {
+  constexpr static GridLine fromInteger(int32_t value) {
     return GridLine{GridLineType::Integer, value};
   }
 
-  static GridLine span(int32_t value) {
+  constexpr static GridLine span(int32_t value) {
     return GridLine{GridLineType::Span, value};
   }
 
-  bool isAuto() const {
+  constexpr bool isAuto() const {
     return type == GridLineType::Auto;
   }
 
-  bool isInteger() const {
+  constexpr bool isInteger() const {
     return type == GridLineType::Integer;
   }
 
-  bool isSpan() const {
+  constexpr bool isSpan() const {
     return type == GridLineType::Span;
   }
 
-  bool operator==(const GridLine& other) const {
-    return type == other.type && integer == other.integer;
-  }
-
-  bool operator!=(const GridLine& other) const {
-    return !(*this == other);
-  }
+  bool operator==(const GridLine& other) const  = default;
 };
 
 } // namespace facebook::yoga
