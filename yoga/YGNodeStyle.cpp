@@ -647,14 +647,14 @@ StyleSizeLength styleSizeLengthFromTypeAndValue(
 
 void YGNodeStyleSetGridTemplateColumnsCount(
     YGNodeRef node,
-    uint32_t count) {
+    size_t count) {
   resolveRef(node)->style().resizeGridTemplateColumns(count);
   resolveRef(node)->markDirtyAndPropagate();
 }
 
 void YGNodeStyleSetGridTemplateColumn(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType type,
     float value) {
   resolveRef(node)->style().setGridTemplateColumnAt(
@@ -664,7 +664,7 @@ void YGNodeStyleSetGridTemplateColumn(
 
 void YGNodeStyleSetGridTemplateColumnMinMax(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType minType,
     float minValue,
     YGGridTrackType maxType,
@@ -679,14 +679,14 @@ void YGNodeStyleSetGridTemplateColumnMinMax(
 
 // GridTemplateRows
 
-void YGNodeStyleSetGridTemplateRowsCount(YGNodeRef node, uint32_t count) {
+void YGNodeStyleSetGridTemplateRowsCount(YGNodeRef node, size_t count) {
   resolveRef(node)->style().resizeGridTemplateRows(count);
   resolveRef(node)->markDirtyAndPropagate();
 }
 
 void YGNodeStyleSetGridTemplateRow(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType type,
     float value) {
   resolveRef(node)->style().setGridTemplateRowAt(
@@ -696,7 +696,7 @@ void YGNodeStyleSetGridTemplateRow(
 
 void YGNodeStyleSetGridTemplateRowMinMax(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType minType,
     float minValue,
     YGGridTrackType maxType,
@@ -711,14 +711,14 @@ void YGNodeStyleSetGridTemplateRowMinMax(
 
 // GridAutoColumns
 
-void YGNodeStyleSetGridAutoColumnsCount(YGNodeRef node, uint32_t count) {
+void YGNodeStyleSetGridAutoColumnsCount(YGNodeRef node, size_t count) {
   resolveRef(node)->style().resizeGridAutoColumns(count);
   resolveRef(node)->markDirtyAndPropagate();
 }
 
 void YGNodeStyleSetGridAutoColumn(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType type,
     float value) {
   resolveRef(node)->style().setGridAutoColumnAt(
@@ -728,7 +728,7 @@ void YGNodeStyleSetGridAutoColumn(
 
 void YGNodeStyleSetGridAutoColumnMinMax(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType minType,
     float minValue,
     YGGridTrackType maxType,
@@ -743,14 +743,14 @@ void YGNodeStyleSetGridAutoColumnMinMax(
 
 // GridAutoRows
 
-void YGNodeStyleSetGridAutoRowsCount(YGNodeRef node, uint32_t count) {
+void YGNodeStyleSetGridAutoRowsCount(YGNodeRef node, size_t count) {
   resolveRef(node)->style().resizeGridAutoRows(count);
   resolveRef(node)->markDirtyAndPropagate();
 }
 
 void YGNodeStyleSetGridAutoRow(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType type,
     float value) {
   resolveRef(node)->style().setGridAutoRowAt(
@@ -760,7 +760,7 @@ void YGNodeStyleSetGridAutoRow(
 
 void YGNodeStyleSetGridAutoRowMinMax(
     YGNodeRef node,
-    uint32_t index,
+    size_t index,
     YGGridTrackType minType,
     float minValue,
     YGGridTrackType maxType,

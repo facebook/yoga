@@ -214,10 +214,10 @@ class YG_EXPORT Style {
   void setGridTemplateColumns(GridTrackList value) {
     gridTemplateColumns_ = std::move(value);
   }
-  void resizeGridTemplateColumns(uint32_t count) {
+  void resizeGridTemplateColumns(size_t count) {
     gridTemplateColumns_.resize(count);
   }
-  void setGridTemplateColumnAt(uint32_t index, GridTrackSize value) {
+  void setGridTemplateColumnAt(size_t index, GridTrackSize value) {
     gridTemplateColumns_[index] = value;
   }
 
@@ -227,10 +227,10 @@ class YG_EXPORT Style {
   void setGridTemplateRows(GridTrackList value) {
     gridTemplateRows_ = std::move(value);
   }
-  void resizeGridTemplateRows(uint32_t count) {
+  void resizeGridTemplateRows(size_t count) {
     gridTemplateRows_.resize(count);
   }
-  void setGridTemplateRowAt(uint32_t index, GridTrackSize value) {
+  void setGridTemplateRowAt(size_t index, GridTrackSize value) {
     gridTemplateRows_[index] = value;
   }
 
@@ -240,10 +240,10 @@ class YG_EXPORT Style {
   void setGridAutoColumns(GridTrackList value) {
     gridAutoColumns_ = std::move(value);
   }
-  void resizeGridAutoColumns(uint32_t count) {
+  void resizeGridAutoColumns(size_t count) {
     gridAutoColumns_.resize(count);
   }
-  void setGridAutoColumnAt(uint32_t index, GridTrackSize value) {
+  void setGridAutoColumnAt(size_t index, GridTrackSize value) {
     gridAutoColumns_[index] = value;
   }
 
@@ -253,10 +253,10 @@ class YG_EXPORT Style {
   void setGridAutoRows(GridTrackList value) {
     gridAutoRows_ = std::move(value);
   }
-  void resizeGridAutoRows(uint32_t count) {
+  void resizeGridAutoRows(size_t count) {
     gridAutoRows_.resize(count);
   }
-  void setGridAutoRowAt(uint32_t index, GridTrackSize value) {
+  void setGridAutoRowAt(size_t index, GridTrackSize value) {
     gridAutoRows_[index] = value;
   }
 
