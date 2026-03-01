@@ -76,6 +76,10 @@ ENUMS = {
         # Absolute nodes will resolve percentages against the inner size of
         # their containing node, not the padding box
         ("AbsolutePercentAgainstInnerSize", 1 << 2),
+        # Percentage min/max sizes on flex items will resolve against the
+        # owner size of the flex container instead of the flex container's
+        # own inner size
+        ("FlexItemPercentMinMaxAgainstOwner", 1 << 3),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
