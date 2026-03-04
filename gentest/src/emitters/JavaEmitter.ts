@@ -1,0 +1,579 @@
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
+
+import Emitter from './Emitter.ts';
+import type {ValueWithUnit, GridTrack, GridTrackValue} from '../Types.ts';
+
+function toValueJava(value: string | number): string {
+  const n = value.toString().replace('px', '').replace('%', '');
+  return n;
+}
+
+function toMethodName(value: ValueWithUnit): string {
+  switch (value.type) {
+    case 'percent':
+      return 'Percent';
+    case 'auto':
+      return 'Auto';
+    case 'max-content':
+      return 'MaxContent';
+    case 'fit-content':
+      return 'FitContent';
+    case 'stretch':
+      return 'Stretch';
+    default:
+      return '';
+  }
+}
+
+function valueWithUnitToString(value: ValueWithUnit): string {
+  switch (value.type) {
+    case 'points':
+      return toValueJava(value.value);
+    case 'percent':
+      return toValueJava(value.value);
+    case 'auto':
+      return 'YogaConstants.AUTO';
+    case 'max-content':
+      return 'MAX_CONTENT';
+    case 'fit-content':
+      return 'FIT_CONTENT';
+    case 'stretch':
+      return 'STRETCH';
+    case 'undefined':
+      return 'YogaConstants.UNDEFINED';
+  }
+}
+
+function toJavaUpper(symbol: string): string {
+  let out = '';
+  for (let i = 0; i < symbol.length; i++) {
+    const c = symbol[i];
+    if (
+      c === c.toUpperCase() &&
+      i !== 0 &&
+      symbol[i - 1] !== symbol[i - 1].toUpperCase()
+    ) {
+      out += '_';
+    }
+    out += c.toUpperCase();
+  }
+  return out;
+}
+
+function formatGridTrackValueJava(track: GridTrackValue): string {
+  switch (track.type) {
+    case 'auto':
+      return 'YogaGridTrackValue.auto()';
+    case 'points':
+      return `YogaGridTrackValue.points(${toValueJava(track.value)}f)`;
+    case 'percent':
+      return `YogaGridTrackValue.percent(${toValueJava(track.value)}f)`;
+    case 'fr':
+      return `YogaGridTrackValue.fr(${toValueJava(track.value)}f)`;
+    default:
+      return 'YogaGridTrackValue.auto()';
+  }
+}
+
+export class JavaEmitter extends Emitter {
+  private static enumMap: Record<string, string> = {
+    YGAlignAuto: 'YogaAlign.AUTO',
+    YGAlignCenter: 'YogaAlign.CENTER',
+    YGAlignFlexEnd: 'YogaAlign.FLEX_END',
+    YGAlignFlexStart: 'YogaAlign.FLEX_START',
+    YGAlignStretch: 'YogaAlign.STRETCH',
+    YGAlignSpaceBetween: 'YogaAlign.SPACE_BETWEEN',
+    YGAlignSpaceAround: 'YogaAlign.SPACE_AROUND',
+    YGAlignSpaceEvenly: 'YogaAlign.SPACE_EVENLY',
+    YGAlignBaseline: 'YogaAlign.BASELINE',
+    YGAlignStart: 'YogaAlign.START',
+    YGAlignEnd: 'YogaAlign.END',
+    YGDirectionInherit: 'YogaDirection.INHERIT',
+    YGDirectionLTR: 'YogaDirection.LTR',
+    YGDirectionRTL: 'YogaDirection.RTL',
+    YGEdgeBottom: 'YogaEdge.BOTTOM',
+    YGEdgeEnd: 'YogaEdge.END',
+    YGEdgeLeft: 'YogaEdge.LEFT',
+    YGEdgeRight: 'YogaEdge.RIGHT',
+    YGEdgeStart: 'YogaEdge.START',
+    YGEdgeTop: 'YogaEdge.TOP',
+    YGEdgeAll: 'YogaEdge.ALL',
+    YGEdgeVertical: 'YogaEdge.VERTICAL',
+    YGEdgeHorizontal: 'YogaEdge.HORIZONTAL',
+    YGGutterAll: 'YogaGutter.ALL',
+    YGGutterColumn: 'YogaGutter.COLUMN',
+    YGGutterRow: 'YogaGutter.ROW',
+    YGFlexDirectionColumn: 'YogaFlexDirection.COLUMN',
+    YGFlexDirectionColumnReverse: 'YogaFlexDirection.COLUMN_REVERSE',
+    YGFlexDirectionRow: 'YogaFlexDirection.ROW',
+    YGFlexDirectionRowReverse: 'YogaFlexDirection.ROW_REVERSE',
+    YGJustifyCenter: 'YogaJustify.CENTER',
+    YGJustifyFlexEnd: 'YogaJustify.FLEX_END',
+    YGJustifyFlexStart: 'YogaJustify.FLEX_START',
+    YGJustifySpaceAround: 'YogaJustify.SPACE_AROUND',
+    YGJustifySpaceBetween: 'YogaJustify.SPACE_BETWEEN',
+    YGJustifySpaceEvenly: 'YogaJustify.SPACE_EVENLY',
+    YGJustifyStretch: 'YogaJustify.STRETCH',
+    YGJustifyStart: 'YogaJustify.START',
+    YGJustifyEnd: 'YogaJustify.END',
+    YGJustifyAuto: 'YogaJustify.AUTO',
+    YGOverflowHidden: 'YogaOverflow.HIDDEN',
+    YGOverflowVisible: 'YogaOverflow.VISIBLE',
+    YGOverflowScroll: 'YogaOverflow.SCROLL',
+    YGPositionTypeAbsolute: 'YogaPositionType.ABSOLUTE',
+    YGPositionTypeRelative: 'YogaPositionType.RELATIVE',
+    YGPositionTypeStatic: 'YogaPositionType.STATIC',
+    YGWrapNoWrap: 'YogaWrap.NO_WRAP',
+    YGWrapWrap: 'YogaWrap.WRAP',
+    YGWrapWrapReverse: 'YogaWrap.WRAP_REVERSE',
+    YGDisplayFlex: 'YogaDisplay.FLEX',
+    YGDisplayNone: 'YogaDisplay.NONE',
+    YGDisplayContents: 'YogaDisplay.CONTENTS',
+    YGDisplayGrid: 'YogaDisplay.GRID',
+    YGBoxSizingBorderBox: 'YogaBoxSizing.BORDER_BOX',
+    YGBoxSizingContentBox: 'YogaBoxSizing.CONTENT_BOX',
+  };
+
+  private tr(value: string): string {
+    return JavaEmitter.enumMap[value] ?? value;
+  }
+
+  constructor() {
+    super('  ');
+  }
+
+  emitCommentHeader(fixtureName: string): void {
+    this.push([
+      '/*',
+      ' * Copyright (c) Meta Platforms, Inc. and affiliates.',
+      ' *',
+      ' * This source code is licensed under the MIT license found in the',
+      ' * LICENSE file in the root directory of this source tree.',
+      ' *',
+      ' * MAGIC_PLACEHOLDER',
+      ' * generated by gentest/src/GentestDriver.ts from gentest/fixtures/' +
+        fixtureName +
+        '.html',
+      ' */',
+      '',
+    ]);
+  }
+
+  emitPrologue(fixtureName: string): void {
+    this.push([
+      'package com.facebook.yoga;',
+      '',
+      'import static org.junit.Assert.assertEquals;',
+      '',
+      'import org.junit.Ignore;',
+      'import org.junit.Test;',
+      'import org.junit.runner.RunWith;',
+      'import org.junit.runners.Parameterized;',
+      'import com.facebook.yoga.utils.TestUtils;',
+      '',
+      '@RunWith(Parameterized.class)',
+      'public class ' + fixtureName + ' {',
+    ]);
+    this.pushIndent();
+    this.push([
+      '@Parameterized.Parameters(name = "{0}")',
+      'public static Iterable<TestParametrization.NodeFactory> nodeFactories() {',
+    ]);
+    this.pushIndent();
+    this.push('return TestParametrization.nodeFactories();');
+    this.popIndent();
+    this.push('}');
+    this.push([
+      '',
+      '@Parameterized.Parameter public TestParametrization.NodeFactory mNodeFactory;',
+      '',
+    ]);
+  }
+
+  emitTestPrologue(
+    name: string,
+    experiments: string[],
+    disabled: boolean,
+  ): void {
+    this.push('@Test');
+    if (disabled) {
+      this.push('@Ignore');
+    }
+    this.push('public void test_' + name + '() {');
+    this.pushIndent();
+
+    this.push('YogaConfig config = YogaConfigFactory.create();');
+    for (const experiment of experiments) {
+      this.push(
+        'config.setExperimentalFeatureEnabled(YogaExperimentalFeature.' +
+          toJavaUpper(experiment) +
+          ', true);',
+      );
+    }
+    this.push('');
+  }
+
+  emitTestTreePrologue(nodeName: string): void {
+    this.push('final YogaNode ' + nodeName + ' = createNode(config);');
+  }
+
+  emitTestEpilogue(_experiments: string[]): void {
+    this.popIndent();
+    this.push(['}', '']);
+  }
+
+  emitEpilogue(): void {
+    this.push('private YogaNode createNode(YogaConfig config) {');
+    this.pushIndent();
+    this.push('return mNodeFactory.create(config);');
+    this.popIndent();
+    this.push('}');
+    this.popIndent();
+    this.push(['}', '']);
+  }
+
+  assertEQ(v0: number, v1: string): void {
+    this.push('assertEquals(' + v0 + 'f, ' + v1 + ', 0.0f);');
+  }
+
+  layoutGetLeft(node: string): string {
+    return node + '.getLayoutX()';
+  }
+
+  layoutGetTop(node: string): string {
+    return node + '.getLayoutY()';
+  }
+
+  layoutGetWidth(node: string): string {
+    return node + '.getLayoutWidth()';
+  }
+
+  layoutGetHeight(node: string): string {
+    return node + '.getLayoutHeight()';
+  }
+
+  insertChild(parent: string, child: string, index: number): void {
+    this.push(parent + '.addChildAt(' + child + ', ' + index + ');');
+  }
+
+  calculateLayout(
+    node: string,
+    direction: string,
+    _experiments: string[],
+  ): void {
+    this.push(node + '.setDirection(' + this.tr(direction) + ');');
+    this.push(
+      node +
+        '.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED);',
+    );
+  }
+
+  setMeasureFunc(node: string, text: string, _flexDirection: string): void {
+    this.push(`${node}.setData("${text}");`);
+    this.push(
+      `${node}.setMeasureFunction(new TestUtils.intrinsicMeasureFunction());`,
+    );
+  }
+
+  setDirection(node: string, value: string): void {
+    this.push(node + '.setDirection(' + this.tr(value) + ');');
+  }
+
+  setFlexDirection(node: string, value: string): void {
+    this.push(node + '.setFlexDirection(' + this.tr(value) + ');');
+  }
+
+  setJustifyContent(node: string, value: string): void {
+    this.push(node + '.setJustifyContent(' + this.tr(value) + ');');
+  }
+
+  setJustifyItems(node: string, value: string): void {
+    this.push(node + '.setJustifyItems(' + this.tr(value) + ');');
+  }
+
+  setJustifySelf(node: string, value: string): void {
+    this.push(node + '.setJustifySelf(' + this.tr(value) + ');');
+  }
+
+  setAlignContent(node: string, value: string): void {
+    this.push(node + '.setAlignContent(' + this.tr(value) + ');');
+  }
+
+  setAlignItems(node: string, value: string): void {
+    this.push(node + '.setAlignItems(' + this.tr(value) + ');');
+  }
+
+  setAlignSelf(node: string, value: string): void {
+    this.push(node + '.setAlignSelf(' + this.tr(value) + ');');
+  }
+
+  setPositionType(node: string, value: string): void {
+    this.push(node + '.setPositionType(' + this.tr(value) + ');');
+  }
+
+  setFlexWrap(node: string, value: string): void {
+    this.push(node + '.setWrap(' + this.tr(value) + ');');
+  }
+
+  setOverflow(node: string, value: string): void {
+    this.push(node + '.setOverflow(' + this.tr(value) + ');');
+  }
+
+  setDisplay(node: string, value: string): void {
+    this.push(node + '.setDisplay(' + this.tr(value) + ');');
+  }
+
+  setBoxSizing(node: string, value: string): void {
+    this.push(node + '.setBoxSizing(' + this.tr(value) + ');');
+  }
+
+  setFlexGrow(node: string, value: string): void {
+    this.push(node + '.setFlexGrow(' + value + 'f);');
+  }
+
+  setFlexShrink(node: string, value: string): void {
+    this.push(node + '.setFlexShrink(' + value + 'f);');
+  }
+
+  setFlexBasis(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setFlexBasis' + suffix + '();');
+    } else {
+      this.push(node + '.setFlexBasis' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setWidth(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setWidth' + suffix + '();');
+    } else {
+      this.push(node + '.setWidth' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setHeight(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setHeight' + suffix + '();');
+    } else {
+      this.push(node + '.setHeight' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setMinWidth(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setMinWidth' + suffix + '();');
+    } else {
+      this.push(node + '.setMinWidth' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setMinHeight(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setMinHeight' + suffix + '();');
+    } else {
+      this.push(node + '.setMinHeight' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setMaxWidth(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setMaxWidth' + suffix + '();');
+    } else {
+      this.push(node + '.setMaxWidth' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setMaxHeight(node: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (
+      suffix === 'Auto' ||
+      suffix === 'MaxContent' ||
+      suffix === 'FitContent' ||
+      suffix === 'Stretch'
+    ) {
+      this.push(node + '.setMaxHeight' + suffix + '();');
+    } else {
+      this.push(node + '.setMaxHeight' + suffix + '(' + v + 'f);');
+    }
+  }
+
+  setMargin(node: string, edge: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (suffix === 'Auto') {
+      this.push(node + '.setMarginAuto(' + this.tr(edge) + ');');
+    } else {
+      this.push(
+        node + '.setMargin' + suffix + '(' + this.tr(edge) + ', ' + v + 'f);',
+      );
+    }
+  }
+
+  setPadding(node: string, edge: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    this.push(
+      node + '.setPadding' + suffix + '(' + this.tr(edge) + ', ' + v + ');',
+    );
+  }
+
+  setPosition(node: string, edge: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    if (suffix === 'Auto') {
+      this.push(node + '.setPositionAuto(' + this.tr(edge) + ');');
+    } else {
+      this.push(
+        node + '.setPosition' + suffix + '(' + this.tr(edge) + ', ' + v + 'f);',
+      );
+    }
+  }
+
+  setBorder(node: string, edge: string, value: ValueWithUnit): void {
+    const v = valueWithUnitToString(value);
+    this.push(node + '.setBorder(' + this.tr(edge) + ', ' + v + 'f);');
+  }
+
+  setGap(node: string, gutter: string, value: ValueWithUnit): void {
+    const suffix = toMethodName(value);
+    const v = valueWithUnitToString(value);
+    this.push(
+      node + '.setGap' + suffix + '(' + this.tr(gutter) + ', ' + v + 'f);',
+    );
+  }
+
+  setAspectRatio(node: string, value: ValueWithUnit): void {
+    const v = valueWithUnitToString(value);
+    this.push(node + '.setAspectRatio(' + v + 'f);');
+  }
+
+  private emitGridTrackList(
+    node: string,
+    varName: string,
+    setterName: string,
+    tracks: GridTrack[],
+  ): void {
+    this.push(`YogaGridTrackList ${node}${varName} = new YogaGridTrackList();`);
+    for (const track of tracks) {
+      if (track.type === 'minmax') {
+        const minVal = formatGridTrackValueJava(track.min);
+        const maxVal = formatGridTrackValueJava(track.max);
+        this.push(
+          `${node}${varName}.addTrack(YogaGridTrackValue.minMax(${minVal}, ${maxVal}));`,
+        );
+      } else {
+        const val = formatGridTrackValueJava(track);
+        this.push(`${node}${varName}.addTrack(${val});`);
+      }
+    }
+    this.push(`${node}.set${setterName}(${node}${varName});`);
+  }
+
+  setGridTemplateColumns(node: string, tracks: GridTrack[]): void {
+    this.emitGridTrackList(
+      node,
+      'GridTemplateColumns',
+      'GridTemplateColumns',
+      tracks,
+    );
+  }
+
+  setGridTemplateRows(node: string, tracks: GridTrack[]): void {
+    this.emitGridTrackList(
+      node,
+      'GridTemplateRows',
+      'GridTemplateRows',
+      tracks,
+    );
+  }
+
+  setGridAutoColumns(node: string, tracks: GridTrack[]): void {
+    this.emitGridTrackList(node, 'GridAutoColumns', 'GridAutoColumns', tracks);
+  }
+
+  setGridAutoRows(node: string, tracks: GridTrack[]): void {
+    this.emitGridTrackList(node, 'GridAutoRows', 'GridAutoRows', tracks);
+  }
+
+  setGridColumnStart(node: string, value: number): void {
+    this.push(`${node}.setGridColumnStart(${value});`);
+  }
+
+  setGridColumnStartSpan(node: string, value: number): void {
+    this.push(`${node}.setGridColumnStartSpan(${value});`);
+  }
+
+  setGridColumnEnd(node: string, value: number): void {
+    this.push(`${node}.setGridColumnEnd(${value});`);
+  }
+
+  setGridColumnEndSpan(node: string, value: number): void {
+    this.push(`${node}.setGridColumnEndSpan(${value});`);
+  }
+
+  setGridRowStart(node: string, value: number): void {
+    this.push(`${node}.setGridRowStart(${value});`);
+  }
+
+  setGridRowStartSpan(node: string, value: number): void {
+    this.push(`${node}.setGridRowStartSpan(${value});`);
+  }
+
+  setGridRowEnd(node: string, value: number): void {
+    this.push(`${node}.setGridRowEnd(${value});`);
+  }
+
+  setGridRowEndSpan(node: string, value: number): void {
+    this.push(`${node}.setGridRowEndSpan(${value});`);
+  }
+}

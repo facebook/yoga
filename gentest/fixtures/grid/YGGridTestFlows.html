@@ -1,0 +1,1135 @@
+<!-- Tests percentage sized tracks when container is indefinite size. -->
+<div
+  id="grid_indefinite_container_size_percentage_tracks"
+  style="
+    display: grid;
+    grid-template-columns: 40% 50% 100%;
+    grid-template-rows: 80px 80%;
+  ">
+  <div style="width: 100px; height: 100px"></div>
+  <div style="width: 100px; height: 100px"></div>
+  <div style="padding: 30px"></div>
+  <div style="min-width: 40px"></div>
+  <div style="border-width: 10px"></div>
+</div>
+
+<div
+  id="grid_definite_container_size_percentage_tracks"
+  style="
+    display: grid;
+    grid-template-columns: 40% 50% 100%;
+    grid-template-rows: 80px 80%;
+    width: 300px;
+    height: 300px;
+    row-gap: 10%;
+    column-gap: 20%;
+  ">
+  <div style="min-width: 40px"></div>
+  <div style="border: 40px"></div>
+  <div style="padding: 40px"></div>
+  <div style="margin: 10%"></div>
+</div>
+
+<!-- TRACK SIZING ALGORITHM TESTS -->
+
+<!-- Flow 1.2: Initialize Track Sizes - Intrinsic Sizing Functions (auto) -->
+<div
+  id="init_track_intrinsic_sizing"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    width: 500px;
+    height: 300px;
+  ">
+  <div style="width: 100px; height: 80px"></div>
+  <div style="width: 150px; height: 90px"></div>
+  <div style="width: 120px; height: 70px"></div>
+</div>
+
+<!-- Flow 1.3: Initialize Track Sizes - Flexible Sizing Functions (fr) -->
+<div
+  id="init_track_flexible_sizing"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 400px;
+    height: 200px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 1.4: Initialize Track Sizes - Mixed Sizing Functions -->
+<div
+  id="init_track_mixed_sizing"
+  style="
+    display: grid;
+    grid-template-columns: 100px auto 1fr 2fr;
+    grid-template-rows: 80px auto 1fr;
+    width: 600px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 80px; height: 60px"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 2.1: Resolve Intrinsic - Single Span Items with Auto Tracks -->
+<div
+  id="resolve_intrinsic_single_span"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+  ">
+  <div style="width: 120px; height: 80px"></div>
+  <div style="width: 100px; height: 90px"></div>
+  <div style="width: 140px; height: 70px"></div>
+  <div style="width: 110px; height: 85px"></div>
+  <div style="width: 130px; height: 95px"></div>
+</div>
+
+<!-- Flow 2.2: Resolve Intrinsic - Multi-Span Items with Auto Tracks -->
+<div
+  id="resolve_intrinsic_multi_span"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+  ">
+  <div
+    style="
+      width: 250px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 80px; height: 90px"></div>
+  <div style="width: 100px; height: 110px"></div>
+  <div
+    style="
+      width: 300px;
+      height: 120px;
+      grid-column-start: 2;
+      grid-column-end: 4;
+    "></div>
+</div>
+
+<!-- Flow 2.3: Resolve Intrinsic - Items Spanning Flexible Tracks -->
+<div
+  id="resolve_intrinsic_flexible_tracks"
+  style="
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    width: 400px;
+  ">
+  <div
+    style="
+      width: 300px;
+      height: 80px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100px; height: 90px"></div>
+  <div style="width: 120px; height: 100px"></div>
+</div>
+
+<!-- Flow 2.4: Resolve Intrinsic - Different Span Sizes (span 1, 2, 3) -->
+<div
+  id="resolve_intrinsic_progressive_spans"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+  ">
+  <!-- Span 1 items -->
+  <div style="width: 100px; height: 80px"></div>
+  <div style="width: 110px; height: 85px"></div>
+  <div style="width: 90px; height: 75px"></div>
+  <div style="width: 105px; height: 82px"></div>
+
+  <!-- Span 2 items -->
+  <div
+    style="
+      width: 250px;
+      height: 90px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 2;
+    "></div>
+  <div
+    style="
+      width: 230px;
+      height: 95px;
+      grid-column-start: 3;
+      grid-column-end: 5;
+      grid-row-start: 2;
+    "></div>
+
+  <!-- Span 3 items -->
+  <div
+    style="
+      width: 380px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 3;
+    "></div>
+</div>
+
+<!-- Flow 3.1: Maximize Track Sizes - With Definite Container Size -->
+<div
+  id="maximize_tracks_definite_size"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    width: 500px;
+    height: 300px;
+  ">
+  <div style="width: 100px; height: 80px"></div>
+  <div style="width: 120px; height: 90px"></div>
+  <div style="width: 110px; height: 85px"></div>
+</div>
+
+<!-- Flow 3.2: Maximize Track Sizes - With Max Constraint -->
+<div
+  id="maximize_tracks_max_constraint"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    max-width: 400px;
+    max-height: 250px;
+  ">
+  <div style="width: 150px; height: 100px"></div>
+  <div style="width: 160px; height: 110px"></div>
+  <div style="width: 170px; height: 105px"></div>
+</div>
+
+<!-- Flow 4.1: Expand Flexible Tracks - Definite Free Space -->
+<div
+  id="expand_flexible_definite_free_space"
+  style="
+    display: grid;
+    grid-template-columns: 100px 1fr 2fr 100px;
+    grid-template-rows: 80px 1fr 80px;
+    width: 600px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 4.3: Expand Flexible Tracks - With Min Constraint -->
+<div
+  id="expand_flexible_min_constraint"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    min-width: 600px;
+    min-height: 400px;
+  ">
+  <div style="width: 50px; height: 50px"></div>
+  <div style="width: 60px; height: 60px"></div>
+  <div style="width: 55px; height: 55px"></div>
+</div>
+
+<!-- Flow 4.4: Expand Flexible Tracks - With Max Constraint -->
+<div
+  id="expand_flexible_max_constraint"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 800px;
+    height: 600px;
+    max-width: 500px;
+    max-height: 350px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 4.5: Expand Flexible Tracks - Flex Factor Less Than 1 -->
+<div
+  id="expand_flexible_flex_less_than_one"
+  style="
+    display: grid;
+    grid-template-columns: 0.5fr 0.3fr 0.2fr;
+    grid-template-rows: 0.6fr 0.4fr;
+    width: 400px;
+    height: 300px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 4.6: Expand Flexible Tracks - Items Spanning Flexible -->
+<div
+  id="expand_flexible_spanning_items"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 600px;
+    height: 400px;
+  ">
+  <div
+    style="
+      width: 450px;
+      height: 100%;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 5.1: Stretch Auto Tracks - justify-content: stretch -->
+<div
+  id="stretch_auto_justify_content_stretch"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 100px 100px;
+    width: 600px;
+    height: 200px;
+    justify-content: stretch;
+  ">
+  <div style="width: 100px; height: 100%"></div>
+  <div style="width: 120px; height: 100%"></div>
+  <div style="width: 110px; height: 100%"></div>
+</div>
+
+<!-- Flow 5.2: Stretch Auto Tracks - align-content: stretch -->
+<div
+  id="stretch_auto_align_content_stretch"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px;
+    grid-template-rows: auto auto auto;
+    width: 200px;
+    height: 600px;
+    align-content: stretch;
+  ">
+  <div style="width: 100%; height: 100px"></div>
+  <div style="width: 100%; height: 120px"></div>
+  <div style="width: 100%; height: 110px"></div>
+</div>
+
+<!-- Flow 5.3: Stretch Auto Tracks - Both Axes -->
+<div
+  id="stretch_auto_both_axes"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    width: 600px;
+    height: 500px;
+    justify-content: stretch;
+    align-content: stretch;
+  ">
+  <div style="width: 100px; height: 80px"></div>
+  <div style="width: 120px; height: 90px"></div>
+  <div style="width: 110px; height: 85px"></div>
+</div>
+
+<!-- Flow 8.5: justify-self with auto margin left -->
+<div
+  id="justify_self_auto_margin_left"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 100px;
+    width: 400px;
+    height: 100px;
+  ">
+  <div style="width: 100px; height: 100%; margin-left: auto"></div>
+  <div style="width: 100px; height: 100%; margin-left: auto"></div>
+</div>
+
+<!-- Flow 8.6: justify-self with auto margin right -->
+<div
+  id="justify_self_auto_margin_right"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 100px;
+    width: 400px;
+    height: 100px;
+  ">
+  <div style="width: 100px; height: 100%; margin-right: auto"></div>
+  <div style="width: 100px; height: 100%; margin-right: auto"></div>
+</div>
+
+<!-- Flow 8.7: justify-self with auto margin both -->
+<div
+  id="justify_self_auto_margin_both"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 100px;
+    width: 400px;
+    height: 100px;
+  ">
+  <div
+    style="
+      width: 100px;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    "></div>
+  <div
+    style="
+      width: 100px;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    "></div>
+</div>
+
+<!-- Flow 9.5: align-self with auto margin top -->
+<div
+  id="align_self_auto_margin_top"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 200px 200px;
+    width: 100px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100px; margin-top: auto"></div>
+  <div style="width: 100%; height: 100px; margin-top: auto"></div>
+</div>
+
+<!-- Flow 9.6: align-self with auto margin bottom -->
+<div
+  id="align_self_auto_margin_bottom"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 200px 200px;
+    width: 100px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100px; margin-bottom: auto"></div>
+  <div style="width: 100%; height: 100px; margin-bottom: auto"></div>
+</div>
+
+<!-- Flow 9.7: align-self with auto margin both -->
+<div
+  id="align_self_auto_margin_both"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 200px 200px;
+    width: 100px;
+    height: 400px;
+  ">
+  <div
+    style="
+      width: 100%;
+      height: 100px;
+      margin-top: auto;
+      margin-bottom: auto;
+    "></div>
+  <div
+    style="
+      width: 100%;
+      height: 100px;
+      margin-top: auto;
+      margin-bottom: auto;
+    "></div>
+</div>
+
+<!-- Flow 10.1: Minimum Contribution - Auto Minimum Size -->
+<div
+  id="minimum_contribution_auto"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 120px; height: 80px"></div>
+  <div style="width: 150px; height: 90px"></div>
+</div>
+
+<!-- Flow 10.2: Minimum Contribution - Definite Size -->
+<div
+  id="minimum_contribution_definite"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 120px; height: 80px"></div>
+  <div style="width: 150px; height: 90px"></div>
+</div>
+
+<!-- Flow 10.3: Minimum Contribution - Percentage Size with Definite Container -->
+<div
+  id="minimum_contribution_percentage_definite"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    width: 500px;
+  ">
+  <div style="width: 30%; height: 80px"></div>
+  <div style="width: 40%; height: 90px"></div>
+</div>
+
+<!-- Flow 10.4: Minimum Contribution - Min Size Constraint -->
+<div
+  id="minimum_contribution_min_size"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 120px; min-width: 150px; height: 80px"></div>
+  <div style="width: 100px; min-width: 180px; height: 90px"></div>
+</div>
+
+<!-- Flow 11.1: Content-based Minimum - Definite Length -->
+<div
+  id="content_based_min_definite_length"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 150px; height: 100px"></div>
+  <div style="width: 180px; height: 120px"></div>
+</div>
+
+<!-- Flow 11.2: Content-based Minimum - Aspect Ratio Transfer -->
+<div
+  id="content_based_min_aspect_ratio"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 150px; aspect-ratio: 2"></div>
+  <div style="height: 100px; aspect-ratio: 0.5"></div>
+</div>
+
+<!-- Flow 11.3: Content-based Minimum - Content Size Suggestion -->
+<div
+  id="content_based_min_content_size"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="padding: 20px; width: 100px; height: 80px"></div>
+  <div style="padding: 15px; width: 120px; height: 90px"></div>
+</div>
+
+<!-- Flow 11.4: Content-based Minimum - Fixed Track Clamping -->
+<div
+  id="content_based_min_fixed_track_clamp"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 300px; height: 100px"></div>
+  <div style="width: 250px; height: 120px"></div>
+</div>
+
+<!-- Flow 11.5: Content-based Minimum - Spanning Only Fixed Max Tracks -->
+<div
+  id="content_based_min_span_fixed_max"
+  style="
+    display: grid;
+    grid-template-columns: 150px 150px 150px;
+    grid-template-rows: auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 500px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100px; height: 120px"></div>
+</div>
+
+<!-- Flow 12.1: Max-content Contribution - Basic -->
+<div
+  id="max_content_contribution_basic"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 150px; height: 100px"></div>
+  <div style="width: 180px; height: 120px"></div>
+</div>
+
+<!-- Flow 12.2: Max-content Contribution - With Margins -->
+<div
+  id="max_content_contribution_margins"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div style="width: 150px; height: 100px; margin: 10px"></div>
+  <div style="width: 180px; height: 120px; margin: 15px"></div>
+</div>
+
+<!-- Flow 13.1: Limited Minimum Content - With Fixed Tracks Limit -->
+<div
+  id="limited_min_content_fixed_limit"
+  style="
+    display: grid;
+    grid-template-columns: 150px 150px;
+    grid-template-rows: auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 400px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100px; height: 120px"></div>
+</div>
+
+<!-- Flow 13.2: Limited Minimum Content - No Fixed Tracks Limit -->
+<div
+  id="limited_min_content_no_limit"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 400px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100px; height: 120px"></div>
+</div>
+
+<!-- Flow 14.1: Percentage Tracks - Definite Container Size -->
+<div
+  id="percentage_tracks_definite_container"
+  style="
+    display: grid;
+    grid-template-columns: 20% 30% 50%;
+    grid-template-rows: 40% 60%;
+    width: 500px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 14.2: Percentage Tracks - Indefinite Container Size -->
+<div
+  id="percentage_tracks_indefinite_container"
+  style="
+    display: grid;
+    grid-template-columns: 20% 30% auto;
+    grid-template-rows: 40% auto;
+  ">
+  <div style="width: 100px; height: 80px"></div>
+  <div style="width: 120px; height: 90px"></div>
+  <div style="width: 110px; height: 85px"></div>
+</div>
+
+<!-- Flow 14.3: Percentage Tracks - Mixed with Fixed -->
+<div
+  id="percentage_tracks_mixed_fixed"
+  style="
+    display: grid;
+    grid-template-columns: 100px 30% auto;
+    grid-template-rows: 80px 40% auto;
+    width: 500px;
+    height: 400px;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 14.4: Percentage Gap - Definite Container -->
+<div
+  id="percentage_gap_definite_container"
+  style="
+    display: grid;
+    grid-template-columns: 150px 150px 150px;
+    grid-template-rows: 100px 100px;
+    width: 600px;
+    height: 300px;
+    column-gap: 10%;
+    row-gap: 20%;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 16.1: Spanning Items - Span 2 -->
+<div
+  id="spanning_items_span_2"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 250px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100px; height: 100px"></div>
+  <div style="width: 110px; height: 100px"></div>
+</div>
+
+<!-- Flow 16.2: Spanning Items - Span 3 -->
+<div
+  id="spanning_items_span_3"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 380px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 4;
+    "></div>
+  <div style="width: 100px; height: 100px"></div>
+</div>
+
+<!-- Flow 16.3: Spanning Items - Overlapping Spans -->
+<div
+  id="spanning_items_overlapping"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 250px;
+      height: 100px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+    "></div>
+  <div
+    style="
+      width: 280px;
+      height: 120px;
+      grid-column-start: 2;
+      grid-column-end: 4;
+      grid-row-start: 2;
+    "></div>
+</div>
+
+<!-- Flow 16.4: Spanning Items - Both Axes -->
+<div
+  id="spanning_items_both_axes"
+  style="
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+  ">
+  <div
+    style="
+      width: 250px;
+      height: 230px;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 3;
+    "></div>
+  <div style="width: 100px; height: 100px"></div>
+  <div style="width: 110px; height: 110px"></div>
+</div>
+
+<!-- Flow 17.1: Auto Margins - Inline Axis Left -->
+<div
+  id="auto_margins_inline_left"
+  style="
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: 100px;
+  ">
+  <div style="width: 150px; height: 100%; margin-left: auto"></div>
+</div>
+
+<!-- Flow 17.2: Auto Margins - Inline Axis Right -->
+<div
+  id="auto_margins_inline_right"
+  style="
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: 100px;
+  ">
+  <div style="width: 150px; height: 100%; margin-right: auto"></div>
+</div>
+
+<!-- Flow 17.4: Auto Margins - Block Axis Top -->
+<div
+  id="auto_margins_block_top"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 300px;
+  ">
+  <div style="width: 100%; height: 150px; margin-top: auto"></div>
+</div>
+
+<!-- Flow 17.5: Auto Margins - Block Axis Bottom -->
+<div
+  id="auto_margins_block_bottom"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 300px;
+  ">
+  <div style="width: 100%; height: 150px; margin-bottom: auto"></div>
+</div>
+
+<!-- Flow 17.7: Auto Margins - Overrides justify-self -->
+<div
+  id="auto_margins_overrides_justify_self"
+  style="
+    display: grid;
+    grid-template-columns: 300px;
+    grid-template-rows: 100px;
+  ">
+  <div
+    style="
+      width: 150px;
+      height: 100%;
+      margin-left: auto;
+      justify-self: start;
+    "></div>
+</div>
+
+<!-- Flow 17.8: Auto Margins - Overrides align-self -->
+<div
+  id="auto_margins_overrides_align_self"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 300px;
+  ">
+  <div
+    style="
+      width: 100%;
+      height: 150px;
+      margin-top: auto;
+      align-self: start;
+    "></div>
+</div>
+
+<!-- Flow 18.1: Min/Max Constraints - Min Width -->
+<div
+  id="min_max_constraints_min_width"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100px;
+  ">
+  <div style="width: 80px; min-width: 150px; height: 100%"></div>
+  <div style="width: 90px; height: 100%"></div>
+</div>
+
+<!-- Flow 18.2: Min/Max Constraints - Max Width -->
+<div
+  id="min_max_constraints_max_width"
+  style="
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 100px;
+  ">
+  <div style="width: 100%; max-width: 120px; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 18.3: Min/Max Constraints - Min Height -->
+<div
+  id="min_max_constraints_min_height"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: auto auto;
+  ">
+  <div style="width: 100%; height: 80px; min-height: 150px"></div>
+  <div style="width: 100%; height: 90px"></div>
+</div>
+
+<!-- Flow 18.4: Min/Max Constraints - Max Height -->
+<div
+  id="min_max_constraints_max_height"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 200px 200px;
+  ">
+  <div style="width: 100%; height: 100%; max-height: 120px"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 18.5: Min/Max Constraints - Both Min and Max -->
+<div
+  id="min_max_constraints_both"
+  style="
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  ">
+  <div
+    style="
+      width: 80px;
+      min-width: 100px;
+      max-width: 150px;
+      height: 100px;
+    "></div>
+  <div
+    style="
+      width: 200px;
+      min-width: 100px;
+      max-width: 130px;
+      height: 100px;
+    "></div>
+</div>
+
+<!-- Flow 19.1: Gaps with Content Distribution - justify-content: space-between -->
+<div
+  id="gaps_justify_space_between"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px;
+    width: 500px;
+    height: 100px;
+    column-gap: 20px;
+    justify-content: space-between;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 19.2: Gaps with Content Distribution - align-content: space-around -->
+<div
+  id="gaps_align_space_around"
+  style="
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 100px 100px 100px;
+    width: 100px;
+    height: 500px;
+    row-gap: 20px;
+    align-content: space-around;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 19.3: Gaps with Content Distribution - Both Axes space-evenly -->
+<div
+  id="gaps_both_space_evenly"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    width: 500px;
+    height: 500px;
+    gap: 15px;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+  ">
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Flow 19.4: Gaps with Spanning Items -->
+<div
+  id="gaps_spanning_items"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    gap: 20px;
+  ">
+  <div
+    style="
+      width: 100%;
+      height: 100%;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    "></div>
+  <div style="width: 100%; height: 100%"></div>
+  <div
+    style="width: 100%; height: 100%; grid-row-start: 2; grid-row-end: 4"></div>
+</div>
+
+<!-- COMPLEX INTEGRATION TESTS -->
+
+
+<!-- Complex 3: Flexible Tracks with Min/Max and Content Distribution -->
+<div
+  id="complex_flexible_min_max_distribution"
+  style="
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 600px;
+    height: 400px;
+    min-width: 400px;
+    max-width: 800px;
+    gap: 15px;
+    justify-content: space-around;
+  ">
+  <div style="width: 100%; height: 100%; min-width: 150px"></div>
+  <div style="width: 100%; height: 100%; max-width: 250px"></div>
+  <div style="width: 100%; height: 100%"></div>
+</div>
+
+<!-- Complex 4: All Features Combined -->
+<div
+  id="complex_all_features_combined"
+  style="
+    display: grid;
+    grid-template-columns: 100px auto 1fr 2fr 30%;
+    grid-template-rows: 80px auto 1fr 40%;
+    width: 800px;
+    height: 600px;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-content: space-between;
+    justify-items: center;
+    align-items: center;
+  ">
+  <div
+    style="
+      width: 350px;
+      height: 180px;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 3;
+      justify-self: start;
+      align-self: end;
+      margin-left: 20px;
+    "></div>
+  <div style="width: 150px; aspect-ratio: 2 / 1; max-height: 100px"></div>
+  <div
+    style="
+      width: 100%;
+      height: 100%;
+      grid-column-start: 2;
+      grid-column-end: 4;
+      min-width: 200px;
+      max-width: 300px;
+    "></div>
+  <div style="aspect-ratio: 1 / 1; margin: auto"></div>
+  <div
+    style="
+      width: 100%;
+      height: 100%;
+      justify-self: stretch;
+      align-self: stretch;
+    "></div>
+</div>
+
+<div
+  id="grid_absolute_position_items"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+  ">
+  <div style="width: 100px; height: 100px"></div>
+  <div style="width: 50px; height: 50px"></div>
+  <div
+    style="
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      left: 50px;
+      top: 10px;
+    "></div>
+  <div
+    style="
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      left: 80px;
+      top: 10px;
+    "></div>
+</div>
+
+<div
+  id="grid_item_with_display_contents_items"
+  style="
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+  ">
+  <div style="width: 100px; height: 100px"></div>
+  <div style="display: contents; border: 2px solid red">
+    <div style="width: 100px; height: 100px"></div>
+  </div>
+  <div style="width: 100px; height: 100px"></div>
+</div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div>Lorem ipsum dolor sit amet, consectetur</div>
+  <div></div>
+</div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks_max_width"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div style="max-width: 50px">Lorem ipsum dolor sit amet, consectetur</div>
+  <div></div>
+</div>
+
+<div
+  id="text_wraps_in_fixed_sized_column_tracks_min_width"
+  style="display: grid; grid-template-columns: 100px auto 100px">
+  <div style="min-width: 180px; width: 100px">
+    Lorem ipsum dolor sit amet, consectetur
+  </div>
+  <div></div>
+</div>
