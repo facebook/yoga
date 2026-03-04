@@ -42,7 +42,10 @@ TEST(YogaTest, scale_change_invalidates_layout) {
 
 TEST(YogaTest, errata_config_change_relayout) {
   YGConfig* config = YGConfigNew();
-  YGConfigSetErrata(config, YGErrataStretchFlexBasis);
+  YGConfigSetErrata(
+      config,
+      static_cast<YGErrata>(
+          YGErrataStretchFlexBasis | YGErrataFlexBasisFitContentInMainAxis));
   YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);

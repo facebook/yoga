@@ -118,7 +118,10 @@ TEST(YogaTest, assert_webdefault_values_reset) {
 
 TEST(YogaTest, assert_legacy_stretch_behaviour) {
   YGConfig* config = YGConfigNew();
-  YGConfigSetErrata(config, YGErrataStretchFlexBasis);
+  YGConfigSetErrata(
+      config,
+      static_cast<YGErrata>(
+          YGErrataStretchFlexBasis | YGErrataFlexBasisFitContentInMainAxis));
   YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetWidth(root, 500);
   YGNodeStyleSetHeight(root, 500);
