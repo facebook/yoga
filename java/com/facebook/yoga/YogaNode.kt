@@ -64,6 +64,10 @@ public abstract class YogaNode : YogaProps {
 
   abstract override var justifyContent: YogaJustify
 
+  abstract override var justifyItems: YogaJustify
+
+  abstract override var justifySelf: YogaJustify
+
   abstract override var alignItems: YogaAlign
 
   abstract override var alignSelf: YogaAlign
@@ -209,6 +213,30 @@ public abstract class YogaNode : YogaProps {
   public abstract fun setGap(gutter: YogaGutter, gapLength: Float)
 
   public abstract fun setGapPercent(gutter: YogaGutter, gapLength: Float)
+
+  public abstract fun setGridTemplateColumns(trackList: YogaGridTrackList)
+
+  public abstract fun setGridTemplateRows(trackList: YogaGridTrackList)
+
+  public abstract fun setGridAutoColumns(trackList: YogaGridTrackList)
+
+  public abstract fun setGridAutoRows(trackList: YogaGridTrackList)
+
+  public abstract fun setGridColumnStart(value: Int)
+
+  public abstract fun setGridColumnStartSpan(span: Int)
+
+  public abstract fun setGridColumnEnd(value: Int)
+
+  public abstract fun setGridColumnEndSpan(span: Int)
+
+  public abstract fun setGridRowStart(value: Int)
+
+  public abstract fun setGridRowStartSpan(span: Int)
+
+  public abstract fun setGridRowEnd(value: Int)
+
+  public abstract fun setGridRowEndSpan(span: Int)
 
   public abstract val layoutX: Float
 
