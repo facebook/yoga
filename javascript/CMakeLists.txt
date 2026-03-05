@@ -5,24 +5,24 @@
 
 cmake_minimum_required(VERSION 3.13...3.26)
 set(CMAKE_VERBOSE_MAKEFILE on)
-project(yoga)
+project(yoga C CXX)
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+file(GLOB_RECURSE YOGA_SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp)
+
+set(BRIDGE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/wasm_bridge.c)
 
 include_directories(..)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_definitions(
-    EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)
-
 set(COMPILE_OPTIONS
     -flto
     -fno-exceptions
     -fno-rtti
+    -Wno-ignored-attributes
     -g0
     -Os
     "SHELL:-s STRICT=1")
@@ -32,7 +32,6 @@ add_compile_options(${COMPILE_OPTIONS})
 add_link_options(
     ${COMPILE_OPTIONS}
     "SHELL:--closure 1"
-    "SHELL:--memory-init-file 0"
     "SHELL:--no-entry"
     "SHELL:-s ALLOW_MEMORY_GROWTH=1"
     "SHELL:-s ASSERTIONS=0"
@@ -44,16 +43,16 @@ add_link_options(
     "SHELL:-s MODULARIZE=1"
     "SHELL:-s EXPORT_ES6=1"
     "SHELL:-s WASM=1"
-    "SHELL:-s TEXTDECODER=0"
+    "SHELL:-s TEXTDECODER=2"
     "SHELL:-s SUPPORT_BIG_ENDIAN=1"
     # SINGLE_FILE=1 combined with ENVIRONMENT='web' creates code that works on
     # both bundlders and Node.
     "SHELL:-s SINGLE_FILE=1"
-    "SHELL:-s ENVIRONMENT='web'")
+    "SHELL:-s ENVIRONMENT='web'"
+    "SHELL:-s EXPORTED_RUNTIME_METHODS=['HEAPF32','HEAP32']"
+    "SHELL:-Wl,--export-dynamic")
 
-link_libraries(embind)
-
-add_library(yogaObjLib OBJECT ${SOURCES})
+add_library(yogaObjLib OBJECT ${YOGA_SOURCES} ${BRIDGE_SOURCES})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 
