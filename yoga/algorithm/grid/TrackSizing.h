@@ -42,12 +42,12 @@ struct TrackSizing {
 
   struct ItemSizeContribution {
     const GridItem* item;
-    std::vector<GridTrackSize*> affectedTracks;
+    std::vector<GridTrack*> affectedTracks;
     float sizeContribution;
 
     ItemSizeContribution(
         const GridItem* item,
-        const std::vector<GridTrackSize*>& affectedTracks,
+        const std::vector<GridTrack*>& affectedTracks,
         float sizeContribution)
         : item(item),
           affectedTracks(affectedTracks),
@@ -55,9 +55,9 @@ struct TrackSizing {
   };
 
   Node* node;
-  std::vector<GridTrackSize>&
+  std::vector<GridTrack>&
       columnTracks; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
-  std::vector<GridTrackSize>&
+  std::vector<GridTrack>&
       rowTracks; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
   float containerInnerWidth;
   float containerInnerHeight;
@@ -87,8 +87,8 @@ struct TrackSizing {
 
   TrackSizing(
       yoga::Node* node,
-      std::vector<GridTrackSize>& columnTracks,
-      std::vector<GridTrackSize>& rowTracks,
+      std::vector<GridTrack>& columnTracks,
+      std::vector<GridTrack>& rowTracks,
       float containerInnerWidth,
       float containerInnerHeight,
       std::vector<GridItem>& gridItems,
@@ -470,9 +470,9 @@ struct TrackSizing {
         previousSpan = span;
       }
 
-      std::vector<GridTrackSize*> intrinsicMinimumSizingFunctionTracks;
-      std::vector<GridTrackSize*> intrinsicMaximumSizingFunctionTracks;
-      std::vector<GridTrackSize*> maxContentMaximumSizingFunctionTracks;
+      std::vector<GridTrack*> intrinsicMinimumSizingFunctionTracks;
+      std::vector<GridTrack*> intrinsicMaximumSizingFunctionTracks;
+      std::vector<GridTrack*> maxContentMaximumSizingFunctionTracks;
 
       for (size_t i = startIndex; i < endIndex; i++) {
         if (isIntrinsicSizingFunction(
@@ -547,7 +547,7 @@ struct TrackSizing {
 
       auto start = item.*startIndexkey;
       auto end = item.*endIndexKey;
-      std::vector<GridTrackSize*> flexibleTracks;
+      std::vector<GridTrack*> flexibleTracks;
 
       for (size_t i = start; i < end && i < tracks.size(); i++) {
         auto& track = tracks[i];
@@ -585,7 +585,7 @@ struct TrackSizing {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth
                                                        : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
-    std::unordered_map<GridTrackSize*, float> plannedIncrease;
+    std::unordered_map<GridTrack*, float> plannedIncrease;
     plannedIncrease.reserve(gridItemSizeContributions.size());
 
     // 1. Maintain separately for each affected track a planned increase,
@@ -599,7 +599,7 @@ struct TrackSizing {
 
     // 2. For each accommodated item, considering only tracks the item spans:
     for (const auto& itemSizeContribution : gridItemSizeContributions) {
-      std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
+      std::unordered_map<GridTrack*, float> itemIncurredIncrease;
       itemIncurredIncrease.reserve(itemSizeContribution.affectedTracks.size());
       for (auto& track : itemSizeContribution.affectedTracks) {
         itemIncurredIncrease[track] = 0.0f;
@@ -627,7 +627,7 @@ struct TrackSizing {
 
       float spaceToDistribute = std::max(
           0.0f, itemSizeContribution.sizeContribution - totalSpannedTracksSize);
-      std::unordered_set<GridTrackSize*> frozenTracks;
+      std::unordered_set<GridTrack*> frozenTracks;
       frozenTracks.reserve(itemSizeContribution.affectedTracks.size());
 
       // 2.2. Distribute space up to limits
@@ -687,7 +687,7 @@ struct TrackSizing {
       // 2.4. Distribute space beyond limits
       if (spaceToDistribute > 0.0f &&
           !yoga::inexactEquals(spaceToDistribute, 0.0f)) {
-        std::vector<GridTrackSize*> tracksToGrowBeyondLimits;
+        std::vector<GridTrack*> tracksToGrowBeyondLimits;
         for (auto& track : itemSizeContribution.affectedTracks) {
           if (isIntrinsicSizingFunction(
                   track->maxSizingFunction, containerSize)) {
@@ -755,7 +755,7 @@ struct TrackSizing {
                                                      : &GridItem::rowEnd;
 
     // Step 1: Maintain planned increase for each affected track
-    std::unordered_map<GridTrackSize*, float> plannedIncrease;
+    std::unordered_map<GridTrack*, float> plannedIncrease;
     for (const auto& itemSizeContribution : gridItemSizeContributions) {
       for (auto& track : itemSizeContribution.affectedTracks) {
         plannedIncrease[track] = 0.0f;
@@ -764,7 +764,7 @@ struct TrackSizing {
 
     // Step 2: For each item
     for (const auto& itemSizeContribution : gridItemSizeContributions) {
-      std::unordered_map<GridTrackSize*, float> itemIncurredIncrease;
+      std::unordered_map<GridTrack*, float> itemIncurredIncrease;
       for (auto& track : itemSizeContribution.affectedTracks) {
         itemIncurredIncrease[track] = 0.0f;
       }
@@ -910,7 +910,7 @@ struct TrackSizing {
           track.baseSize = track.growthLimit;
         }
       } else {
-        std::unordered_set<GridTrackSize*> frozenTracks;
+        std::unordered_set<GridTrack*> frozenTracks;
         frozenTracks.reserve(tracks.size());
         auto extraSpace = freeSpace;
 
@@ -921,7 +921,7 @@ struct TrackSizing {
               extraSpace / static_cast<float>(unfrozenTrackCount);
 
           for (auto& track : tracks) {
-            GridTrackSize* trackPtr = &track;
+            GridTrack* trackPtr = &track;
             if (frozenTracks.contains(trackPtr)) {
               continue;
             }
@@ -972,7 +972,7 @@ struct TrackSizing {
           0,
           gridTracks.size(),
           containerSize,
-          std::unordered_set<GridTrackSize*>());
+          std::unordered_set<GridTrack*>());
     }
     // Otherwise, if the free space is an indefinite length:
     // The used flex fraction is the maximum of:
@@ -1015,7 +1015,7 @@ struct TrackSizing {
                 item.*startIndexKey,
                 item.*endIndexKey,
                 itemMaxContentContribution,
-                std::unordered_set<GridTrackSize*>()));
+                std::unordered_set<GridTrack*>()));
       }
     }
 
@@ -1064,7 +1064,7 @@ struct TrackSizing {
             0,
             gridTracks.size(),
             minContainerSize,
-            std::unordered_set<GridTrackSize*>());
+            std::unordered_set<GridTrack*>());
       }
     }
 
@@ -1087,7 +1087,7 @@ struct TrackSizing {
             0,
             gridTracks.size(),
             maxContainerSize,
-            std::unordered_set<GridTrackSize*>());
+            std::unordered_set<GridTrack*>());
       }
     }
 
@@ -1113,13 +1113,13 @@ struct TrackSizing {
       size_t startIndex,
       size_t endIndex,
       float spaceToFill,
-      const std::unordered_set<GridTrackSize*>& nonFlexibleTracks) {
+      const std::unordered_set<GridTrack*>& nonFlexibleTracks) {
     auto containerSize = dimension == Dimension::Width ? containerInnerWidth
                                                        : containerInnerHeight;
     auto gap = node->style().computeGapForDimension(dimension, containerSize);
     auto leftoverSpace = spaceToFill;
     auto flexFactorSum = 0.0f;
-    std::vector<GridTrackSize*> flexibleTracks;
+    std::vector<GridTrack*> flexibleTracks;
     auto& tracks = dimension == Dimension::Width ? columnTracks : rowTracks;
 
     for (size_t i = startIndex; i < endIndex; i++) {
@@ -1156,7 +1156,7 @@ struct TrackSizing {
     // If the product of the hypothetical fr size and a flexible track's flex
     // factor is less than the track's base size, restart this algorithm
     // treating all such tracks as inflexible.
-    std::unordered_set<GridTrackSize*> inflexibleTracks;
+    std::unordered_set<GridTrack*> inflexibleTracks;
     for (auto& track : flexibleTracks) {
       if (track->maxSizingFunction.isStretch() &&
           track->maxSizingFunction.value().isDefined()) {
@@ -1205,7 +1205,7 @@ struct TrackSizing {
 
     if (shouldStretch) {
       // Count only auto tracks for distribution
-      std::vector<GridTrackSize*> autoTracks;
+      std::vector<GridTrack*> autoTracks;
       for (auto& track : gridTracks) {
         if (isAutoSizingFunction(track.maxSizingFunction, containerSize)) {
           autoTracks.push_back(&track);
@@ -1388,7 +1388,7 @@ struct TrackSizing {
       const GridItem& item,
       Dimension dimension,
       const ItemConstraint& itemConstraints,
-      const std::vector<GridTrackSize>& tracks,
+      const std::vector<GridTrack>& tracks,
       float containerSize) {
     auto overflow = item.node->style().overflow();
     size_t startIndex =
@@ -1434,7 +1434,7 @@ struct TrackSizing {
       const GridItem& item,
       Dimension dimension,
       const ItemConstraint& itemConstraints,
-      const std::vector<GridTrackSize>& tracks,
+      const std::vector<GridTrack>& tracks,
       float containerSize) {
     float result = measureItem(item, dimension, itemConstraints);
     // Clamp by fixed track limit if all spanned tracks have fixed max sizing
@@ -1484,7 +1484,7 @@ struct TrackSizing {
   float computeFixedTracksLimit(
       const GridItem& item,
       Dimension dimension,
-      const std::vector<GridTrackSize>& tracks,
+      const std::vector<GridTrack>& tracks,
       float containerSize) {
     size_t startIndex =
         dimension == Dimension::Width ? item.columnStart : item.rowStart;

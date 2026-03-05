@@ -442,8 +442,8 @@ GridTracks createGridTracks(
   auto gridExplicitColumns = node->style().gridTemplateColumns();
   auto gridExplicitRows = node->style().gridTemplateRows();
 
-  std::vector<GridTrackSize> columnTracks;
-  std::vector<GridTrackSize> rowTracks;
+  std::vector<GridTrack> columnTracks;
+  std::vector<GridTrack> rowTracks;
   columnTracks.reserve(
       static_cast<size_t>(
           autoPlacement.maxColumnEnd - autoPlacement.minColumnStart));
@@ -472,11 +472,11 @@ GridTracks createGridTracks(
         autoColumnTracksSize;
     auto autoColumnTrack =
         autoColumnTracks[autoColumnTracksSize - currentColumnTrackIndex - 1];
-    columnTracks.push_back(autoColumnTrack);
+    columnTracks.push_back(GridTrack(autoColumnTrack));
   }
 
   for (size_t i = 0; i < gridExplicitColumns.size(); i++) {
-    columnTracks.push_back(gridExplicitColumns[i]);
+    columnTracks.push_back(GridTrack(gridExplicitColumns[i]));
   }
 
   // The first track after the last explicitly-sized track receives the first
@@ -485,7 +485,7 @@ GridTracks createGridTracks(
            gridExplicitColumns.size();
        i++) {
     auto autoColumnTrack = autoColumnTracks[i % autoColumnTracksSize];
-    columnTracks.push_back(autoColumnTrack);
+    columnTracks.push_back(GridTrack(autoColumnTrack));
   }
 
   auto negativeImplicitGridRowTrackCount = -autoPlacement.minRowStart;
@@ -496,16 +496,16 @@ GridTracks createGridTracks(
         autoRowTracksSize;
     auto autoRowTrack =
         autoRowTracks[autoRowTracksSize - currentRowTrackIndex - 1];
-    rowTracks.push_back(autoRowTrack);
+    rowTracks.push_back(GridTrack(autoRowTrack));
   }
   for (const auto& explicitRow : gridExplicitRows) {
-    rowTracks.push_back(explicitRow);
+    rowTracks.push_back(GridTrack(explicitRow));
   }
   for (size_t i = 0; i <
        static_cast<size_t>(autoPlacement.maxRowEnd) - gridExplicitRows.size();
        i++) {
     auto autoRowTrack = autoRowTracks[i % autoRowTracksSize];
-    rowTracks.push_back(autoRowTrack);
+    rowTracks.push_back(GridTrack(autoRowTrack));
   }
 
   return {std::move(columnTracks), std::move(rowTracks)};

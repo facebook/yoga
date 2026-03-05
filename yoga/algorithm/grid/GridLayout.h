@@ -9,6 +9,7 @@
 
 #include <yoga/Yoga.h>
 #include <yoga/algorithm/grid/AutoPlacement.h>
+#include <yoga/algorithm/grid/GridTrack.h>
 #include <yoga/event/event.h>
 #include <yoga/node/Node.h>
 #include <vector>
@@ -31,8 +32,8 @@ void calculateGridLayoutInternal(
     uint32_t generationCount);
 
 struct GridTracks {
-  std::vector<GridTrackSize> columnTracks;
-  std::vector<GridTrackSize> rowTracks;
+  std::vector<GridTrack> columnTracks;
+  std::vector<GridTrack> rowTracks;
 };
 // Creates implicit grid tracks based on the auto placement result
 GridTracks createGridTracks(

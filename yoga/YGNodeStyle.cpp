@@ -622,6 +622,8 @@ GridTrackSize gridTrackSizeFromTypeAndValue(YGGridTrackType type, float value) {
     case YGGridTrackTypeMinmax:
       return GridTrackSize::auto_();
   }
+  // Unreachable, but needed to silence GCC -Wreturn-type
+  return GridTrackSize::auto_();
 }
 
 StyleSizeLength styleSizeLengthFromTypeAndValue(
@@ -639,6 +641,8 @@ StyleSizeLength styleSizeLengthFromTypeAndValue(
     case YGGridTrackTypeMinmax:
       return StyleSizeLength::ofAuto();
   }
+  // Unreachable, but needed to silence GCC -Wreturn-type
+  return StyleSizeLength::ofAuto();
 }
 
 } // namespace
