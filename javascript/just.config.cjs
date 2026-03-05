@@ -137,7 +137,7 @@ function runBenchTask() {
   };
 }
 
-const emsdkVersion = '3.1.28';
+const emsdkVersion = '4.0.23';
 const emsdkPath = path.join(__dirname, '.emsdk');
 const emsdkBin = path.join(
   emsdkPath,
