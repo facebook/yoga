@@ -32,7 +32,6 @@ add_compile_options(${COMPILE_OPTIONS})
 add_link_options(
     ${COMPILE_OPTIONS}
     "SHELL:--closure 1"
-    "SHELL:--memory-init-file 0"
     "SHELL:--no-entry"
     "SHELL:-s ALLOW_MEMORY_GROWTH=1"
     "SHELL:-s ASSERTIONS=0"
@@ -44,12 +43,14 @@ add_link_options(
     "SHELL:-s MODULARIZE=1"
     "SHELL:-s EXPORT_ES6=1"
     "SHELL:-s WASM=1"
-    "SHELL:-s TEXTDECODER=0"
+    "SHELL:-s TEXTDECODER=2"
     "SHELL:-s SUPPORT_BIG_ENDIAN=1"
     # SINGLE_FILE=1 combined with ENVIRONMENT='web' creates code that works on
     # both bundlders and Node.
     "SHELL:-s SINGLE_FILE=1"
-    "SHELL:-s ENVIRONMENT='web'")
+    "SHELL:-s ENVIRONMENT='web'"
+    "SHELL:-s EXPORTED_RUNTIME_METHODS=['HEAPF32','HEAP32']"
+    "SHELL:-Wl,--export-dynamic")
 
 add_library(yogaObjLib OBJECT ${YOGA_SOURCES} ${BRIDGE_SOURCES})
 
