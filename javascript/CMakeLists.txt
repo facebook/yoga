@@ -5,24 +5,24 @@
 
 cmake_minimum_required(VERSION 3.13...3.26)
 set(CMAKE_VERBOSE_MAKEFILE on)
-project(yoga)
+project(yoga C CXX)
 
-file(GLOB SOURCES CONFIGURE_DEPENDS
+file(GLOB YOGA_SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+    ${CMAKE_CURRENT_SOURCE_DIR}/../yoga/**/*.cpp)
+
+set(BRIDGE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/wasm_bridge.c)
 
 include_directories(..)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_definitions(
-    EMSCRIPTEN_HAS_UNBOUND_TYPE_NAMES=0)
-
 set(COMPILE_OPTIONS
     -flto
     -fno-exceptions
     -fno-rtti
+    -Wno-ignored-attributes
     -g0
     -Os
     "SHELL:-s STRICT=1")
@@ -51,9 +51,7 @@ add_link_options(
     "SHELL:-s SINGLE_FILE=1"
     "SHELL:-s ENVIRONMENT='web'")
 
-link_libraries(embind)
-
-add_library(yogaObjLib OBJECT ${SOURCES})
+add_library(yogaObjLib OBJECT ${YOGA_SOURCES} ${BRIDGE_SOURCES})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 
