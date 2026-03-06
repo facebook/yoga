@@ -59,7 +59,6 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
       this.push(`${testFn}('${name}', () => {`);
       this.pushIndent();
       this.push('const config = Yoga.Config.create();');
-      this.push('let root;');
       this.push('');
 
       if (experiments.length > 0) {
@@ -70,39 +69,17 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
         }
         this.push('');
       }
-
-      this.push('try {');
-      this.pushIndent();
     },
   },
 
   emitTestTreePrologue: {
     value: function (nodeName) {
-      if (nodeName === 'root') {
-        this.push(`root = Yoga.Node.create(config);`);
-      } else {
-        this.push(`const ${nodeName} = Yoga.Node.create(config);`);
-      }
+      this.push(`const ${nodeName} = Yoga.Node.create(config);`);
     },
   },
 
   emitTestEpilogue: {
     value: function (_experiments) {
-      this.popIndent();
-      this.push('} finally {');
-      this.pushIndent();
-
-      this.push("if (typeof root !== 'undefined') {");
-      this.pushIndent();
-      this.push('root.freeRecursive();');
-      this.popIndent();
-      this.push('}');
-      this.push('');
-      this.push('config.free();');
-
-      this.popIndent();
-      this.push('}');
-
       this.popIndent();
       this.push('});');
     },

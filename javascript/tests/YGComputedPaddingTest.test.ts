@@ -22,6 +22,4 @@ test('padding_start', () => {
 
   expect(root.getComputedPadding(Yoga.EDGE_LEFT)).toBe(0);
   expect(root.getComputedPadding(Yoga.EDGE_RIGHT)).toBe(10);
-
-  root.freeRecursive();
 });

@@ -22,6 +22,4 @@ test('border_start', () => {
 
   expect(root.getComputedBorder(Yoga.EDGE_LEFT)).toBe(0);
   expect(root.getComputedBorder(Yoga.EDGE_RIGHT)).toBe(10);
-
-  root.freeRecursive();
 });

@@ -63,7 +63,6 @@ function layoutStyleTree(
   const layoutMetrics = metricsFromYogaNode(root);
   layoutMetrics.overflow = node.style?.overflow;
 
-  root.freeRecursive();
   return layoutMetrics;
 }
 

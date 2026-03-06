@@ -23,8 +23,6 @@ test('dont_measure_single_grow_shrink_child', () => {
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   expect(measureCounter.get()).toBe(0);
-
-  root.freeRecursive();
 });
 
 test('dont_fail_with_incomplete_measure_dimensions', () => {
@@ -65,6 +63,4 @@ test('dont_fail_with_incomplete_measure_dimensions', () => {
 
   expect(node3.getComputedWidth()).toBe(100);
   expect(node3.getComputedHeight()).toBe(0);
-
-  root.freeRecursive();
 });

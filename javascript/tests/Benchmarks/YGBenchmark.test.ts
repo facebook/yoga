@@ -27,7 +27,6 @@ YGBENCHMARK('Stack with flex', () => {
   }
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
-  root.freeRecursive();
 });
 
 YGBENCHMARK('Align stretch in undefined axis', () => {
@@ -43,7 +42,6 @@ YGBENCHMARK('Align stretch in undefined axis', () => {
   }
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
-  root.freeRecursive();
 });
 
 YGBENCHMARK('Nested flex', () => {
@@ -67,7 +65,6 @@ YGBENCHMARK('Nested flex', () => {
   }
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
-  root.freeRecursive();
 });
 
 YGBENCHMARK('Huge nested layout', () => {
@@ -110,5 +107,4 @@ YGBENCHMARK('Huge nested layout', () => {
   }
 
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
-  root.freeRecursive();
 });

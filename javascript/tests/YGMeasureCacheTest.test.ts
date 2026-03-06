@@ -26,6 +26,4 @@ test('measure_once_single_flexible_child', () => {
   root.calculateLayout(undefined, undefined, Yoga.DIRECTION_LTR);
 
   expect(measureCounter.get()).toBe(1);
-
-  root.freeRecursive();
 });

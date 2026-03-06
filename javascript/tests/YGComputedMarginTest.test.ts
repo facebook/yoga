@@ -22,6 +22,4 @@ test('margin_start', () => {
 
   expect(root.getComputedMargin(Yoga.EDGE_LEFT)).toBe(0);
   expect(root.getComputedMargin(Yoga.EDGE_RIGHT)).toBe(10);
-
-  root.freeRecursive();
 });

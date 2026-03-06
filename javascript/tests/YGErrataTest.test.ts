@@ -13,8 +13,6 @@ test('errata_all_contains_example_errata', () => {
 
   expect(config.getErrata()).toBe(Yoga.ERRATA_ALL);
   expect(config.getErrata() & Yoga.ERRATA_STRETCH_FLEX_BASIS).not.toBe(0);
-
-  config.free();
 });
 
 test('errata_none_omits_example_errata', () => {
@@ -23,8 +21,6 @@ test('errata_none_omits_example_errata', () => {
 
   expect(config.getErrata()).toBe(Yoga.ERRATA_NONE);
   expect(config.getErrata() & Yoga.ERRATA_STRETCH_FLEX_BASIS).toBe(0);
-
-  config.free();
 });
 
 test('errata_is_settable', () => {
@@ -35,6 +31,4 @@ test('errata_is_settable', () => {
 
   config.setErrata(Yoga.ERRATA_NONE);
   expect(config.getErrata()).toBe(Yoga.ERRATA_NONE);
-
-  config.free();
 });

@@ -48,7 +48,6 @@ type Value = {
 };
 
 export type Config = {
-  free(): void;
   isExperimentalFeatureEnabled(feature: ExperimentalFeature): boolean;
   setExperimentalFeatureEnabled(
     feature: ExperimentalFeature,
@@ -77,8 +76,6 @@ export type Node = {
     direction?: Direction,
   ): void;
   copyStyle(node: Node): void;
-  free(): void;
-  freeRecursive(): void;
   getAlignContent(): Align;
   getAlignItems(): Align;
   getAlignSelf(): Align;
@@ -263,13 +260,11 @@ export type Node = {
 export type Yoga = {
   Config: {
     create(): Config;
-    destroy(config: Config): void;
   };
   Node: {
     create(config?: Config): Node;
     createDefault(): Node;
     createWithConfig(config: Config): Node;
-    destroy(node: Node): void;
   };
 } & typeof YGEnums;
 
@@ -365,16 +360,24 @@ export default function wrapAssembly(lib: any): Yoga {
     }
   }
 
+  // --- FinalizationRegistry for automatic cleanup ---
+  const configRegistry = new FinalizationRegistry((ptr: number) => {
+    lib._YGConfigFree(ptr);
+  });
+
+  const nodeRegistry = new FinalizationRegistry((ptr: number) => {
+    lib._yogaMeasureFuncs.delete(ptr);
+    lib._yogaDirtiedFuncs.delete(ptr);
+    lib._YGNodeFinalize(ptr);
+  });
+
   // --- Config class ---
   class ConfigImpl {
     _ptr: number;
 
     constructor(ptr: number) {
       this._ptr = ptr;
-    }
-
-    free(): void {
-      lib._YGConfigFree(this._ptr);
+      configRegistry.register(this, ptr, this);
     }
 
     setExperimentalFeatureEnabled(
@@ -423,6 +426,7 @@ export default function wrapAssembly(lib: any): Yoga {
       this._ptr = ptr;
       this._children = [];
       this._parent = null;
+      nodeRegistry.register(this, ptr, this);
     }
 
     // --- Tree hierarchy ---
@@ -454,31 +458,6 @@ export default function wrapAssembly(lib: any): Yoga {
     }
 
     // --- Lifecycle ---
-    free(): void {
-      lib._yogaMeasureFuncs.delete(this._ptr);
-      lib._yogaDirtiedFuncs.delete(this._ptr);
-
-      // Clear JS tree references
-      if (this._parent) {
-        const idx = this._parent._children.indexOf(this);
-        if (idx !== -1) {
-          this._parent._children.splice(idx, 1);
-        }
-        this._parent = null;
-      }
-      this._children = [];
-
-      lib._YGNodeFree(this._ptr);
-    }
-
-    freeRecursive(): void {
-      // Walk children in JS, calling freeRecursive on each
-      while (this._children.length > 0) {
-        this._children[0].freeRecursive();
-      }
-      this.free();
-    }
-
     reset(): void {
       lib._yogaMeasureFuncs.delete(this._ptr);
       lib._yogaDirtiedFuncs.delete(this._ptr);
@@ -920,7 +899,11 @@ export default function wrapAssembly(lib: any): Yoga {
 
     setDirtiedFunc(dirtiedFunc: DirtiedFunction | null): void {
       if (dirtiedFunc) {
-        lib._yogaDirtiedFuncs.set(this._ptr, () => dirtiedFunc(this));
+        const nodeWeakRef = new WeakRef(this);
+        lib._yogaDirtiedFuncs.set(this._ptr, () => {
+          const node = nodeWeakRef.deref();
+          if (node) dirtiedFunc(node);
+        });
         lib._jswrap_YGNodeSetDirtiedFunc(this._ptr);
       } else {
         this.unsetDirtiedFunc();
@@ -1011,9 +994,6 @@ export default function wrapAssembly(lib: any): Yoga {
       create(): Config {
         return new ConfigImpl(lib._YGConfigNew());
       },
-      destroy(config: Config): void {
-        (config as ConfigImpl).free();
-      },
     },
     Node: {
       create(config?: Config): Node {
@@ -1031,9 +1011,6 @@ export default function wrapAssembly(lib: any): Yoga {
         return new NodeImpl(
           lib._YGNodeNewWithConfig((config as ConfigImpl)._ptr),
         );
-      },
-      destroy(node: Node): void {
-        (node as NodeImpl).free();
       },
     },
     ...YGEnums,
