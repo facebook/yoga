@@ -32,8 +32,6 @@ test('dirtied', () => {
   // dirtied func MUST be called ONCE.
   root.markDirty();
   expect(dirtied).toBe(1);
-
-  root.freeRecursive();
 });
 
 test('dirtied_propagation', () => {
@@ -71,8 +69,6 @@ test('dirtied_propagation', () => {
   // dirtied func must NOT be called for the second time.
   root_child0.markDirty();
   expect(dirtied).toBe(1);
-
-  root.freeRecursive();
 });
 
 test('dirtied_hierarchy', () => {
@@ -114,8 +110,6 @@ test('dirtied_hierarchy', () => {
   // dirtied func MUST be called in case of explicit dirtying.
   root_child0.markDirty();
   expect(dirtied).toBe(1);
-
-  root.freeRecursive();
 });
 
 test('dirtied_reset', () => {
@@ -152,6 +146,4 @@ test('dirtied_reset', () => {
   // dirtied func must NOT be called after reset.
   root.markDirty();
   expect(dirtied).toBe(1);
-
-  root.freeRecursive();
 });

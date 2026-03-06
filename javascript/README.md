@@ -13,19 +13,6 @@ const node = Yoga.Node.create();
 node.setAlignContent(Align.Center);
 ```
 
-Objects created by `Yoga.<>.create()` are not automatically garbage collected and should be freed once they are no longer in use.
-
-```ts
-// Free a config
-config.free();
-
-// Free a tree of Nodes
-node.freeRecursive();
-
-// Free a single Node
-node.free();
-```
-
 ## Requirements
 
 `yoga-layout` requires a toolchain that supports ES Modules and top-level await.

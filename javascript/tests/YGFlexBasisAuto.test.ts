@@ -18,6 +18,4 @@ test('flex_basis_auto', () => {
 
   root.setFlexBasisAuto();
   expect(root.getFlexBasis().unit).toBe(Yoga.UNIT_AUTO);
-
-  root.freeRecursive();
 });
