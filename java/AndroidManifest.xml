@@ -7,11 +7,7 @@
   LICENSE file in the root directory of this source tree.
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.facebook.yoga"
-          android:versionCode="1"
-          android:versionName="1.0"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application/>
 
