@@ -41,9 +41,9 @@
   <div style="width: 10px;"></div>
 </div>
 
-<!-- gentest.rb will swap margin-start to margin-left. This is needed to use YGEdgeStart instead of YGEdgeLeft in the generated tests -->
+<!-- margin-inline-start maps to YGEdgeStart in the generated tests -->
 <div id="flex_direction_row_reverse_margin_start"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; margin-start: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; margin-inline-start: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -57,7 +57,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_margin_end"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; margin-end: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; margin-inline-end: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -85,7 +85,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_padding_start"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; padding-start: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; padding-inline-start: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -99,7 +99,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_padding_end"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; padding-end: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; padding-inline-end: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -127,7 +127,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_border_start"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; border-start-width: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; border-inline-start-width: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -141,7 +141,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_border_end"
-  style="height: 100px; width: 100px; flex-direction: row-reverse; border-end-width: 100px;">
+  style="height: 100px; width: 100px; flex-direction: row-reverse; border-inline-end-width: 100px;">
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
   <div style="width: 10px;"></div>
@@ -170,7 +170,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_pos_start" style="height: 100px; width: 100px;">
-  <div style="height: 100px; width: 100px; flex-direction: row-reverse; start: 100px;">
+  <div style="height: 100px; width: 100px; flex-direction: row-reverse; inset-inline-start: 100px;">
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
@@ -186,7 +186,7 @@
 </div>
 
 <div id="flex_direction_row_reverse_pos_end" style="height: 100px; width: 100px;">
-  <div style="height: 100px; width: 100px; flex-direction: row-reverse; end: 100px;">
+  <div style="height: 100px; width: 100px; flex-direction: row-reverse; inset-inline-end: 100px;">
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
@@ -243,7 +243,7 @@
 
 <div id="flex_direction_row_reverse_inner_pos_start" data-disabled="true" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; start: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; inset-inline-start: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -251,7 +251,7 @@
 
 <div id="flex_direction_row_reverse_inner_pos_end" data-disabled="true" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; end: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; inset-inline-end: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -291,7 +291,7 @@
 
 <div id="flex_direction_row_reverse_inner_marign_start" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; margin-start: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; margin-inline-start: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -299,7 +299,7 @@
 
 <div id="flex_direction_row_reverse_inner_margin_end" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; margin-end: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; margin-inline-end: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -339,7 +339,7 @@
 
 <div id="flex_direction_row_reverse_inner_border_start" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; border-start: 10px solid black"></div>
+    <div style="width: 10px; height: 10px; position: absolute; border-inline-start: 10px solid black"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -347,7 +347,7 @@
 
 <div id="flex_direction_row_reverse_inner_border_end" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; border-end: 10px solid black"></div>
+    <div style="width: 10px; height: 10px; position: absolute; border-inline-end: 10px solid black"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -387,7 +387,7 @@
 
 <div id="flex_direction_row_reverse_inner_padding_start" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; padding-start: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; padding-inline-start: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
@@ -395,7 +395,7 @@
 
 <div id="flex_direction_row_reverse_inner_padding_end" style="height: 100px; width: 100px;">
   <div style="height: 100px; width: 100px; flex-direction: row-reverse; ">
-    <div style="width: 10px; height: 10px; position: absolute; padding-end: 10px"></div>
+    <div style="width: 10px; height: 10px; position: absolute; padding-inline-end: 10px"></div>
     <div style="width: 10px;"></div>
     <div style="width: 10px;"></div>
   </div>
