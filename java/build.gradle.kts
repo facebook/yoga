@@ -14,16 +14,10 @@ plugins {
 
 group = "com.facebook.yoga"
 
-val compileSdkVersionProperty: Int by rootProject.extra
-val minSdkVersionProperty: Int by rootProject.extra
-val targetSdkVersionProperty: Int by rootProject.extra
-val buildToolsVersionProperty: String by rootProject.extra
-val ndkVersionProperty: String by rootProject.extra
-
 android {
   namespace = "com.facebook.yoga"
-  compileSdk = 35
-  buildToolsVersion = "35.0.0"
+  compileSdk = 36
+  buildToolsVersion = "36.0.0"
   ndkVersion = "27.1.12297006"
 
   defaultConfig {
@@ -37,8 +31,8 @@ android {
   externalNativeBuild { cmake { path("CMakeLists.txt") } }
 
   compileOptions {
-    targetCompatibility(JavaVersion.VERSION_1_8)
-    sourceCompatibility(JavaVersion.VERSION_1_8)
+    targetCompatibility(JavaVersion.VERSION_17)
+    sourceCompatibility(JavaVersion.VERSION_17)
   }
 
   sourceSets {
@@ -49,7 +43,7 @@ android {
     }
   }
 
-  kotlinOptions { jvmTarget = "1.8" }
+  kotlinOptions { jvmTarget = "17" }
 
   publishing {
     multipleVariants {
@@ -62,9 +56,9 @@ android {
 
 dependencies {
   implementation("com.google.code.findbugs:jsr305:3.0.2")
-  implementation("com.facebook.soloader:soloader:0.10.5")
+  implementation("com.facebook.soloader:soloader:0.12.1")
   implementation("androidx.core:core-ktx:1.16.0")
-  testImplementation("junit:junit:4.12")
+  testImplementation("junit:junit:4.13.2")
 }
 
 version =
