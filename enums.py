@@ -83,9 +83,6 @@ ENUMS = {
         # Absolute nodes will resolve percentages against the inner size of
         # their containing node, not the padding box
         ("AbsolutePercentAgainstInnerSize", 1 << 2),
-        # Applies a FitContent constraint in the main axis during flex basis
-        # computation for non-measure container nodes
-        ("FlexBasisFitContentInMainAxis", 1 << 3),
         # Enable all incorrect behavior (preserve compatibility)
         ("All", 0x7FFFFFFF),
         # Enable all errata except for "StretchFlexBasis" (Defaults behavior
