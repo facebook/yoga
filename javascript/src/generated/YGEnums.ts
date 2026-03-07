@@ -61,7 +61,6 @@ export enum Errata {
   StretchFlexBasis = 1,
   AbsolutePositionWithoutInsetsExcludesPadding = 2,
   AbsolutePercentAgainstInnerSize = 4,
-  FlexBasisFitContentInMainAxis = 8,
   All = 2147483647,
   Classic = 2147483646,
 }
@@ -188,7 +187,6 @@ const constants = {
   ERRATA_STRETCH_FLEX_BASIS: Errata.StretchFlexBasis,
   ERRATA_ABSOLUTE_POSITION_WITHOUT_INSETS_EXCLUDES_PADDING: Errata.AbsolutePositionWithoutInsetsExcludesPadding,
   ERRATA_ABSOLUTE_PERCENT_AGAINST_INNER_SIZE: Errata.AbsolutePercentAgainstInnerSize,
-  ERRATA_FLEX_BASIS_FIT_CONTENT_IN_MAIN_AXIS: Errata.FlexBasisFitContentInMainAxis,
   ERRATA_ALL: Errata.All,
   ERRATA_CLASSIC: Errata.Classic,
   EXPERIMENTAL_FEATURE_WEB_FLEX_BASIS: ExperimentalFeature.WebFlexBasis,
