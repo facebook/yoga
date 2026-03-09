@@ -1,30 +1,19 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
-  <title>%s</title>
-  <script src="gentest.js"></script>
-  <script src="gentest-cpp.js"></script>
-  <script src="gentest-java.js"></script>
-  <script src="gentest-javascript.js"></script>
-  <script src="gentest-log.js"></script>
-
   <style>
     @font-face {
       font-family: 'Ahem';
-      src: url('./fonts/Ahem.ttf') format('truetype');
+      src: url('%FONT_PATH%') format('truetype');
     }
-
     body {
       padding: 0;
       margin: 0;
       font: 10px/1 Ahem;
       font-weight: 100;
     }
-
-    div,
-    span {
+    div, span {
       box-sizing: border-box;
       position: relative;
       border: 0 solid black;
@@ -37,43 +26,17 @@
       justify-content: flex-start;
       flex-shrink: 0;
     }
-
-    body>* {
+    body > div {
       position: absolute;
     }
-
-    #ltr-container>* {
+    body > div > * {
       position: absolute;
-      direction: ltr;
     }
-
-    #rtl-container>* {
-      position: absolute;
-      direction: rtl;
-    }
-
   </style>
 </head>
-
 <body>
-  <div id='ltr-container'>
-
-    %s
-
-    <div id='default'></div>
-  </div>
-  <div id='rtl-container'>
-
-    %s
-
-    <div id='default'></div>
-  </div>
-
-  <div>
-
-    %s
-
+  <div id="container">
+    %FIXTURE%
   </div>
 </body>
-
 </html>
