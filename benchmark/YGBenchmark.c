@@ -50,7 +50,7 @@ static int __compareDoubles(const void* a, const void* b) {
 }
 
 static void
-__printBenchmarkResult(char* name, clock_t start, clock_t* endTimes) {
+__printBenchmarkResult(char* name, clock_t start, const clock_t* endTimes) {
   double timesInMs[NUM_REPETITIONS];
   double mean = 0;
   clock_t lastEnd = start;
