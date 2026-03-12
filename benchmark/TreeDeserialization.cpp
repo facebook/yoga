@@ -237,12 +237,12 @@ YGMeasureMode measureModeFromString(const std::string& str) {
 
 SerializedMeasureFunc serializedMeasureFuncFromJson(json& j) {
   return SerializedMeasureFunc{
-      floatFromJson(j["width"]),
-      measureModeFromString(j["width-mode"]),
-      floatFromJson(j["height"]),
-      measureModeFromString(j["height-mode"]),
-      floatFromJson(j["output-width"]),
-      floatFromJson(j["output-height"]),
-      j["duration-ns"]};
+      .inputWidth = floatFromJson(j["width"]),
+      .widthMode = measureModeFromString(j["width-mode"]),
+      .inputHeight = floatFromJson(j["height"]),
+      .heightMode = measureModeFromString(j["height-mode"]),
+      .outputWidth = floatFromJson(j["output-width"]),
+      .outputHeight = floatFromJson(j["output-height"]),
+      .durationNs = j["duration-ns"]};
 }
 } // namespace facebook::yoga
