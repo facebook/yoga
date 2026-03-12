@@ -1,0 +1,68 @@
+<!-- Container child with content overflowing definite column parent.
+     Flex basis uses content size regardless of ExperimentalFeature state,
+     because FitContent and MaxContent produce the same result for containers. -->
+<div id="container_child_overflows_definite_parent_column"
+     style="width: 200px; height: 300px;">
+  <div>
+    <div style="height: 500px; width: 50px;"></div>
+  </div>
+</div>
+
+<!-- Row variant: container child overflows definite row parent. -->
+<div id="container_child_overflows_definite_parent_row"
+     style="width: 300px; height: 200px; flex-direction: row;">
+  <div>
+    <div style="width: 500px; height: 50px;"></div>
+  </div>
+</div>
+
+<!-- Container child content fits within parent bounds.
+     Same behavior with and without feature (no capping needed). -->
+<div id="container_child_within_bounds_column"
+     style="width: 200px; height: 300px;">
+  <div>
+    <div style="height: 100px; width: 50px;"></div>
+  </div>
+</div>
+
+<!-- Multiple container children, both overflowing definite column parent. -->
+<div id="multiple_container_children_overflow_column"
+     style="width: 200px; height: 300px;">
+  <div>
+    <div style="height: 400px;"></div>
+  </div>
+  <div>
+    <div style="height: 500px;"></div>
+  </div>
+</div>
+
+<!-- Scroll container: children always use MaxContent in main axis.
+     Same behavior with and without feature. -->
+<div id="scroll_container_column"
+     style="width: 200px; height: 300px; overflow: scroll;">
+  <div>
+    <div style="height: 500px;"></div>
+  </div>
+</div>
+
+<!-- Mix of explicit-height child and overflowing container child. -->
+<div id="explicit_and_container_children_column"
+     style="width: 200px; height: 300px;">
+  <div style="height: 100px;"></div>
+  <div>
+    <div style="height: 500px;"></div>
+  </div>
+</div>
+
+<!-- Items with flex-basis inside a scroll container's auto-height
+     content container. With FixFlexBasisFitContent, flex-basis is
+     respected even when the content container's main axis size is
+     indefinite (NaN). Without the feature, flex-basis would be ignored. -->
+<div id="flex_basis_in_scroll_content_container"
+     data-experiments="FixFlexBasisFitContent"
+     style="width: 200px; height: 300px; overflow: scroll;">
+  <div>
+    <div style="flex-basis: 200px;"></div>
+    <div style="flex-basis: 300px;"></div>
+  </div>
+</div>

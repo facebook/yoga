@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env fbpython
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 #
 # This source code is licensed under the MIT license found in the
@@ -66,6 +66,9 @@ ENUMS = {
     "ExperimentalFeature": [
         # Mimic web flex-basis behavior (experiment may be broken)
         "WebFlexBasis",
+        # Fix flex basis computation to not apply FitContent constraint in the
+        # main axis for non-measure container nodes
+        "FixFlexBasisFitContent",
     ],
     "Gutter": ["Column", "Row", "All"],
     "GridTrackType": ["Auto", "Points", "Percent", "Fr", "Minmax"],
