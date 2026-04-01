@@ -11,13 +11,17 @@
 
 namespace facebook::yoga {
 
-// Represents a resolved grid track size during layout computation. 
-// Includes variables used by the track sizing algorithm.
 // https://www.w3.org/TR/css-grid-1/#algo-track-sizing
 struct GridTrack {
-  GridTrackSize trackSize;
+  // Sizing functions for this track, immutable after construction
+  const GridTrackSize trackSize;
+
+  // Mutable state used by the track sizing algorithm
+  // https://www.w3.org/TR/css-grid-1/#base-size
   float baseSize = 0.0f;
+  // https://www.w3.org/TR/css-grid-1/#growth-limit
   float growthLimit = 0.0f;
+  // https://www.w3.org/TR/css-grid-1/#infinitely-growable
   bool infinitelyGrowable = false;
 
   explicit GridTrack(const GridTrackSize& ts) : trackSize(ts) {}
