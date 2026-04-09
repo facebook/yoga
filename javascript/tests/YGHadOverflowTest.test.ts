@@ -31,7 +31,6 @@ test('children_overflow_no_wrap_and_no_flex_children', () => {
   root.calculateLayout(200, 100, Direction.LTR);
 
   expect(root.getComputedHadOverflow()).toBe(true);
-
 });
 
 test('no_overflow_no_wrap_and_flex_children', () => {
@@ -58,7 +57,6 @@ test('no_overflow_no_wrap_and_flex_children', () => {
   root.calculateLayout(200, 100, Direction.LTR);
 
   expect(root.getComputedHadOverflow()).toBe(false);
-
 });
 
 test('hadOverflow_gets_reset_if_no_longer_valid', () => {
@@ -87,7 +85,6 @@ test('hadOverflow_gets_reset_if_no_longer_valid', () => {
   child1.setFlexShrink(1);
   root.calculateLayout(200, 100, Direction.LTR);
   expect(root.getComputedHadOverflow()).toBe(false);
-
 });
 
 test('hadOverflow_included_in_getComputedLayout', () => {
@@ -110,5 +107,4 @@ test('hadOverflow_included_in_getComputedLayout', () => {
 
   const layout = root.getComputedLayout();
   expect(layout.hadOverflow).toBe(true);
-
 });
