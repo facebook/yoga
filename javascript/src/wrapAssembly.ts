@@ -939,7 +939,15 @@ export default function wrapAssembly(lib: any): Yoga {
       height: number | 'auto' | undefined = NaN,
       direction: Direction = Direction.LTR,
     ): void {
-      lib._YGNodeCalculateLayout(this._ptr, width, height, direction);
+      // Non-numeric values (undefined, 'auto') should be treated as NaN (auto-sizing)
+      const resolvedWidth = typeof width === 'number' ? width : NaN;
+      const resolvedHeight = typeof height === 'number' ? height : NaN;
+      lib._YGNodeCalculateLayout(
+        this._ptr,
+        resolvedWidth,
+        resolvedHeight,
+        direction,
+      );
     }
 
     // --- Layout getters ---
