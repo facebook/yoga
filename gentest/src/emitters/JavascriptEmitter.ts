@@ -8,7 +8,7 @@
  */
 
 import Emitter from './Emitter.ts';
-import type {ValueWithUnit} from '../Types.ts';
+import type {ValueWithUnit} from '../types.ts';
 
 function toValueJavascript(value: ValueWithUnit): string {
   switch (value.type) {
