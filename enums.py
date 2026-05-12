@@ -108,6 +108,7 @@ KOTLIN_ENUM_NAMES = {
     "GridTrackType",
     "Gutter",
     "Justify",
+    "LogLevel",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
@@ -307,6 +308,9 @@ for name, values in sorted(ENUMS_KOTLIN.items()):
     with open(root + "/java/com/facebook/yoga/Yoga%s.kt" % name, "w") as f:
         f.write(get_license("kotlin"))
         f.write("package com.facebook.yoga\n\n")
+        if name in DO_NOT_STRIP:
+            f.write("import com.facebook.yoga.annotations.DoNotStrip\n\n")
+            f.write("@DoNotStrip\n")
         f.write("public enum class Yoga%s(public val intValue: Int) {\n" % name)
         if len(values) > 0:
             for value in values:
@@ -324,6 +328,8 @@ for name, values in sorted(ENUMS_KOTLIN.items()):
         f.write("  public fun intValue(): Int = intValue\n")
         f.write("\n")
         f.write("  public companion object {\n")
+        if name in DO_NOT_STRIP:
+            f.write("    @DoNotStrip\n")
         f.write("    @JvmStatic\n")
         f.write("    public fun fromInt(value: Int): Yoga%s =\n" % name)
         f.write("        when (value) {\n")
