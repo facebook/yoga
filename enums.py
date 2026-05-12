@@ -95,7 +95,7 @@ ENUMS = {
 }
 
 # Temporary filter enums to not upgrade all enums at once
-KOTLIN_ENUM_NAMES = {"Direction", "Align", "BoxSizing"}
+KOTLIN_ENUM_NAMES = {"Direction", "Align", "BoxSizing", "Dimension"}
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
 ENUMS_JAVA = {
