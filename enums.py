@@ -113,6 +113,7 @@ KOTLIN_ENUM_NAMES = {
     "NodeType",
     "Overflow",
     "PositionType",
+    "Unit",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
