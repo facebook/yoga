@@ -112,6 +112,7 @@ KOTLIN_ENUM_NAMES = {
     "MeasureMode",
     "NodeType",
     "Overflow",
+    "PositionType",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
