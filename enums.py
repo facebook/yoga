@@ -111,6 +111,7 @@ KOTLIN_ENUM_NAMES = {
     "LogLevel",
     "MeasureMode",
     "NodeType",
+    "Overflow",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
