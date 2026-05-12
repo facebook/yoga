@@ -106,6 +106,7 @@ KOTLIN_ENUM_NAMES = {
     "ExperimentalFeature",
     "FlexDirection",
     "GridTrackType",
+    "Gutter",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
