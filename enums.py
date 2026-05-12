@@ -114,6 +114,7 @@ KOTLIN_ENUM_NAMES = {
     "Overflow",
     "PositionType",
     "Unit",
+    "Wrap",
 }
 
 ENUMS_KOTLIN = {name: ENUMS[name] for name in KOTLIN_ENUM_NAMES}
