@@ -34,8 +34,8 @@ class YogaNodeTest {
   @Test
   fun testBaseline() {
     val root = createNode()
-    root.setFlexDirection(YogaFlexDirection.ROW)
-    root.setAlignItems(YogaAlign.BASELINE)
+    root.flexDirection = YogaFlexDirection.ROW
+    root.alignItems = YogaAlign.BASELINE
     root.setWidth(100f)
     root.setHeight(100f)
 
@@ -52,8 +52,8 @@ class YogaNodeTest {
 
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
 
-    assertEquals(0, child1.getLayoutY().toInt())
-    assertEquals(40, child2.getLayoutY().toInt())
+    assertEquals(0, child1.layoutY.toInt())
+    assertEquals(40, child2.layoutY.toInt())
   }
 
   @Test
@@ -65,8 +65,8 @@ class YogaNodeTest {
         }
     )
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
-    assertEquals(100, node.getLayoutWidth().toInt())
-    assertEquals(100, node.getLayoutHeight().toInt())
+    assertEquals(100, node.layoutWidth.toInt())
+    assertEquals(100, node.layoutHeight.toInt())
   }
 
   @Test
@@ -78,8 +78,8 @@ class YogaNodeTest {
         }
     )
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
-    assertEquals(101f, node.getLayoutWidth(), 0.01f)
-    assertEquals(101f, node.getLayoutHeight(), 0.01f)
+    assertEquals(101f, node.layoutWidth, 0.01f)
+    assertEquals(101f, node.layoutHeight, 0.01f)
   }
 
   @Test
@@ -91,8 +91,8 @@ class YogaNodeTest {
         }
     )
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
-    assertEquals(Float.MIN_VALUE, node.getLayoutWidth(), 0.01f)
-    assertEquals(Float.MIN_VALUE, node.getLayoutHeight(), 0.01f)
+    assertEquals(Float.MIN_VALUE, node.layoutWidth, 0.01f)
+    assertEquals(Float.MIN_VALUE, node.layoutHeight, 0.01f)
   }
 
   @Test
@@ -105,20 +105,20 @@ class YogaNodeTest {
         }
     )
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
-    assertEquals(bigNumber, node.getLayoutWidth(), 0.01f)
-    assertEquals(bigNumber, node.getLayoutHeight(), 0.01f)
+    assertEquals(bigNumber, node.layoutWidth, 0.01f)
+    assertEquals(bigNumber, node.layoutHeight, 0.01f)
   }
 
   @Test
   fun testCopyStyle() {
     val node0 = createNode()
-    assertTrue(YogaConstants.isUndefined(node0.getMaxHeight()))
+    assertTrue(YogaConstants.isUndefined(node0.maxHeight))
 
     val node1 = createNode()
     node1.setMaxHeight(100f)
 
     node0.copyStyle(node1)
-    assertEquals(100, node0.getMaxHeight().value.toInt())
+    assertEquals(100, node0.maxHeight.value.toInt())
   }
 
   @Test
@@ -177,7 +177,7 @@ class YogaNodeTest {
     val config = YogaConfigFactory.create()
     config.setUseWebDefaults(true)
     val node = createNode(config)
-    assertEquals(YogaFlexDirection.ROW, node.getFlexDirection())
+    assertEquals(YogaFlexDirection.ROW, node.flexDirection)
   }
 
   @Test
@@ -257,7 +257,7 @@ class YogaNodeTest {
     root.setDirection(YogaDirection.RTL)
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
 
-    assertEquals(root.getLayoutDirection(), YogaDirection.RTL)
+    assertEquals(root.layoutDirection, YogaDirection.RTL)
   }
 
   @Test
@@ -287,13 +287,13 @@ class YogaNodeTest {
         }
     )
     node.setBaselineFunction(YogaBaselineFunction { node, width, height -> height })
-    node.setData(ArrayList<Any>())
+    node.data = ArrayList<Any>()
 
     node.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
     node.reset()
 
-    assertEquals(0, node.getLayoutHeight().toInt())
-    assertEquals(0, node.getLayoutWidth().toInt())
+    assertEquals(0, node.layoutHeight.toInt())
+    assertEquals(0, node.layoutWidth.toInt())
     assertEquals(0, node.getLayoutMargin(YogaEdge.LEFT).toInt())
     assertEquals(0, node.getLayoutMargin(YogaEdge.RIGHT).toInt())
     assertEquals(0, node.getLayoutMargin(YogaEdge.TOP).toInt())
@@ -306,11 +306,11 @@ class YogaNodeTest {
     assertEquals(0, node.getLayoutBorder(YogaEdge.RIGHT).toInt())
     assertEquals(0, node.getLayoutBorder(YogaEdge.TOP).toInt())
     assertEquals(0, node.getLayoutBorder(YogaEdge.BOTTOM).toInt())
-    assertEquals(node.getLayoutDirection(), YogaDirection.INHERIT)
+    assertEquals(node.layoutDirection, YogaDirection.INHERIT)
     assertTrue(node.hasNewLayout())
-    assertFalse(node.isMeasureDefined())
-    assertFalse(node.isBaselineDefined())
-    assertNull(node.getData())
+    assertFalse(node.isMeasureDefined)
+    assertFalse(node.isBaselineDefined)
+    assertNull(node.data)
   }
 
   private fun createNode(): YogaNode = mNodeFactory.create()
