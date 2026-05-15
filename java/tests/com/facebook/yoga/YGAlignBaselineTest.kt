@@ -50,17 +50,17 @@ class YGAlignBaselineTest {
 
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
 
-    assertEquals(0f, root_child0.getLayoutX(), 0.0f)
-    assertEquals(0f, root_child0.getLayoutY(), 0.0f)
+    assertEquals(0f, root_child0.layoutX, 0.0f)
+    assertEquals(0f, root_child0.layoutY, 0.0f)
 
-    assertEquals(500f, root_child1.getLayoutX(), 0.0f)
-    assertEquals(100f, root_child1.getLayoutY(), 0.0f)
+    assertEquals(500f, root_child1.layoutX, 0.0f)
+    assertEquals(100f, root_child1.layoutY, 0.0f)
 
-    assertEquals(0f, root_child1_child0.getLayoutX(), 0.0f)
-    assertEquals(0f, root_child1_child0.getLayoutY(), 0.0f)
+    assertEquals(0f, root_child1_child0.layoutX, 0.0f)
+    assertEquals(0f, root_child1_child0.layoutY, 0.0f)
 
-    assertEquals(0f, root_child1_child1.getLayoutX(), 0.0f)
-    assertEquals(300f, root_child1_child1.getLayoutY(), 0.0f)
+    assertEquals(0f, root_child1_child1.layoutX, 0.0f)
+    assertEquals(300f, root_child1_child1.layoutY, 0.0f)
   }
 
   @Test
@@ -85,17 +85,17 @@ class YGAlignBaselineTest {
 
     root.calculateLayout(YogaConstants.UNDEFINED, YogaConstants.UNDEFINED)
 
-    assertEquals(0f, root_child0.getLayoutX(), 0.0f)
-    assertEquals(0f, root_child0.getLayoutY(), 0.0f)
+    assertEquals(0f, root_child0.layoutX, 0.0f)
+    assertEquals(0f, root_child0.layoutY, 0.0f)
 
-    assertEquals(500f, root_child1.getLayoutX(), 0.0f)
-    assertEquals(100f, root_child1.getLayoutY(), 0.0f)
+    assertEquals(500f, root_child1.layoutX, 0.0f)
+    assertEquals(100f, root_child1.layoutY, 0.0f)
 
-    assertEquals(0f, root_child1_child0.getLayoutX(), 0.0f)
-    assertEquals(0f, root_child1_child0.getLayoutY(), 0.0f)
+    assertEquals(0f, root_child1_child0.layoutX, 0.0f)
+    assertEquals(0f, root_child1_child0.layoutY, 0.0f)
 
-    assertEquals(500f, root_child1_child1.getLayoutX(), 0.0f)
-    assertEquals(300f, root_child1_child1.getLayoutY(), 0.0f)
+    assertEquals(500f, root_child1_child1.layoutX, 0.0f)
+    assertEquals(300f, root_child1_child1.layoutY, 0.0f)
   }
 
   private fun createYGNode(
@@ -106,11 +106,11 @@ class YGAlignBaselineTest {
       alignBaseline: Boolean,
   ): YogaNode {
     val node = mNodeFactory.create(config)
-    node.setFlexDirection(flexDirection)
+    node.flexDirection = flexDirection
     node.setWidth(width)
     node.setHeight(height)
     if (alignBaseline) {
-      node.setAlignItems(YogaAlign.BASELINE)
+      node.alignItems = YogaAlign.BASELINE
     }
     return node
   }

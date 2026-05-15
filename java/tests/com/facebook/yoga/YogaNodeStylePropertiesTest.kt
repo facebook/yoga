@@ -30,8 +30,8 @@ class YogaNodeStylePropertiesTest {
   fun testDirectionDefault() {
     val node = createNode()
 
-    assertEquals(node.getStyleDirection(), YogaDirection.INHERIT)
-    assertEquals(node.getLayoutDirection(), YogaDirection.INHERIT)
+    assertEquals(node.styleDirection, YogaDirection.INHERIT)
+    assertEquals(node.layoutDirection, YogaDirection.INHERIT)
   }
 
   @Test
@@ -40,8 +40,8 @@ class YogaNodeStylePropertiesTest {
     node.setDirection(YogaDirection.LTR)
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(YogaDirection.LTR, node.getStyleDirection())
-    assertEquals(YogaDirection.LTR, node.getLayoutDirection())
+    assertEquals(YogaDirection.LTR, node.styleDirection)
+    assertEquals(YogaDirection.LTR, node.layoutDirection)
   }
 
   @Test
@@ -50,21 +50,21 @@ class YogaNodeStylePropertiesTest {
         style().direction(YogaDirection.RTL).width(200f).children(style().widthPercent(40f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(120f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(120f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testFlexDirectionDefault() {
     val node = createNode()
 
-    assertEquals(YogaFlexDirection.COLUMN, node.getFlexDirection())
+    assertEquals(YogaFlexDirection.COLUMN, node.flexDirection)
   }
 
   @Test
   fun testFlexDirectionAssignment() {
     val node = style().flexDirection(YogaFlexDirection.COLUMN_REVERSE).node()
 
-    assertEquals(YogaFlexDirection.COLUMN_REVERSE, node.getFlexDirection())
+    assertEquals(YogaFlexDirection.COLUMN_REVERSE, node.flexDirection)
   }
 
   @Test
@@ -77,22 +77,22 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(120f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(120f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testJustifyContentDefault() {
     val node = createNode()
 
-    assertEquals(YogaJustify.FLEX_START, node.getJustifyContent())
+    assertEquals(YogaJustify.FLEX_START, node.justifyContent)
   }
 
   @Test
   fun testJustifyContentAssignment() {
     val node = createNode()
-    node.setJustifyContent(YogaJustify.SPACE_EVENLY)
+    node.justifyContent = YogaJustify.SPACE_EVENLY
 
-    assertEquals(YogaJustify.SPACE_EVENLY, node.getJustifyContent())
+    assertEquals(YogaJustify.SPACE_EVENLY, node.justifyContent)
   }
 
   @Test
@@ -105,22 +105,22 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(60f, node.getChildAt(0).getLayoutY(), 0f)
+    assertEquals(60f, node.getChildAt(0).layoutY, 0f)
   }
 
   @Test
   fun testAlignItemsDefault() {
     val node = createNode()
 
-    assertEquals(YogaAlign.STRETCH, node.getAlignItems())
+    assertEquals(YogaAlign.STRETCH, node.alignItems)
   }
 
   @Test
   fun testAlignItemsAssignment() {
     val node = createNode()
-    node.setAlignItems(YogaAlign.SPACE_AROUND)
+    node.alignItems = YogaAlign.SPACE_AROUND
 
-    assertEquals(YogaAlign.SPACE_AROUND, node.getAlignItems())
+    assertEquals(YogaAlign.SPACE_AROUND, node.alignItems)
   }
 
   @Test
@@ -129,22 +129,22 @@ class YogaNodeStylePropertiesTest {
         style().alignItems(YogaAlign.CENTER).height(200f).children(style().widthPercent(40f)).node()
     node.calculateLayout(200f, UNDEFINED)
 
-    assertEquals(60f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(60f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testAlignSelfDefault() {
     val node = createNode()
 
-    assertEquals(YogaAlign.AUTO, node.getAlignSelf())
+    assertEquals(YogaAlign.AUTO, node.alignSelf)
   }
 
   @Test
   fun testAlignSelfAssignment() {
     val node = createNode()
-    node.setAlignSelf(YogaAlign.FLEX_END)
+    node.alignSelf = YogaAlign.FLEX_END
 
-    assertEquals(YogaAlign.FLEX_END, node.getAlignSelf())
+    assertEquals(YogaAlign.FLEX_END, node.alignSelf)
   }
 
   @Test
@@ -153,22 +153,22 @@ class YogaNodeStylePropertiesTest {
         style().height(200f).children(style().alignSelf(YogaAlign.CENTER).widthPercent(40f)).node()
     node.calculateLayout(200f, UNDEFINED)
 
-    assertEquals(60f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(60f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testAlignContentDefault() {
     val node = createNode()
 
-    assertEquals(YogaAlign.FLEX_START, node.getAlignContent())
+    assertEquals(YogaAlign.FLEX_START, node.alignContent)
   }
 
   @Test
   fun testAlignContentAssignment() {
     val node = createNode()
-    node.setAlignContent(YogaAlign.BASELINE)
+    node.alignContent = YogaAlign.BASELINE
 
-    assertEquals(YogaAlign.BASELINE, node.getAlignContent())
+    assertEquals(YogaAlign.BASELINE, node.alignContent)
   }
 
   @Test
@@ -186,22 +186,22 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(30f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(30f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testPositionTypeDefault() {
     val node = createNode()
 
-    assertEquals(YogaPositionType.RELATIVE, node.getPositionType())
+    assertEquals(YogaPositionType.RELATIVE, node.positionType)
   }
 
   @Test
   fun testPositionTypeAssignment() {
     val node = createNode()
-    node.setPositionType(YogaPositionType.ABSOLUTE)
+    node.positionType = YogaPositionType.ABSOLUTE
 
-    assertEquals(YogaPositionType.ABSOLUTE, node.getPositionType())
+    assertEquals(YogaPositionType.ABSOLUTE, node.positionType)
   }
 
   @Test
@@ -216,7 +216,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(0f, node.getChildAt(1).getLayoutY(), 0f)
+    assertEquals(0f, node.getChildAt(1).layoutY, 0f)
   }
 
   @Test
@@ -230,22 +230,22 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(190f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(190f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
   fun testOverflowDefault() {
     val node = createNode()
 
-    assertEquals(YogaOverflow.VISIBLE, node.getOverflow())
+    assertEquals(YogaOverflow.VISIBLE, node.overflow)
   }
 
   @Test
   fun testOverflowAssignment() {
     val node = createNode()
-    node.setOverflow(YogaOverflow.SCROLL)
+    node.overflow = YogaOverflow.SCROLL
 
-    assertEquals(YogaOverflow.SCROLL, node.getOverflow())
+    assertEquals(YogaOverflow.SCROLL, node.overflow)
   }
 
   // TODO add testOverflowAffectsLayout()
@@ -254,15 +254,15 @@ class YogaNodeStylePropertiesTest {
   fun testDisplayDefault() {
     val node = createNode()
 
-    assertEquals(YogaDisplay.FLEX, node.getDisplay())
+    assertEquals(YogaDisplay.FLEX, node.display)
   }
 
   @Test
   fun testDisplayAssignment() {
     val node = createNode()
-    node.setDisplay(YogaDisplay.NONE)
+    node.display = YogaDisplay.NONE
 
-    assertEquals(YogaDisplay.NONE, node.getDisplay())
+    assertEquals(YogaDisplay.NONE, node.display)
   }
 
   @Test
@@ -273,7 +273,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(200f, 200f)
 
-    assertEquals(200f, node.getChildAt(1).getLayoutHeight(), 0f)
+    assertEquals(200f, node.getChildAt(1).layoutHeight, 0f)
   }
 
   @Test
@@ -281,7 +281,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().height(200f).children(style().height(100f).flex(1.25f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(200f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(200f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
@@ -289,22 +289,22 @@ class YogaNodeStylePropertiesTest {
     val node = style().height(200f).children(style().height(300f).flex(1.25f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(200f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(200f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
   fun testFlexGrowDefault() {
     val node = createNode()
 
-    assertEquals(0f, node.getFlexGrow(), 0f)
+    assertEquals(0f, node.flexGrow, 0f)
   }
 
   @Test
   fun testFlexGrowAssignment() {
     val node = createNode()
-    node.setFlexGrow(2.5f)
+    node.flexGrow = 2.5f
 
-    assertEquals(2.5f, node.getFlexGrow(), 0f)
+    assertEquals(2.5f, node.flexGrow, 0f)
   }
 
   @Test
@@ -313,22 +313,22 @@ class YogaNodeStylePropertiesTest {
         style().height(200f).children(style().height(50f).flexGrow(1f), style().height(50f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(150f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(150f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
   fun testFlexShrinkDefault() {
     val node = createNode()
 
-    assertEquals(0f, node.getFlexShrink(), 0f)
+    assertEquals(0f, node.flexShrink, 0f)
   }
 
   @Test
   fun testFlexShrinkAssignment() {
     val node = createNode()
-    node.setFlexShrink(2.5f)
+    node.flexShrink = 2.5f
 
-    assertEquals(2.5f, node.getFlexShrink(), 0f)
+    assertEquals(2.5f, node.flexShrink, 0f)
   }
 
   @Test
@@ -340,27 +340,27 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(50f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(50f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
   fun testFlexBasisDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.AUTO, node.getFlexBasis())
+    assertEquals(YogaValue.AUTO, node.flexBasis)
   }
 
   @Test
   fun testFlexBasisAssignment() {
     val node = createNode()
     node.setFlexBasis(50f)
-    assertEquals(YogaValue(50f, YogaUnit.POINT), node.getFlexBasis())
+    assertEquals(YogaValue(50f, YogaUnit.POINT), node.flexBasis)
 
     node.setFlexBasisPercent(20f)
-    assertEquals(YogaValue(20f, YogaUnit.PERCENT), node.getFlexBasis())
+    assertEquals(YogaValue(20f, YogaUnit.PERCENT), node.flexBasis)
 
     node.setFlexBasisAuto()
-    assertEquals(YogaValue.AUTO, node.getFlexBasis())
+    assertEquals(YogaValue.AUTO, node.flexBasis)
   }
 
   @Test
@@ -375,7 +375,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(100f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(100f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
@@ -387,7 +387,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(80f, node.getChildAt(1).getLayoutHeight(), 0f)
+    assertEquals(80f, node.getChildAt(1).layoutHeight, 0f)
   }
 
   @Test
@@ -433,7 +433,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().margin(YogaEdge.TOP, 42f).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(42f, node.getLayoutY(), 0f)
+    assertEquals(42f, node.layoutY, 0f)
   }
 
   @Test
@@ -442,7 +442,7 @@ class YogaNodeStylePropertiesTest {
         style().height(200f).children(style().flexGrow(1f).marginPercent(YogaEdge.TOP, 20f)).node()
     node.calculateLayout(200f, 200f)
 
-    assertEquals(40f, node.getChildAt(0).getLayoutY(), 0f)
+    assertEquals(40f, node.getChildAt(0).layoutY, 0f)
   }
 
   @Test
@@ -455,7 +455,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(50f, node.getChildAt(0).getLayoutX(), 0f)
+    assertEquals(50f, node.getChildAt(0).layoutX, 0f)
   }
 
   @Test
@@ -483,7 +483,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().padding(YogaEdge.TOP, 42f).children(style()).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(42f, node.getChildAt(0).getLayoutY(), 0f)
+    assertEquals(42f, node.getChildAt(0).layoutY, 0f)
   }
 
   @Test
@@ -492,7 +492,7 @@ class YogaNodeStylePropertiesTest {
         style().height(200f).paddingPercent(YogaEdge.TOP, 20f).children(style().flexGrow(1f)).node()
     node.calculateLayout(200f, 200f)
 
-    assertEquals(40f, node.getChildAt(0).getLayoutY(), 0f)
+    assertEquals(40f, node.getChildAt(0).layoutY, 0f)
   }
 
   @Test
@@ -517,7 +517,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().border(YogaEdge.TOP, 42f).children(style()).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(42f, node.getChildAt(0).getLayoutY(), 0f)
+    assertEquals(42f, node.getChildAt(0).layoutY, 0f)
   }
 
   @Test
@@ -554,7 +554,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(67f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(67f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
@@ -571,24 +571,24 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(67f, node.getChildAt(0).getLayoutWidth(), 0f)
+    assertEquals(67f, node.getChildAt(0).layoutWidth, 0f)
   }
 
   @Test
   fun testWidthDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.AUTO, node.getWidth())
+    assertEquals(YogaValue.AUTO, node.width)
   }
 
   @Test
   fun testWidthAssignment() {
     val node = createNode()
     node.setWidth(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getWidth())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.width)
 
     node.setWidthPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getWidth())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.width)
   }
 
   @Test
@@ -596,7 +596,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().width(123f).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getLayoutWidth(), 0f)
+    assertEquals(123f, node.layoutWidth, 0f)
   }
 
   @Test
@@ -604,7 +604,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().widthPercent(75f).node()
     node.calculateLayout(200f, UNDEFINED)
 
-    assertEquals(150f, node.getLayoutWidth(), 0f)
+    assertEquals(150f, node.layoutWidth, 0f)
   }
 
   // TODO: testWidthAutoAffectsLayout
@@ -613,17 +613,17 @@ class YogaNodeStylePropertiesTest {
   fun testHeightDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.AUTO, node.getHeight())
+    assertEquals(YogaValue.AUTO, node.height)
   }
 
   @Test
   fun testHeightAssignment() {
     val node = createNode()
     node.setHeight(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getHeight())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.height)
 
     node.setHeightPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getHeight())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.height)
   }
 
   @Test
@@ -631,7 +631,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().height(123f).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getLayoutHeight(), 0f)
+    assertEquals(123f, node.layoutHeight, 0f)
   }
 
   @Test
@@ -639,7 +639,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().heightPercent(75f).node()
     node.calculateLayout(UNDEFINED, 200f)
 
-    assertEquals(150f, node.getLayoutHeight(), 0f)
+    assertEquals(150f, node.layoutHeight, 0f)
   }
 
   // TODO: testHeightAutoAffectsLayout
@@ -648,17 +648,17 @@ class YogaNodeStylePropertiesTest {
   fun testMinWidthDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.UNDEFINED, node.getMinWidth())
+    assertEquals(YogaValue.UNDEFINED, node.minWidth)
   }
 
   @Test
   fun testMinWidthAssignment() {
     val node = createNode()
     node.setMinWidth(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getMinWidth())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.minWidth)
 
     node.setMinWidthPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getMinWidth())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.minWidth)
   }
 
   @Test
@@ -666,7 +666,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().minWidth(123f).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getLayoutWidth(), 0f)
+    assertEquals(123f, node.layoutWidth, 0f)
   }
 
   @Test
@@ -674,24 +674,24 @@ class YogaNodeStylePropertiesTest {
     val node = style().minWidthPercent(120f).node()
     node.calculateLayout(200f, UNDEFINED)
 
-    assertEquals(240f, node.getLayoutWidth(), 0f)
+    assertEquals(240f, node.layoutWidth, 0f)
   }
 
   @Test
   fun testMinHeightDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.UNDEFINED, node.getMinHeight())
+    assertEquals(YogaValue.UNDEFINED, node.minHeight)
   }
 
   @Test
   fun testMinHeightAssignment() {
     val node = createNode()
     node.setMinHeight(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getMinHeight())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.minHeight)
 
     node.setMinHeightPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getMinHeight())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.minHeight)
   }
 
   @Test
@@ -699,7 +699,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().minHeight(123f).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getLayoutHeight(), 0f)
+    assertEquals(123f, node.layoutHeight, 0f)
   }
 
   @Test
@@ -707,24 +707,24 @@ class YogaNodeStylePropertiesTest {
     val node = style().minHeightPercent(120f).node()
     node.calculateLayout(UNDEFINED, 200f)
 
-    assertEquals(240f, node.getLayoutHeight(), 0f)
+    assertEquals(240f, node.layoutHeight, 0f)
   }
 
   @Test
   fun testMaxWidthDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.UNDEFINED, node.getMaxWidth())
+    assertEquals(YogaValue.UNDEFINED, node.maxWidth)
   }
 
   @Test
   fun testMaxWidthAssignment() {
     val node = createNode()
     node.setMaxWidth(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getMaxWidth())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.maxWidth)
 
     node.setMaxWidthPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getMaxWidth())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.maxWidth)
   }
 
   @Test
@@ -732,7 +732,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().width(200f).children(style().maxWidth(123f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getChildAt(0).getLayoutWidth(), 0f)
+    assertEquals(123f, node.getChildAt(0).layoutWidth, 0f)
   }
 
   @Test
@@ -740,24 +740,24 @@ class YogaNodeStylePropertiesTest {
     val node = style().width(200f).children(style().maxWidthPercent(80f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(160f, node.getChildAt(0).getLayoutWidth(), 0f)
+    assertEquals(160f, node.getChildAt(0).layoutWidth, 0f)
   }
 
   @Test
   fun testMaxHeightDefault() {
     val node = createNode()
 
-    assertEquals(YogaValue.UNDEFINED, node.getMaxHeight())
+    assertEquals(YogaValue.UNDEFINED, node.maxHeight)
   }
 
   @Test
   fun testMaxHeightAssignment() {
     val node = createNode()
     node.setMaxHeight(123f)
-    assertEquals(YogaValue(123f, YogaUnit.POINT), node.getMaxHeight())
+    assertEquals(YogaValue(123f, YogaUnit.POINT), node.maxHeight)
 
     node.setMaxHeightPercent(45f)
-    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.getMaxHeight())
+    assertEquals(YogaValue(45f, YogaUnit.PERCENT), node.maxHeight)
   }
 
   @Test
@@ -770,7 +770,7 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(123f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(123f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
@@ -783,22 +783,22 @@ class YogaNodeStylePropertiesTest {
             .node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(160f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(160f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
   fun testAspectRatioDefault() {
     val node = createNode()
 
-    assertEquals(UNDEFINED, node.getAspectRatio(), 0f)
+    assertEquals(UNDEFINED, node.aspectRatio, 0f)
   }
 
   @Test
   fun testAspectRatioAssignment() {
     val node = createNode()
-    node.setAspectRatio(2.75f)
+    node.aspectRatio = 2.75f
 
-    assertEquals(2.75f, node.getAspectRatio(), 0f)
+    assertEquals(2.75f, node.aspectRatio, 0f)
   }
 
   @Test
@@ -806,7 +806,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().children(style().width(300f).aspectRatio(1.5f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(200f, node.getChildAt(0).getLayoutHeight(), 0f)
+    assertEquals(200f, node.getChildAt(0).layoutHeight, 0f)
   }
 
   @Test
@@ -814,7 +814,7 @@ class YogaNodeStylePropertiesTest {
     val node = style().children(style().height(300f).aspectRatio(1.5f)).node()
     node.calculateLayout(UNDEFINED, UNDEFINED)
 
-    assertEquals(450f, node.getChildAt(0).getLayoutWidth(), 0f)
+    assertEquals(450f, node.getChildAt(0).layoutWidth, 0f)
   }
 
   private fun createNode(): YogaNode = mNodeFactory.create()
@@ -827,7 +827,7 @@ class YogaNodeStylePropertiesTest {
     fun node(): YogaNode = mNode
 
     fun children(vararg children: StyledNode): StyledNode {
-      var i = mNode.getChildCount()
+      var i = mNode.childCount
       while (--i >= 0) {
         mNode.removeChildAt(i)
       }
@@ -853,12 +853,12 @@ class YogaNodeStylePropertiesTest {
     }
 
     fun flexDirection(direction: YogaFlexDirection): StyledNode {
-      mNode.setFlexDirection(direction)
+      mNode.flexDirection = direction
       return this
     }
 
     fun justifyContent(justify: YogaJustify): StyledNode {
-      mNode.setJustifyContent(justify)
+      mNode.justifyContent = justify
       return this
     }
 
@@ -873,52 +873,52 @@ class YogaNodeStylePropertiesTest {
     }
 
     fun alignItems(align: YogaAlign): StyledNode {
-      mNode.setAlignItems(align)
+      mNode.alignItems = align
       return this
     }
 
     fun alignSelf(align: YogaAlign): StyledNode {
-      mNode.setAlignSelf(align)
+      mNode.alignSelf = align
       return this
     }
 
     fun alignContent(align: YogaAlign): StyledNode {
-      mNode.setAlignContent(align)
+      mNode.alignContent = align
       return this
     }
 
     fun flexWrap(wrap: YogaWrap): StyledNode {
-      mNode.setWrap(wrap)
+      mNode.wrap = wrap
       return this
     }
 
     fun positionType(positionType: YogaPositionType): StyledNode {
-      mNode.setPositionType(positionType)
+      mNode.positionType = positionType
       return this
     }
 
     fun overflow(overflow: YogaOverflow): StyledNode {
-      mNode.setOverflow(overflow)
+      mNode.overflow = overflow
       return this
     }
 
     fun flexShrink(flexShrink: Float): StyledNode {
-      mNode.setFlexShrink(flexShrink)
+      mNode.flexShrink = flexShrink
       return this
     }
 
     fun display(display: YogaDisplay): StyledNode {
-      mNode.setDisplay(display)
+      mNode.display = display
       return this
     }
 
     fun flexGrow(flexGrow: Float): StyledNode {
-      mNode.setFlexGrow(flexGrow)
+      mNode.flexGrow = flexGrow
       return this
     }
 
     fun flex(flex: Float): StyledNode {
-      mNode.setFlex(flex)
+      mNode.flex = flex
       return this
     }
 
@@ -1013,7 +1013,7 @@ class YogaNodeStylePropertiesTest {
     }
 
     fun aspectRatio(aspectRatio: Float): StyledNode {
-      mNode.setAspectRatio(aspectRatio)
+      mNode.aspectRatio = aspectRatio
       return this
     }
   }

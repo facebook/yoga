@@ -30,8 +30,8 @@ class YogaExceptionTest {
   @Test(expected = RuntimeException::class)
   fun testBaselineThrows() {
     val root = createNode()
-    root.setFlexDirection(YogaFlexDirection.ROW)
-    root.setAlignItems(YogaAlign.BASELINE)
+    root.flexDirection = YogaFlexDirection.ROW
+    root.alignItems = YogaAlign.BASELINE
 
     val child1 = createNode()
     root.addChildAt(child1, 0)
@@ -48,8 +48,8 @@ class YogaExceptionTest {
   @Test
   fun testBaselineThrowsAndStops() {
     val root = createNode()
-    root.setFlexDirection(YogaFlexDirection.ROW)
-    root.setAlignItems(YogaAlign.BASELINE)
+    root.flexDirection = YogaFlexDirection.ROW
+    root.alignItems = YogaAlign.BASELINE
 
     val child1 = createNode()
     root.addChildAt(child1, 0)
@@ -98,8 +98,8 @@ class YogaExceptionTest {
   @Test
   fun testMeasureThrowsAndStops() {
     val root = createNode()
-    root.setFlexDirection(YogaFlexDirection.ROW)
-    root.setAlignItems(YogaAlign.BASELINE)
+    root.flexDirection = YogaFlexDirection.ROW
+    root.alignItems = YogaAlign.BASELINE
 
     val child1 = createNode()
     root.addChildAt(child1, 0)
