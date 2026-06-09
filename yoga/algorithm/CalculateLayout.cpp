@@ -911,12 +911,17 @@ static float distributeFreeSpaceSecondPass(
   const bool isNodeFlexWrap = node->style().flexWrap() != Wrap::NoWrap;
 
   for (auto currentLineChild : flexLine.itemsInFlow) {
+    const float minMaxAxisSize =
+        currentLineChild->hasErrata(
+            Errata::FlexItemPercentMinMaxAgainstOwner)
+        ? mainAxisOwnerSize
+        : availableInnerMainDim;
     childFlexBasis = boundAxisWithinMinAndMax(
                          currentLineChild,
                          direction,
                          mainAxis,
                          currentLineChild->getLayout().computedFlexBasis,
-                         mainAxisOwnerSize,
+                         minMaxAxisSize,
                          ownerWidth)
                          .unwrap();
     float updatedMainSize = childFlexBasis;
@@ -1099,12 +1104,17 @@ static void distributeFreeSpaceFirstPass(
   float deltaFreeSpace = 0;
 
   for (auto currentLineChild : flexLine.itemsInFlow) {
+    const float minMaxAxisSize =
+        currentLineChild->hasErrata(
+            Errata::FlexItemPercentMinMaxAgainstOwner)
+        ? mainAxisOwnerSize
+        : availableInnerMainDim;
     float childFlexBasis = boundAxisWithinMinAndMax(
                                currentLineChild,
                                direction,
                                mainAxis,
                                currentLineChild->getLayout().computedFlexBasis,
-                               mainAxisOwnerSize,
+                               minMaxAxisSize,
                                ownerWidth)
                                .unwrap();
 
@@ -1408,6 +1418,10 @@ static void justifyMainAxis(
       // If we skipped the flex step, then we can't rely on the measuredDims
       // because they weren't computed. This means we can't call
       // dimensionWithMargin.
+      const float minMaxAxisSize =
+          child->hasErrata(Errata::FlexItemPercentMinMaxAgainstOwner)
+          ? mainAxisOwnerSize
+          : availableInnerMainDim;
       flexLine.layout.mainDim +=
           child->style().computeMarginForAxis(mainAxis, availableInnerWidth) +
           boundAxisWithinMinAndMax(
@@ -1415,7 +1429,7 @@ static void justifyMainAxis(
               direction,
               mainAxis,
               childLayout.computedFlexBasis,
-              mainAxisOwnerSize,
+              minMaxAxisSize,
               ownerWidth)
               .unwrap();
       flexLine.layout.crossDim = availableInnerCrossDim;
