@@ -14,11 +14,6 @@ namespace facebook::yoga {
 
 namespace {
 
-// Rounds in double precision. A dimension is the difference of two rounded
-// edges, and far from the origin a float has fewer bits than a pixel: taking
-// that difference in float can leave it a step short of the real size (for
-// example 43.9998 instead of 44 for a node spanning y = 2048 on a 3x screen),
-// which makes a text renderer drop the last line. Subtract first, then narrow.
 double roundValueToPixelGridDouble(
     const double value,
     const double pointScaleFactor,

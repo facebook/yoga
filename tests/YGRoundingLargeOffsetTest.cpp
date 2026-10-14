@@ -17,12 +17,6 @@ static YGSize _measureTwoLines(
   return YGSize{292.0f, 44.0f};
 }
 
-// A measured (text) node far from the origin on a 3x screen, with its top on
-// one side of a power of two and its bottom on the other. Each edge is rounded
-// to the pixel grid and the height is their difference; in float the two
-// edges have different precision and the height came out one step short (for
-// example 43.9998779 instead of 44 for a node spanning 2048), so a text
-// renderer given that box dropped the last line.
 TEST(YogaTest, rounding_measured_height_is_exact_across_float_steps) {
   for (const float spacer :
        {1012.0f + 1.0f / 3.0f,
