@@ -227,6 +227,33 @@ TEST_F(EventTest, layout_events_counts_cache_hits_multi_node_layout) {
   ASSERT_EQ(layoutData.cachedMeasures, 4);
 }
 
+TEST_F(EventTest, unconstrained_fit_content_height_measure_is_reused) {
+  // A child measured with a FitContent height that does not constrain it
+  // (e.g. a row in a scroll view's content, whose height grows) keeps its
+  // cached measurement when only that available height changes.
+  auto root = YGNodeNew();
+  YGNodeStyleSetWidth(root, 400);
+  YGNodeStyleSetHeight(root, 1000);
+  auto container = YGNodeNew();
+  YGNodeInsertChild(root, container, 0);
+  auto content = YGNodeNew();
+  YGNodeStyleSetHeight(content, 50);
+  YGNodeInsertChild(container, content, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  YGNodeStyleSetHeight(root, 1200);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  LayoutData layoutData =
+      lastEvent().eventTestData<Event::LayoutPassEnd>().layoutData;
+
+  ASSERT_EQ(layoutData.measures, 0);
+  ASSERT_EQ(YGNodeLayoutGetHeight(container), 50);
+
+  YGNodeFreeRecursive(root);
+}
+
 TEST_F(EventTest, layout_events_has_max_measure_cache) {
   auto root = YGNodeNew();
   auto a = YGNodeNew();

@@ -35,6 +35,10 @@
 
 namespace facebook::yoga {
 
+// Margin used to tell an unconstrained FitContent measurement from one that
+// filled its available size.
+constexpr float kUnconstrainedEpsilon = 0.5f;
+
 std::atomic<uint32_t> gCurrentGenerationCount(0);
 
 static bool hasAutoHorizontalMargin(const Style& style) {
@@ -2779,6 +2783,31 @@ bool calculateLayoutInternal(
           layout->cachedMeasurements[i].heightSizingMode == heightSizingMode) {
         cachedResults = &layout->cachedMeasurements[i];
         break;
+      }
+    }
+    // A FitContent height that did not constrain an earlier measurement (the
+    // measured height plus margin stayed below it) does not change the result
+    // as long as the new available height still fits that measured height.
+    // Content in a scroll view is measured with the container's growing
+    // height, so without this every clean child misses the cache whenever the
+    // content gets taller.
+    if (cachedResults == nullptr &&
+        heightSizingMode == SizingMode::FitContent &&
+        yoga::isDefined(availableHeight)) {
+      const float marginColumn =
+          node->style().computeMarginForAxis(FlexDirection::Column, ownerWidth);
+      for (uint32_t i = 0; i < layout->nextCachedMeasurementsIndex; i++) {
+        const auto& cached = layout->cachedMeasurements[i];
+        if (cached.widthSizingMode == widthSizingMode &&
+            yoga::inexactEquals(cached.availableWidth, availableWidth) &&
+            cached.heightSizingMode == SizingMode::FitContent &&
+            yoga::isDefined(cached.availableHeight) &&
+            cached.computedHeight + marginColumn <
+                cached.availableHeight - kUnconstrainedEpsilon &&
+            cached.computedHeight + marginColumn <= availableHeight) {
+          cachedResults = &layout->cachedMeasurements[i];
+          break;
+        }
       }
     }
   }
