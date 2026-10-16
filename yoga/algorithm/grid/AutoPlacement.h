@@ -42,7 +42,7 @@ struct AutoPlacement {
 // 0-based coordinate space.
 // 2. Builds the baseline sharing groups for each row.
 struct ResolvedAutoPlacement {
-  // Items with resolved 0-based positions, in child order.
+  // Items with resolved 0-based positions, in placement order.
   std::vector<GridItem> gridItems;
 
   // Baseline-aligned items grouped by starting row.
