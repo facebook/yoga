@@ -41,6 +41,38 @@ constexpr float kUnconstrainedEpsilon = 0.5f;
 
 std::atomic<uint32_t> gCurrentGenerationCount(0);
 
+// Whether laying out `node` resolves a percentage against a height: a height,
+// min/max height or flex basis in percent on the node itself or on a
+// descendant that takes part in its layout. Children are read from the flags
+// their own layouts left behind, except `display: contents` ones, which are not
+// laid out themselves.
+static bool resolvesHeightPercentage(const yoga::Node* node) {
+  const auto& style = node->style();
+  if (style.dimension(Dimension::Height).isPercent() ||
+      style.minDimension(Dimension::Height).isPercent() ||
+      style.maxDimension(Dimension::Height).isPercent() ||
+      style.flexBasis().isPercent()) {
+    return true;
+  }
+  for (const auto* child : node->getChildren()) {
+    switch (child->style().display()) {
+      case Display::None:
+        break;
+      case Display::Contents:
+        if (resolvesHeightPercentage(child)) {
+          return true;
+        }
+        break;
+      default:
+        if (child->resolvesHeightPercentage()) {
+          return true;
+        }
+        break;
+    }
+  }
+  return false;
+}
+
 static bool hasAutoHorizontalMargin(const Style& style) {
   for (const auto direction : {Direction::LTR, Direction::RTL}) {
     if (style.flexStartMarginIsAuto(FlexDirection::Row, direction) ||
@@ -2790,8 +2822,9 @@ bool calculateLayoutInternal(
     // as long as the new available height still fits that measured height.
     // Content in a scroll view is measured with the container's growing
     // height, so without this every clean child misses the cache whenever the
-    // content gets taller.
-    if (cachedResults == nullptr &&
+    // content gets taller. That doesn't hold if a percentage in the subtree
+    // is resolved against the available height.
+    if (cachedResults == nullptr && !node->resolvesHeightPercentage() &&
         heightSizingMode == SizingMode::FitContent &&
         yoga::isDefined(availableHeight)) {
       const float marginColumn =
@@ -2838,6 +2871,7 @@ bool calculateLayoutInternal(
 
     layout->lastOwnerDirection = ownerDirection;
     layout->configVersion = node->getConfig()->getVersion();
+    node->setResolvesHeightPercentage(resolvesHeightPercentage(node));
 
     if (cachedResults == nullptr) {
       layoutMarkerData.maxMeasureCache = std::max(
