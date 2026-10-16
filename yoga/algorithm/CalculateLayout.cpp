@@ -41,11 +41,14 @@ constexpr float kUnconstrainedEpsilon = 0.5f;
 
 std::atomic<uint32_t> gCurrentGenerationCount(0);
 
-// Whether laying out `node` resolves a percentage against a height: a height,
-// min/max height or flex basis in percent on the node itself or on a
-// descendant that takes part in its layout. Children are read from the flags
-// their own layouts left behind, except `display: contents` ones, which are not
-// laid out themselves.
+// Whether laying out `node` resolves a percentage against a height it doesn't
+// define itself: a height, min/max height or flex basis in percent on the
+// node, or on a descendant whose percentage reaches the node's available
+// height. Below a node with a definite height (in points, or from an aspect
+// ratio and a defined width) percentages resolve against that height, and
+// absolutely positioned descendants don't affect the node's size, so neither
+// counts. Children are read from the flags their own layouts left behind,
+// except `display: contents` ones, which are not laid out themselves.
 static bool resolvesHeightPercentage(const yoga::Node* node) {
   const auto& style = node->style();
   if (style.dimension(Dimension::Height).isPercent() ||
@@ -54,7 +57,16 @@ static bool resolvesHeightPercentage(const yoga::Node* node) {
       style.flexBasis().isPercent()) {
     return true;
   }
+  if (style.dimension(Dimension::Height).isPoints() ||
+      (style.aspectRatio().isDefined() &&
+       (style.dimension(Dimension::Width).isPoints() ||
+        style.dimension(Dimension::Width).isPercent()))) {
+    return false;
+  }
   for (const auto* child : node->getChildren()) {
+    if (child->style().positionType() == PositionType::Absolute) {
+      continue;
+    }
     switch (child->style().display()) {
       case Display::None:
         break;
