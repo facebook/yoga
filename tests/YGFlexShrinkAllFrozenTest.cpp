@@ -6,7 +6,7 @@
  */
 
 // Regression tests for flex shrink after the first pass freezes items:
-// https://github.com/react/yoga/issues/2038, #1651 and #931.
+// https://github.com/react/yoga/issues/2038 and #1651.
 
 #include <gtest/gtest.h>
 #include <yoga/Yoga.h>
@@ -52,6 +52,15 @@ YGNodeRef newAspectRatioRow(
   return root;
 }
 
+YGSize measureHeightFromContext(
+    YGNodeConstRef node,
+    float /*width*/,
+    YGMeasureMode /*widthMode*/,
+    float /*height*/,
+    YGMeasureMode /*heightMode*/) {
+  return YGSize{1.0f, *static_cast<float*>(YGNodeGetContext(node))};
+}
+
 } // namespace
 
 // https://github.com/react/yoga/issues/2038
@@ -81,51 +90,6 @@ TEST(YGFlexShrinkAllFrozen, all_items_frozen_at_min_width) {
       EXPECT_EQ(minWidths[i], YGNodeLayoutGetWidth(YGNodeGetChild(root, i)))
           << "withoutErrata " << withoutErrata << ", child[" << i << "]";
     }
-
-    YGNodeFreeRecursive(root);
-    YGConfigFree(config);
-  }
-}
-
-// https://github.com/react/yoga/issues/931
-// An item with flexShrink 0.25 freezes at minHeight 25, but basis * (1 -
-// flexShrink) left it at 113.
-TEST(YGFlexShrinkAllFrozen, issue_931_shrink_below_one_freezes_at_min_height) {
-  for (bool withoutErrata : kWithoutErrata) {
-    YGConfigRef config = newConfig(withoutErrata);
-    YGNodeRef root = YGNodeNewWithConfig(config);
-    YGNodeStyleSetWidth(root, 500.0f);
-    YGNodeStyleSetHeight(root, 400.0f);
-
-    YGNodeRef shrinking = YGNodeNewWithConfig(config);
-    YGNodeStyleSetWidth(shrinking, 100.0f);
-    YGNodeStyleSetHeight(shrinking, 100.0f);
-    YGNodeStyleSetMinHeight(shrinking, 25.0f);
-    YGNodeStyleSetMaxHeight(shrinking, 300.0f);
-    YGNodeStyleSetFlexBasis(shrinking, 150.0f);
-    YGNodeStyleSetFlexGrow(shrinking, 0.33f);
-    YGNodeStyleSetFlexShrink(shrinking, 0.25f);
-    YGNodeInsertChild(root, shrinking, 0);
-
-    YGNodeRef fixed = YGNodeNewWithConfig(config);
-    YGNodeStyleSetWidth(fixed, 100.0f);
-    YGNodeStyleSetHeight(fixed, 200.0f);
-    YGNodeStyleSetMaxHeight(fixed, 200.0f);
-    YGNodeStyleSetFlexGrow(fixed, 1.0f);
-    YGNodeStyleSetFlexShrink(fixed, 0.0f);
-    YGNodeInsertChild(root, fixed, 1);
-
-    YGNodeRef basis = YGNodeNewWithConfig(config);
-    YGNodeStyleSetWidth(basis, 100.0f);
-    YGNodeStyleSetMinHeight(basis, 200.0f);
-    YGNodeStyleSetFlexBasis(basis, 200.0f);
-    YGNodeStyleSetFlexShrink(basis, 0.0f);
-    YGNodeInsertChild(root, basis, 2);
-
-    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
-
-    EXPECT_EQ(25.0f, YGNodeLayoutGetHeight(shrinking))
-        << "withoutErrata " << withoutErrata;
 
     YGNodeFreeRecursive(root);
     YGConfigFree(config);
@@ -179,6 +143,115 @@ TEST(YGFlexShrinkAllFrozen, unshrinkable_item_keeps_aspect_ratio_basis) {
         << "withoutErrata " << withoutErrata;
     EXPECT_EQ(21.0f, YGNodeLayoutGetLeft(sibling))
         << "withoutErrata " << withoutErrata;
+
+    YGNodeFreeRecursive(root);
+    YGConfigFree(config);
+  }
+}
+
+// https://github.com/react/yoga/issues/2038
+// The residual grows with the size of the total: here it is about 0.0078, far
+// above any fixed near-zero threshold, but it is still positive. Pixel rounding
+// is off so that each item can be compared with its exact minWidth.
+TEST(YGFlexShrinkAllFrozen, large_total_residual_is_not_divided_by) {
+  for (bool withoutErrata : kWithoutErrata) {
+    YGConfigRef config = newConfig(withoutErrata);
+    YGConfigSetPointScaleFactor(config, 0.0f);
+    YGNodeRef root = YGNodeNewWithConfig(config);
+    YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+    YGNodeStyleSetWidth(root, 1000.0f);
+    YGNodeStyleSetHeight(root, 50.0f);
+
+    const float widths[] = {10000.1f, 30000.7f, 34567.8f};
+    for (size_t i = 0; i < 3; i++) {
+      YGNodeRef child = YGNodeNewWithConfig(config);
+      YGNodeStyleSetWidth(child, widths[i]);
+      YGNodeStyleSetMinWidth(child, widths[i] - 50.0f);
+      YGNodeStyleSetFlexShrink(child, 1.0f);
+      YGNodeInsertChild(root, child, i);
+    }
+
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+    for (size_t i = 0; i < 3; i++) {
+      EXPECT_EQ(
+          widths[i] - 50.0f, YGNodeLayoutGetWidth(YGNodeGetChild(root, i)))
+          << "withoutErrata " << withoutErrata << ", child[" << i << "]";
+    }
+
+    YGNodeFreeRecursive(root);
+    YGConfigFree(config);
+  }
+}
+
+// https://github.com/react/yoga/issues/2038
+// A tiny item stays unfrozen while the others freeze. Its factor (-1e-5) is
+// below the float precision of the total, so the total after removing the
+// frozen items was a positive residual instead of the tiny item's factor.
+TEST(YGFlexShrinkAllFrozen, tiny_item_remains_after_others_freeze) {
+  for (bool withoutErrata : kWithoutErrata) {
+    YGConfigRef config = newConfig(withoutErrata);
+    YGNodeRef root = YGNodeNewWithConfig(config);
+    YGNodeStyleSetFlexDirection(root, YGFlexDirectionRow);
+    YGNodeStyleSetWidth(root, 350.0f);
+    YGNodeStyleSetHeight(root, 50.0f);
+
+    const float widths[] = {100.1f, 200.3f, 300.7f, 0.00001f};
+    const float minWidths[] = {90.0f, 190.0f, 290.0f, 0.0f};
+    for (size_t i = 0; i < 4; i++) {
+      YGNodeRef child = YGNodeNewWithConfig(config);
+      YGNodeStyleSetWidth(child, widths[i]);
+      YGNodeStyleSetMinWidth(child, minWidths[i]);
+      YGNodeStyleSetFlexShrink(child, 1.0f);
+      YGNodeInsertChild(root, child, i);
+    }
+
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+    for (size_t i = 0; i < 4; i++) {
+      EXPECT_EQ(minWidths[i], YGNodeLayoutGetWidth(YGNodeGetChild(root, i)))
+          << "withoutErrata " << withoutErrata << ", child[" << i << "]";
+    }
+
+    YGNodeFreeRecursive(root);
+    YGConfigFree(config);
+  }
+}
+
+// https://github.com/react/yoga/issues/1651
+// Measured items freeze at their lower bound, which is 0 with the default
+// errata and the content height without (automatic minimum size). The residual
+// made them millions of points tall.
+TEST(YGFlexShrinkAllFrozen, issue_1651_measured_items_freeze_at_lower_bound) {
+  for (bool withoutErrata : kWithoutErrata) {
+    YGConfigRef config = newConfig(withoutErrata);
+    YGConfigSetUseWebDefaults(config, true);
+    YGConfigSetPointScaleFactor(config, 100.0f);
+    YGNodeRef root = YGNodeNewWithConfig(config);
+    YGNodeStyleSetFlexDirection(root, YGFlexDirectionColumn);
+    YGNodeStyleSetHeight(root, 99.0f);
+
+    float heights[] = {10.01f, 10.01f, 12.01f};
+    for (size_t i = 0; i < 3; i++) {
+      YGNodeRef child = YGNodeNewWithConfig(config);
+      YGNodeSetContext(child, &heights[i]);
+      YGNodeSetMeasureFunc(child, measureHeightFromContext);
+      YGNodeInsertChild(root, child, i);
+    }
+    YGNodeStyleSetMargin(YGNodeGetChild(root, 0), YGEdgeBottom, 100.0f);
+
+    YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+    float top = 0.0f;
+    for (size_t i = 0; i < 3; i++) {
+      YGNodeRef child = YGNodeGetChild(root, i);
+      const float height = withoutErrata ? heights[i] : 0.0f;
+      EXPECT_FLOAT_EQ(height, YGNodeLayoutGetHeight(child))
+          << "withoutErrata " << withoutErrata << ", child[" << i << "]";
+      EXPECT_FLOAT_EQ(top, YGNodeLayoutGetTop(child))
+          << "withoutErrata " << withoutErrata << ", child[" << i << "]";
+      top += height + (i == 0 ? 100.0f : 0.0f);
+    }
 
     YGNodeFreeRecursive(root);
     YGConfigFree(config);

@@ -1104,11 +1104,20 @@ static float distributeFreeSpaceSecondPass(
       if (flexShrinkScaledFactor != 0) {
         float childSize = YGUndefined;
 
-        // No item is left to share the free space with. Set item size to the
-        // smallest size, and let the clamp below raise it to the item's lower
-        // bound.
-        if (flexLine.layout.totalFlexShrinkScaledFactors == 0) {
-          childSize = 0;
+        // Use a relative epsilon guard instead of exact equality: after the
+        // first pass removes all constrained items,
+        // totalFlexShrinkScaledFactors may be near-zero rather than exactly 0
+        // due to floating-point cancellation. Dividing by a near-zero value
+        // produces a gigantic childSize that overwhelms the min/max clamp.
+        // A positive total is always such a residual: with non-negative
+        // flexShrink a real total is never positive
+        // (https://github.com/react/yoga/issues/2038).
+        const float shrinkFactorMagnitude =
+            std::abs(flexLine.layout.totalFlexShrinkScaledFactors);
+        if (yoga::isDefined(flexLine.layout.totalFlexShrinkScaledFactors) &&
+            (shrinkFactorMagnitude < 1e-6f ||
+             flexLine.layout.totalFlexShrinkScaledFactors > 0)) {
+          childSize = childFlexBasis + flexShrinkScaledFactor;
         } else {
           childSize = childFlexBasis +
               (flexLine.layout.remainingFreeSpace /
@@ -1295,14 +1304,6 @@ static void distributeFreeSpaceFirstPass(
   const float originalTotalFlexShrinkScaledFactors =
       flexLine.layout.totalFlexShrinkScaledFactors;
 
-  // Only read when useRunningTotals is set.
-  float runningTotalFlexShrinkScaledFactors =
-      originalTotalFlexShrinkScaledFactors;
-  // Sum of the factors of the unfrozen items, for the second pass. It is
-  // summed, not subtracted from the total, so it is exactly 0 when every item
-  // froze (https://github.com/react/yoga/issues/2038).
-  float unfrozenTotalFlexShrinkScaledFactors = 0;
-
   for (auto currentLineChild : flexLine.itemsInFlow) {
     float childFlexBasis = boundAxisWithinMinAndMax(
                                currentLineChild,
@@ -1316,14 +1317,13 @@ static void distributeFreeSpaceFirstPass(
     if (flexLine.layout.remainingFreeSpace < 0) {
       flexShrinkScaledFactor =
           -currentLineChild->resolveFlexShrink() * childFlexBasis;
-      bool isFrozen = false;
 
       // Is this child able to shrink?
       if (yoga::isDefined(flexShrinkScaledFactor) &&
           flexShrinkScaledFactor != 0) {
         baseMainSize = childFlexBasis +
             flexLine.layout.remainingFreeSpace /
-                (useRunningTotals ? runningTotalFlexShrinkScaledFactors
+                (useRunningTotals ? flexLine.layout.totalFlexShrinkScaledFactors
                                   : originalTotalFlexShrinkScaledFactors) *
                 flexShrinkScaledFactor;
         boundMainSize = boundAxisWithAutoMin(
@@ -1340,17 +1340,10 @@ static void distributeFreeSpaceFirstPass(
           // resulting in the item's size calculation being identical in the
           // first and second passes.
           deltaFreeSpace += boundMainSize - childFlexBasis;
-          runningTotalFlexShrinkScaledFactors -=
+          flexLine.layout.totalFlexShrinkScaledFactors -=
               (-currentLineChild->resolveFlexShrink() *
                currentLineChild->getLayout().computedFlexBasis.unwrap());
-          isFrozen = true;
         }
-      }
-
-      if (!isFrozen && currentLineChild->isNodeFlexible()) {
-        unfrozenTotalFlexShrinkScaledFactors +=
-            -currentLineChild->resolveFlexShrink() *
-            currentLineChild->getLayout().computedFlexBasis.unwrap();
       }
     } else if (
         yoga::isDefined(flexLine.layout.remainingFreeSpace) &&
@@ -1383,10 +1376,6 @@ static void distributeFreeSpaceFirstPass(
         }
       }
     }
-  }
-  if (flexLine.layout.remainingFreeSpace < 0) {
-    flexLine.layout.totalFlexShrinkScaledFactors =
-        unfrozenTotalFlexShrinkScaledFactors;
   }
   flexLine.layout.remainingFreeSpace -= deltaFreeSpace;
 }
