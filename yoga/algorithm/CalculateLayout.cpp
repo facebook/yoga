@@ -2872,7 +2872,8 @@ bool calculateLayoutInternal(
             yoga::isDefined(cached.availableHeight) &&
             cached.computedHeight + marginColumn <
                 cached.availableHeight - kUnconstrainedEpsilon &&
-            cached.computedHeight + marginColumn <= availableHeight) {
+            cached.computedHeight + marginColumn <= availableHeight &&
+            isCachedForOwnerSize(node, cached, ownerWidth, ownerHeight)) {
           cachedResults = &layout->cachedMeasurements[i];
           break;
         }
