@@ -254,6 +254,36 @@ TEST(YogaTest, has_new_layout_flag_set_static) {
   YGNodeFreeRecursive(root);
 }
 
+TEST(
+    YogaTest,
+    percent_height_in_auto_container_relayout_on_root_height_change) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 400);
+  YGNodeStyleSetHeight(root, 1000);
+
+  YGNodeRef container = YGNodeNewWithConfig(config);
+  YGNodeInsertChild(root, container, 0);
+
+  YGNodeRef child = YGNodeNewWithConfig(config);
+  YGNodeStyleSetHeightPercent(child, 50);
+  YGNodeInsertChild(container, child, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(500, YGNodeLayoutGetHeight(container));
+  ASSERT_FLOAT_EQ(250, YGNodeLayoutGetHeight(child));
+
+  YGNodeStyleSetHeight(root, 1200);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(600, YGNodeLayoutGetHeight(container));
+  ASSERT_FLOAT_EQ(300, YGNodeLayoutGetHeight(child));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
 TEST(YogaTest, percent_padding_follows_owner_size_on_relayout) {
   YGConfigRef config = YGConfigNew();
 
@@ -324,6 +354,39 @@ TEST(YogaTest, percent_min_height_follows_owner_size_on_relayout) {
   YGNodeStyleSetHeight(root, 200);
   YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
   ASSERT_FLOAT_EQ(200, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(
+    YogaTest,
+    percent_padding_follows_owner_size_on_relayout_with_taller_fit_content) {
+  YGConfigRef config = YGConfigNew();
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root, 100);
+  YGNodeStyleSetHeight(root, 100);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetWidth(root_child0, 50);
+  YGNodeStyleSetPaddingPercent(root_child0, YGEdgeTop, 50);
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeRef root_child0_child0 = YGNodeNewWithConfig(config);
+  YGNodeStyleSetHeight(root_child0_child0, 10);
+  YGNodeInsertChild(root_child0, root_child0_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(50, YGNodeLayoutGetPadding(root_child0, YGEdgeTop));
+  ASSERT_FLOAT_EQ(60, YGNodeLayoutGetHeight(root_child0));
+
+  YGNodeStyleSetWidth(root, 60);
+  YGNodeStyleSetHeight(root, 120);
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+  ASSERT_FLOAT_EQ(30, YGNodeLayoutGetPadding(root_child0, YGEdgeTop));
+  ASSERT_FLOAT_EQ(40, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
 
