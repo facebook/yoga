@@ -32,7 +32,7 @@ static YGSize _measureCeil(
   };
 }
 
-static YGSize _measureFractial(
+static YGSize _measureFractional(
     YGNodeConstRef /*node*/,
     float width,
     YGMeasureMode /*widthMode*/,
@@ -114,7 +114,7 @@ TEST(YogaTest, rounding_feature_with_custom_measure_func_ceil) {
 
 TEST(
     YogaTest,
-    rounding_feature_with_custom_measure_and_fractial_matching_scale) {
+    rounding_feature_with_custom_measure_and_fractional_matching_scale) {
   YGConfigRef config = YGConfigNew();
   YGNodeRef root = YGNodeNewWithConfig(config);
   YGNodeStyleSetPositionType(root, YGPositionTypeAbsolute);
@@ -122,7 +122,7 @@ TEST(
   YGNodeRef root_child0 = YGNodeNewWithConfig(config);
   YGNodeStyleSetPosition(root_child0, YGEdgeLeft, 73.625);
   YGNodeStyleSetPositionType(root_child0, YGPositionTypeRelative);
-  YGNodeSetMeasureFunc(root_child0, _measureFractial);
+  YGNodeSetMeasureFunc(root_child0, _measureFractional);
   YGNodeInsertChild(root, root_child0, 0);
 
   YGConfigSetPointScaleFactor(config, 2.0f);
@@ -132,6 +132,57 @@ TEST(
   ASSERT_FLOAT_EQ(0.5, YGNodeLayoutGetWidth(root_child0));
   ASSERT_FLOAT_EQ(0.5, YGNodeLayoutGetHeight(root_child0));
   ASSERT_FLOAT_EQ(73.5, YGNodeLayoutGetLeft(root_child0));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+// Regression test for https://github.com/react/yoga/issues/749
+TEST(YogaTest, rounding_feature_with_custom_measure_keeps_whole_pixel_size) {
+  YGConfigRef config = YGConfigNew();
+  YGConfigSetPointScaleFactor(config, 3.0f);
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetPadding(root, YGEdgeLeft, 163.666641f);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeSetMeasureFunc(
+      root_child0,
+      [](YGNodeConstRef, float, YGMeasureMode, float, YGMeasureMode) {
+        return YGSize{54.666656f, 20};
+      });
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(164.0f / 3.0f, YGNodeLayoutGetWidth(root_child0));
+
+  YGNodeFreeRecursive(root);
+
+  YGConfigFree(config);
+}
+
+TEST(YogaTest, rounding_feature_with_custom_measure_keeps_whole_pixel_height) {
+  YGConfigRef config = YGConfigNew();
+  YGConfigSetPointScaleFactor(config, 3.0f);
+
+  YGNodeRef root = YGNodeNewWithConfig(config);
+  YGNodeStyleSetAlignItems(root, YGAlignFlexStart);
+  YGNodeStyleSetPadding(root, YGEdgeTop, 163.666641f);
+
+  YGNodeRef root_child0 = YGNodeNewWithConfig(config);
+  YGNodeSetMeasureFunc(
+      root_child0,
+      [](YGNodeConstRef, float, YGMeasureMode, float, YGMeasureMode) {
+        return YGSize{20, 54.666656f};
+      });
+  YGNodeInsertChild(root, root_child0, 0);
+
+  YGNodeCalculateLayout(root, YGUndefined, YGUndefined, YGDirectionLTR);
+
+  ASSERT_FLOAT_EQ(164.0f / 3.0f, YGNodeLayoutGetHeight(root_child0));
 
   YGNodeFreeRecursive(root);
 
